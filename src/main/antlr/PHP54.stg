@@ -1,0 +1,2 @@
+file(namespaces) ::= <<
+<namespaces; separator="\n">
