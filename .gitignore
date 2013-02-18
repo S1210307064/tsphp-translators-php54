@@ -2,11 +2,9 @@ build/*
 nbproject/*
 /src/main/antlr/output
 
-/lib/dev/sonar
 /lib/dev/checkstyle
 /lib/dev/classycle
 /lib/dev/findbugs
-/lib/dev/jacoco
 /lib/dev/pmd
 
 /src/main/java/ch/tutteli/tsphp/translators/php54/antlr/PHP54Translator.tokens
