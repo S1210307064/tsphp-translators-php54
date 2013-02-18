@@ -53,6 +53,7 @@
     <property name="common.jar" location="${basedir}/../TSPHP-common/build/lib" />
     <property name="parser" location="${basedir}/../TSPHP-parser"/>
     <property name="parser.tokens" location="${parser}/src/main/antlr/output"/>
+    <property name="parser.jar" location="${parser}/build/lib"/>
     
     <!-- setting target locations -->
     <property name="target" location="${basedir}/build" />
@@ -68,6 +69,7 @@
     <property name="pmd" location="${target}/pmd" />
     <property name="cpd" location="${target}/cpd" />
     <property name="findbugs" location="${target}/findbugs" />
+    <property name="templates" location="${target}/templates" />
 
     <!-- setting general properties -->
     <property name="proj.java.version" value="1.7" />
@@ -92,11 +94,12 @@
             <include name="**/*.jar" />
         </fileset>
     </path>
-    
+        
     <!-- define path for test -->
     <path id="test">
         <path location="${test-classes}" />
         <path location="${classes}" />
+        <path location="${templates}" />
         <path refid="libset" />
         <path refid="libsetdev" />
     </path>
@@ -121,7 +124,7 @@
 
     <target name="copyAntlr" depends="clean" description="copy antlr generated classes to src/java folder">
         <copy todir="${antlr.copyLocation}">
-            <fileset dir="${antlr.output}" includes="TSPHPLexer.java, TSPHPParser.java"/>
+            <fileset dir="${antlr.output}" includes="PHP54Translator.java"/>
         </copy>
     </target>
     
@@ -139,12 +142,18 @@
         </java>
     </target>
 
-    <target name="copyParser" depends="" description="copy parser token file to src/main/antlr respectively">
+    <target name="copyParser" depends="" description="copy parser jar and token file to /lib/dev/, src/main/antlr respectively">
         <delete>
             <fileset dir="${antlr}" includes="*.tokens"/>
         </delete>
         <copy todir="${antlr}">
             <fileset dir="${parser.tokens}" includes="*.tokens" />
+        </copy>
+         <delete>
+            <fileset dir="${libdev}" includes="TSPHP-parser-*.jar"/>
+        </delete>
+        <copy todir="${libdev}">
+            <fileset dir="${parser.jar}" includes="TSPHP-parser-*.jar"/>
         </copy>
     </target>
     <target name="copyCommon" depends="" description="copy common library to the lib folder">
@@ -195,6 +204,11 @@
                 <include name="**/*.xml" />
             </fileset>
         </copy>
+        <copy todir="${templates}">
+            <fileset dir="${antlr}">
+                <include name="*.stg" />
+            </fileset>
+        </copy>
         <javac srcdir="${src.test}"
                destdir="${test-classes}"
                source="${proj.java.version}"
@@ -223,8 +237,8 @@
                 <attribute name="Implementation-User" value="${proj.autor}" />
                 <attribute name="Built-By" value="${proj.autor}" />
                 <attribute name="Sealed" value="false" />
-                <attribute name="Main-Class" value="${proj.startclass}" />
             </manifest>
+            <zipfileset dir="${antlr}" includes="PHP54.stg"/>
         </jar>
     </target>
 

@@ -50,12 +50,25 @@ compilationUnit
 	;
 	
 namespace
-	:	^('namespace' name=TYPE_NAME namespaceBody) -> namespace(name={$name})
-	|	^('namespace' DEFAULT_NAMESPACE namespaceBody) -> namespace()
+	:	^('namespace' (name=TYPE_NAME|DEFAULT_NAMESPACE) namespaceBody)
+		{
+			String namespaceName = null; 
+		 	if(name!=null){
+		 		namespaceName=name.getText().substring(1,name.getText().length()-1);
+	 		}
+	  	}
+
+		 -> namespace(name={namespaceName},body={$namespaceBody.st})
 	;
 	
 namespaceBody
-	:	
+	:	^(NAMESPACE_BODY statements+=statement*) -> namespaceBody(statements={$statements})
+	|	NAMESPACE_BODY -> namespaceBody(statements={null})
 	;
+
+statement
+	:	VariableId
+	;
+
 	
 	

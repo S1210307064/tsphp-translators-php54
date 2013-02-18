@@ -1,2 +1,15 @@
+group PHP54;
+
 file(namespaces) ::= <<
 <namespaces; separator="\n">
+>>
+
+namespace(name, body) ::= <<
+namespace<if(name)> <name><endif><body>
+>>
+
+namespaceBody(statements) ::= <<
+{<if(statements)>
+	<statements; separator="\n">
+<endif>}
+>>
