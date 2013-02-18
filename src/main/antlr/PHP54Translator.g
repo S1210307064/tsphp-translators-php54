@@ -62,13 +62,21 @@ namespace
 	;
 	
 namespaceBody
-	:	^(NAMESPACE_BODY statements+=statement*) -> namespaceBody(statements={$statements})
-	|	NAMESPACE_BODY -> namespaceBody(statements={null})
+	:	^(NAMESPACE_BODY statements+=statement*) -> body(statements={$statements})
+	|	NAMESPACE_BODY -> body(statements={null})
 	;
 
 statement
-	:	VariableId
+	:	useDeclarationList
+	;
+	
+useDeclarationList
+	:	^('use' useDeclaration+) 
+		-> useDeclarationList(useDeclarations={$useDeclaration.st})
 	;
 
-	
+useDeclaration
+	:	^(USE_DECLARATION TYPE_NAME Identifier) 
+		-> useDeclaration(type={$TYPE_NAME}, alias={$Identifier})
+	;
 	

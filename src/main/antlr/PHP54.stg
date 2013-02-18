@@ -8,8 +8,16 @@ namespace(name, body) ::= <<
 namespace<if(name)> <name><endif><body>
 >>
 
-namespaceBody(statements) ::= <<
+body(statements) ::= <<
 {<if(statements)>
 	<statements; separator="\n">
 <endif>}
+>>
+
+useDeclarationList(useDeclarations) ::= <<
+use <useDeclarations; separator=",">;
+>>
+
+useDeclaration(type, alias) ::= <<
+<type> as <alias>
 >>

@@ -14,17 +14,25 @@
  * limitations under the License.
  * 
  */
-package ch.tutteli.tsphp.translators.php54.testutils;
+package ch.tutteli.tsphp.translators.php54.test.testutils;
 
 import ch.tutteli.tsphp.common.IParser;
 import ch.tutteli.tsphp.common.ITSPHPAst;
 import ch.tutteli.tsphp.common.TSPHPAstAdaptor;
 import ch.tutteli.tsphp.parser.ParserFacade;
+import ch.tutteli.tsphp.parser.antlr.ANTLRNoCaseStringStream;
+import ch.tutteli.tsphp.parser.antlr.TSPHPErrorReportingLexer;
+import ch.tutteli.tsphp.parser.antlr.TSPHPErrorReportingParser;
+import ch.tutteli.tsphp.parser.antlr.TSPHPLexer;
+import ch.tutteli.tsphp.parser.antlr.TSPHPParser;
 import ch.tutteli.tsphp.translators.php54.antlr.PHP54Translator;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
+import org.antlr.runtime.CharStream;
+import org.antlr.runtime.CommonTokenStream;
+import org.antlr.runtime.ParserRuleReturnScope;
 import org.antlr.runtime.RecognitionException;
 import org.antlr.runtime.tree.CommonTreeNodeStream;
 import org.antlr.runtime.tree.TreeRuleReturnScope;
@@ -53,9 +61,17 @@ public abstract class ATest
     }
 
     public void translate() throws FileNotFoundException, IOException, RecognitionException {
-        IParser parser = new ParserFacade();
-        ast = parser.parse(testString);
+        CharStream stream = new ANTLRNoCaseStringStream(testString);
+        TSPHPErrorReportingLexer lexer = new TSPHPErrorReportingLexer(stream);
+        CommonTokenStream tokens = new CommonTokenStream(lexer);
 
+        TSPHPErrorReportingParser parser = new TSPHPErrorReportingParser(tokens);
+        parser.setTreeAdaptor(new TSPHPAstAdaptor());
+
+        ParserRuleReturnScope parserResult = parserRun(parser);
+        ast = (ITSPHPAst) parserResult.getTree();
+
+        Assert.assertFalse(testString.replaceAll("\n", " ") + " failed - lexer throw exception", lexer.hasFoundError());
         Assert.assertFalse(testString.replaceAll("\n", " ") + " failed - parser throw exception", parser.hasFoundError());
 
         commonTreeNodeStream = new CommonTreeNodeStream(new TSPHPAstAdaptor(), ast);
@@ -76,6 +92,10 @@ public abstract class ATest
         run();
 
         check();
+    }
+
+    protected ParserRuleReturnScope parserRun(TSPHPParser parser) throws RecognitionException {
+        return parser.compilationUnit();
     }
 
     protected void run() throws RecognitionException {

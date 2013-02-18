@@ -1,5 +1,7 @@
+package ch.tutteli.tsphp.translators.php54.test;
 
-import ch.tutteli.tsphp.translators.php54.testutils.ATest;
+
+import ch.tutteli.tsphp.translators.php54.test.testutils.ATest;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Arrays;
