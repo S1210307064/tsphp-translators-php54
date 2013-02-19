@@ -21,3 +21,19 @@ use <useDeclarations; separator=",">;
 useDeclaration(type, alias) ::= <<
 <type> as <alias>
 >>
+
+class(modifier, identifier, ext, impl, body) ::= <<
+<if(modifier)><modifier> <endif>class <identifier><if(ext)> <ext><endif><if(impl)> <impl><endif><body>
+>>
+
+modifier(modifiers) ::=<<
+<modifiers; separator=" ">
+>>
+
+extends(identifiers) ::=<<
+<if(identifiers)>extends <identifiers; separator=","><endif>
+>>
+
+impl(identifiers) ::=<<
+<if(identifiers)>implements <identifiers; separator=","><endif>
+>>

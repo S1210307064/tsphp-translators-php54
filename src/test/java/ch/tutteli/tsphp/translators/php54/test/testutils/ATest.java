@@ -95,11 +95,11 @@ public abstract class ATest
     }
 
     protected ParserRuleReturnScope parserRun(TSPHPParser parser) throws RecognitionException {
-        return parser.compilationUnit();
+        return parser.statement();
     }
 
     protected void run() throws RecognitionException {
-        result = translator.compilationUnit();
+        result = translator.statement();
     }
 
     public void check() {

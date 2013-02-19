@@ -67,7 +67,8 @@ namespaceBody
 	;
 
 statement
-	:	useDeclarationList
+	:	useDeclarationList -> {$useDeclarationList.st}
+	|	definition -> {$definition.st}
 	;
 	
 useDeclarationList
@@ -79,4 +80,52 @@ useDeclaration
 	:	^(USE_DECLARATION TYPE_NAME Identifier) 
 		-> useDeclaration(type={$TYPE_NAME}, alias={$Identifier})
 	;
+
+definition
+	:	classDeclaration -> {$classDeclaration.st}
+	//|	interfaceDeclaration
+	//|	functionDeclaration
+	//|	constDeclarationList
+	;
 	
+classDeclaration
+	:	^('class' classModifier Identifier extendsDeclaration implementsDeclaration classBody)
+		-> class(
+			modifier={$classModifier.st}, 
+			identifier={$Identifier}, 
+			ext={$extendsDeclaration.st},
+			impl={$implementsDeclaration.st},
+			body={$classBody.st}
+		)
+	;
+classModifier
+	:	^(CLASS_MODIFIER list+=classModifierNames) -> modifier(modifiers={$list})
+	|	CLASS_MODIFIER -> {null}
+	;
+
+classModifierNames
+@after {$st = %{$text};}
+	:	Final 
+	|	Abstract
+	;
+	
+extendsDeclaration
+	:	^('extends' identifiers+=TYPE_NAME+)	-> extends(identifiers={$identifiers})
+	|	'extends' 				-> {null}
+	;
+
+
+implementsDeclaration
+	:	^('implements' identifiers+=TYPE_NAME+) -> impl(identifiers={$identifiers})
+	|	'implements' 				-> {null}
+	;
+	
+classBody
+	:	CLASS_BODY -> body(statements={null})
+	;
+
+
+
+
+
+

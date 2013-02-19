@@ -45,16 +45,6 @@ public class UseTest extends ATest
         translate();
     }
 
-    @Override
-    public ParserRuleReturnScope parserRun(TSPHPParser parser) throws RecognitionException {
-        return parser.useDeclarationList();
-    }
-
-    @Override
-    public void run() throws RecognitionException {
-        result = translator.useDeclarationList();
-    }
-
     @Parameterized.Parameters
     public static Collection<Object[]> testStrings() {
         return Arrays.asList(new Object[][]{
