@@ -10,7 +10,9 @@ namespace<if(name)> <name><endif><body>
 
 body(statements) ::= <<
 {<if(statements)>
-	<statements; separator="\n">
+
+    <statements; separator="\n">
+
 <endif>}
 >>
 
@@ -23,7 +25,7 @@ useDeclaration(type, alias) ::= <<
 >>
 
 class(modifier, identifier, ext, impl, body) ::= <<
-<if(modifier)><modifier> <endif>class <identifier><if(ext)> <ext><endif><if(impl)> <impl><endif><body>
+<if(modifier)><modifier> <endif>class <identifier><if(ext)> <ext><endif><if(impl)> <impl><endif> <body>
 >>
 
 modifier(modifiers) ::=<<
@@ -36,4 +38,12 @@ extends(identifiers) ::=<<
 
 impl(identifiers) ::=<<
 <if(identifiers)>implements <identifiers; separator=","><endif>
+>>
+
+const(identifiers) ::=<<
+const <identifiers; separator=", ">;
+>>
+
+assign(id,value) ::=<<
+<id> = <value>
 >>

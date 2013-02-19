@@ -83,9 +83,9 @@ useDeclaration
 
 definition
 	:	classDeclaration -> {$classDeclaration.st}
-	//|	interfaceDeclaration
-	//|	functionDeclaration
-	//|	constDeclarationList
+	//|	interfaceDeclaration ->{$interfaceDeclaration.st}
+	//|	functionDeclaration -> {$functionDeclaration.st}
+	|	constDeclarationList ->{$constDeclarationList.st}
 	;
 	
 classDeclaration
@@ -121,11 +121,39 @@ implementsDeclaration
 	;
 	
 classBody
-	:	CLASS_BODY -> body(statements={null})
+	:	^(CLASS_BODY def+=classBodyDefinition*) -> body(statements={$def})
+	|	CLASS_BODY -> body(statements={null})
+	;
+	
+classBodyDefinition
+	:	constDeclarationList -> {$constDeclarationList.st}
+	//|	classMemberDeclaration	
+	//|	abstractConstructDestructDeclaration
+	//|	constructDestructDeclaration
+	//|	abstractMethodDeclaration
+	//|	methodDeclaration
+	;
+	
+constDeclarationList
+	:	^(CONSTANT_DECLARATION_LIST 
+			^(TYPE ^(TYPE_MODIFIER Final) scalarTypes)
+			identifiers+=constantAssignment+
+		) 
+		-> const(identifiers={$identifiers})
+	;
+	
+constantAssignment
+	:	^(Identifier v=Int)
+		 -> assign(id={$Identifier}, value={v})
 	;
 
-
-
+scalarTypes
+@after {$st = %{$text};}
+	:	'bool'
+	|	'int'
+	|	'float'
+	|	'string'
+	;
 
 
 
