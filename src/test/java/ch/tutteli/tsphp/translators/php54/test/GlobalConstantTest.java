@@ -60,6 +60,7 @@ public class GlobalConstantTest extends ATest
         return Arrays.asList(new Object[][]{
                     {"const int a=1;", "namespace{\n    const a = 1;\n}"},
                     {"const int a=1,b=1;", "namespace{\n    const a = 1, b = 1;\n}"},
-                    {"const int a=1; const float b=1;", "namespace{\n    const a = 1;\n    const b = 1;\n}"},});
+                    {"const int a=1; const float b=1;", "namespace{\n    const a = 1;\n    const b = 1;\n}"}
+                });
     }
 }

@@ -16,6 +16,8 @@
  */
 package ch.tutteli.tsphp.translators.php54.test.testutils;
 
+import ch.tutteli.tsphp.common.AstHelper;
+import ch.tutteli.tsphp.common.AstHelperRegistry;
 import ch.tutteli.tsphp.common.IParser;
 import ch.tutteli.tsphp.common.ITSPHPAst;
 import ch.tutteli.tsphp.common.TSPHPAstAdaptor;
@@ -61,6 +63,8 @@ public abstract class ATest
     }
 
     public void translate() throws FileNotFoundException, IOException, RecognitionException {
+        AstHelperRegistry.set(new AstHelper());
+        
         CharStream stream = new ANTLRNoCaseStringStream(testString);
         TSPHPErrorReportingLexer lexer = new TSPHPErrorReportingLexer(stream);
         CommonTokenStream tokens = new CommonTokenStream(lexer);

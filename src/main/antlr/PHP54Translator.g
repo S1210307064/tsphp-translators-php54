@@ -127,11 +127,11 @@ classBody
 	
 classBodyDefinition
 	:	constDeclarationList -> {$constDeclarationList.st}
-	//|	classMemberDeclaration	
-	//|	abstractConstructDestructDeclaration
-	//|	constructDestructDeclaration
-	//|	abstractMethodDeclaration
-	//|	methodDeclaration
+	|	classMemberDeclaration	-> {$classMemberDeclaration.st}
+	//|	abstractConstructDestructDeclaration -> {$abstractConstructDestructDeclaration.st}
+	//|	constructDestructDeclaration -> {$constructDestructDeclaration.st}
+	//|	abstractMethodDeclaration -> {$abstractMethodDeclaration.st}
+	//|	methodDeclaration -> {$methodDeclaration.st}
 	;
 	
 constDeclarationList
@@ -155,5 +155,48 @@ scalarTypes
 	|	'string'
 	;
 
+classMemberDeclaration
+	:	^(CLASS_MEMBER variableDeclarationList) -> {$variableDeclarationList.st}
+	;
 
+variableDeclarationList
+	:	^(VARIABLE_DECLARATION_LIST 
+			^(TYPE variabeTypeModifier allTypes) 
+			identifiers+=variableDeclaration+
+		)
+		-> variableDeclarationList(modifier={$variabeTypeModifier.st},identifiers={$identifiers})
+	;
+	
+variabeTypeModifier
+	:	^(TYPE_MODIFIER Cast? '?'? variableModifier?) -> {$variableModifier.st}
+	|	TYPE_MODIFIER -> {null}
+	;
+	
+variableModifier
+	:	list+=staticToken list+=accessModifier -> modifier(modifiers={$list})
+	|	list+=accessModifier list+=staticToken -> modifier(modifiers={$list})
+	|	accessModifier -> {$accessModifier.st}
+	;
+	
+staticToken
+	:	Static -> {%{$Static.text}}
+	;
+	
+accessModifier
+	:	Private -> {%{$Private.text}}
+	|	Protected -> {%{$Protected.text}}
+	|	Public -> {%{$Public.text}}
+	;
+	
+variableDeclaration
+	:	^(VariableId v=Int) -> assign(id={$VariableId},value={v})
+	|	VariableId -> {%{$VariableId.text}}
+	;
 
+allTypes
+	:	scalarTypes
+	|	'array'
+	|	'resource'
+	|	'object'
+	|	TYPE_NAME
+	;

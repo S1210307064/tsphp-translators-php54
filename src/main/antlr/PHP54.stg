@@ -47,3 +47,7 @@ const <identifiers; separator=", ">;
 assign(id,value) ::=<<
 <id> = <value>
 >>
+
+variableDeclarationList(modifier,identifiers) ::=<<
+<if(modifier)><modifier> <endif><identifiers; separator=", ">;
+>>
