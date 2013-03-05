@@ -18,14 +18,12 @@ package ch.tutteli.tsphp.translators.php54.test.testutils;
 
 import ch.tutteli.tsphp.common.AstHelper;
 import ch.tutteli.tsphp.common.AstHelperRegistry;
-import ch.tutteli.tsphp.common.IParser;
 import ch.tutteli.tsphp.common.ITSPHPAst;
+import ch.tutteli.tsphp.common.ITSPHPAstAdaptor;
 import ch.tutteli.tsphp.common.TSPHPAstAdaptor;
-import ch.tutteli.tsphp.parser.ParserFacade;
 import ch.tutteli.tsphp.parser.antlr.ANTLRNoCaseStringStream;
 import ch.tutteli.tsphp.parser.antlr.TSPHPErrorReportingLexer;
 import ch.tutteli.tsphp.parser.antlr.TSPHPErrorReportingParser;
-import ch.tutteli.tsphp.parser.antlr.TSPHPLexer;
 import ch.tutteli.tsphp.parser.antlr.TSPHPParser;
 import ch.tutteli.tsphp.translators.php54.antlr.PHP54Translator;
 import java.io.FileNotFoundException;
@@ -63,14 +61,15 @@ public abstract class ATest
     }
 
     public void translate() throws FileNotFoundException, IOException, RecognitionException {
-        AstHelperRegistry.set(new AstHelper());
+        ITSPHPAstAdaptor adaptor = new TSPHPAstAdaptor();
+        AstHelperRegistry.set(new AstHelper(adaptor));
         
         CharStream stream = new ANTLRNoCaseStringStream(testString);
         TSPHPErrorReportingLexer lexer = new TSPHPErrorReportingLexer(stream);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
 
         TSPHPErrorReportingParser parser = new TSPHPErrorReportingParser(tokens);
-        parser.setTreeAdaptor(new TSPHPAstAdaptor());
+        parser.setTreeAdaptor(adaptor);
 
         ParserRuleReturnScope parserResult = parserRun(parser);
         ast = (ITSPHPAst) parserResult.getTree();
@@ -78,7 +77,7 @@ public abstract class ATest
         Assert.assertFalse(testString.replaceAll("\n", " ") + " failed - lexer throw exception", lexer.hasFoundError());
         Assert.assertFalse(testString.replaceAll("\n", " ") + " failed - parser throw exception", parser.hasFoundError());
 
-        commonTreeNodeStream = new CommonTreeNodeStream(new TSPHPAstAdaptor(), ast);
+        commonTreeNodeStream = new CommonTreeNodeStream(adaptor, ast);
         commonTreeNodeStream.setTokenStream(parser.getTokenStream());
 
         // LOAD TEMPLATES (via classpath)

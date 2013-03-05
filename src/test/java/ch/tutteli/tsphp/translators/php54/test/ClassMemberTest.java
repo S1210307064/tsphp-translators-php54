@@ -3,8 +3,10 @@ package ch.tutteli.tsphp.translators.php54.test;
 import ch.tutteli.tsphp.translators.php54.test.testutils.ATest;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 import org.antlr.runtime.RecognitionException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -45,25 +47,38 @@ public class ClassMemberTest extends ATest
 
     @Parameterized.Parameters
     public static Collection<Object[]> testStrings() {
-        return Arrays.asList(new Object[][]{
-                    {"class a{int $a=1;}", "class a {\n    public $a = 1;\n}"},
-                    {"class a{private int $a=1;}", "class a {\n    private $a = 1;\n}"},
-                    {"class a{protected int $a=1;}", "class a {\n    protected $a = 1;\n}"},
-                    {"class a{public int $a=1;}", "class a {\n    public $a = 1;\n}"},
-                    //
-                    {"class a{static int $a;}", "class a {\n    static public $a;\n}"},
-                    {"class a{static private int $a;}", "class a {\n    static private $a;\n}"},
-                    {"class a{static protected int $a;}", "class a {\n    static protected $a;\n}"},
-                    {"class a{static public int $a;}", "class a {\n    static public $a;\n}"},
-                    //
-                    {"class a{private static int $a;}", "class a {\n    private static $a;\n}"},
-                    {"class a{protected static int $a;}", "class a {\n    protected static $a;\n}"},
-                    {"class a{ public static int $a;}", "class a {\n    public static $a;\n}"},
-                    //
-                    {"class a{int $a, $b;}", "class a {\n    public $a, $b;\n}"},
-                    {"class a{private int $a,$b=1,$c;}", "class a {\n    private $a, $b = 1, $c;\n}"},
-                    {"class a{protected int $a,$b,$c=1;}", "class a {\n    protected $a, $b, $c = 1;\n}"},
-                    {"class a{public int $a=1,$b=1,$c;}", "class a {\n    public $a = 1, $b = 1, $c;\n}"},
-                });
+        List<Object[]> collection = new ArrayList<>();
+        String[][] variations = new String[][]{
+            {"", "public"},
+            {"private", "private"},
+            {"private static", "private static"},
+            {"protected", "protected"},
+            {"protected static", "protected static"},
+            {"public", "public"},
+            {"public static", "public static"},
+            {"static", "static public"},
+            {"static private", "static private"},
+            {"static protected", "static protected"},
+            {"static public", "static public"}
+        };
+        for (String[] variation : variations) {
+            collection.add(new Object[]{
+                        "class a{" + variation[0] + " int $a=1;}",
+                        "class a {\n    " + variation[1] + " $a = 1;\n}"
+                    });
+            collection.add(new Object[]{
+                        "class a{" + variation[0] + " int $a;}",
+                        "class a {\n    " + variation[1] + " $a;\n}"
+                    });
+            collection.add(new Object[]{
+                        "class a{" + variation[0] + " int $a,$b=1;}",
+                        "class a {\n    " + variation[1] + " $a, $b = 1;\n}"
+                    });
+        }
+        collection.add(new Object[]{
+                        "class a{private int $a,$b,$c=1;}",
+                        "class a {\n    private $a, $b, $c = 1;\n}"
+                    });
+        return collection;
     }
 }

@@ -45,6 +45,7 @@ import ch.tutteli.tsphp.common.ITSPHPAst;
 
 }
 
+
 compilationUnit	
 	:	(n+=namespace) -> file(namespaces={$n})
 	;
@@ -128,15 +129,15 @@ classBody
 classBodyDefinition
 	:	constDeclarationList -> {$constDeclarationList.st}
 	|	classMemberDeclaration	-> {$classMemberDeclaration.st}
-	//|	abstractConstructDestructDeclaration -> {$abstractConstructDestructDeclaration.st}
+	//	|	abstractConstructDestructDeclaration -> {$abstractConstructDestructDeclaration.st}
 	//|	constructDestructDeclaration -> {$constructDestructDeclaration.st}
 	//|	abstractMethodDeclaration -> {$abstractMethodDeclaration.st}
-	//|	methodDeclaration -> {$methodDeclaration.st}
+	|	methodDeclaration -> {$methodDeclaration.st}
 	;
 	
 constDeclarationList
 	:	^(CONSTANT_DECLARATION_LIST 
-			^(TYPE ^(TYPE_MODIFIER Final) scalarTypes)
+			^(TYPE ^(TYPE_MODIFIER Public Static Final) scalarTypes)
 			identifiers+=constantAssignment+
 		) 
 		-> const(identifiers={$identifiers})
@@ -161,14 +162,14 @@ classMemberDeclaration
 
 variableDeclarationList
 	:	^(VARIABLE_DECLARATION_LIST 
-			^(TYPE variabeTypeModifier allTypes) 
+			^(TYPE typeModifier allTypes) 
 			identifiers+=variableDeclaration+
 		)
-		-> variableDeclarationList(modifier={$variabeTypeModifier.st},identifiers={$identifiers})
+		-> variableDeclarationList(modifier={$typeModifier.st},identifiers={$identifiers})
 	;
 	
-variabeTypeModifier
-	:	^(TYPE_MODIFIER Cast? '?'? variableModifier?) -> {$variableModifier.st}
+typeModifier returns[boolean isCast, boolean isNullable]
+	:	^(TYPE_MODIFIER cast=Cast? nullable='?'? variableModifier?) {$isCast=cast!=null; $isNullable=nullable!=null;} -> {$variableModifier.st}
 	|	TYPE_MODIFIER -> {null}
 	;
 	
@@ -194,9 +195,113 @@ variableDeclaration
 	;
 
 allTypes
+	:	primitiveTypes
+	|	TYPE_NAME
+	;
+
+primitiveTypes
 	:	scalarTypes
 	|	'array'
 	|	'resource'
 	|	'object'
-	|	TYPE_NAME
+	;
+	
+primitiveTypesWithoutArray
+	:	scalarTypes -> {$scalarTypes.st}
+	|	TypeResource -> {%{$TypeResource.text}}
+	|	TypeObject -> {%{$TypeObject.text}}
+	;
+
+methodDeclaration
+	:	^(METHOD_DECLARATION
+			^(METHOD_MODIFIER methodModifier)
+			^(TYPE typeModifier returnType)
+			Identifier
+			formalParameters
+			block
+		)
+		-> method(
+			modifier={$methodModifier.st},
+			identifier={$Identifier},
+			params={$formalParameters.st},
+			body={$block.instructions}
+		)
+	;
+
+methodModifier
+	:	(	list+=staticToken list+=finalToken list+=accessModifier
+		|	list+=staticToken list+=accessModifier list+=finalToken
+		|	list+=staticToken list+=accessModifier
+		
+		|	list+=finalToken list+=staticToken list+=accessModifier
+		|	list+=finalToken list+=accessModifier list+=staticToken 
+		|	list+=finalToken list+=accessModifier
+		
+		
+		|	list+=accessModifier list+=finalToken list+=staticToken
+		|	list+=accessModifier list+=staticToken list+=finalToken
+		|	list+=accessModifier list+=staticToken
+		|	list+=accessModifier list+=finalToken
+		|	list+=accessModifier
+		)
+		-> modifier(modifiers={$list})
+	;
+	
+finalToken
+	:	Final -> {%{$Final.text}}
+	;
+	
+returnType
+	:	allTypes
+	|	Void 
+	;
+	
+formalParameters
+	:	^(PARAMETER_LIST params+=paramDeclaration+) -> parameterList(declarations={$params})
+	|	PARAMETER_LIST -> {null}
+	;
+
+paramDeclaration
+@init{String defaultValue =null;}
+	:	^(PARAMETER_DECLARATION 
+			^(TYPE typeModifier 
+				(	scalarAndResource
+				|	typeName=arrayType
+				|	TypeObject
+				|	typeName=classInterfaceType
+				)
+			)
+			parameterNormalOrOptional
+		)
+		{
+		    String variableId = $parameterNormalOrOptional.variableId;		    
+		    defaultValue =  $typeModifier.isNullable && typeName!=null ? "null" : $parameterNormalOrOptional.defaultValue;
+		}
+		-> parameter(type={$typeName.text}, variableId={variableId}, defaultValue={defaultValue})
+	;
+arrayType
+	:	TypeArray -> {%{$TypeArray.text}}
+	;
+
+classInterfaceType
+	:	TYPE_NAME -> {%{$TYPE_NAME.text}}	
+	;
+
+scalarAndResource
+	:	scalarTypes -> {$scalarTypes.st}
+	|	TypeResource -> {%{$TypeResource.text}}
+	;
+
+parameterNormalOrOptional returns[String variableId,String defaultValue]
+	:	^(VariableId v=Int) {$variableId=$VariableId.text; $defaultValue=$v.text;} 
+	|	VariableId {$variableId=$VariableId.text;}
+	;
+
+block returns[List<Object> instructions]
+	:	^(BLOCK instr+=instruction*) {$instructions=$instr;}
+	|	BLOCK 
+	;
+
+instruction
+	:	VariableId
 	;

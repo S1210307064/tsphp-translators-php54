@@ -51,3 +51,37 @@ assign(id,value) ::=<<
 variableDeclarationList(modifier,identifiers) ::=<<
 <if(modifier)><modifier> <endif><identifiers; separator=", ">;
 >>
+
+method(modifier, identifier, params, primitiveCastings, castings, primitiveTypeChecks, body) ::=<<
+<modifier> function <identifier>(<if(params)><params><endif>) {<if(body)>
+
+    <body; separator="\n">
+
+<else>
+
+
+<endif>}
+>>
+
+primitiveCasting(typeVariableId)::=<<
+<if(!typeVariableId.isNullable)><typeVariableId.variableId> != null or \trigger_error('Argument <typeVariableId.variableId>'s type must be <typeVariableId.type>', \E_RECOVERABLE_ERROR);<endif>
+<typeVariableId.variableId> = (<typeVariableId.type>) <typeVariableId.variableId>;
+>>
+
+casting(typeVariableId)::=<<
+<typeVariableId.variableId> instanceof <typeVariableId.type> or \trigger_error('Argument <typeVariableIdst.variableId>'s type must be <typeVariableId.type>', \E_RECOVERABLE_ERROR);
+>>
+
+primitiveTypeCheck(typeVariableId)::=<<
+<if(!typeVariableId.isNullable)><typeVariableId.variableId> != null && <endif>is_<typeVariableId.type>(<typeVariableId.variableId>) or \trigger_error('Argument <typeVariableId.variableId>'s type must be <typeVariableId.type>', \E_RECOVERABLE_ERROR);
+>>
+
+parameterList(declarations) ::=<<
+<declarations; separator=", ">
+>>
+
+parameter(type,variableId,defaultValue) ::=<<
+<if(type)><type> <endif><variableId><if(defaultValue)> = <defaultValue><endif>
+>>
+
+
