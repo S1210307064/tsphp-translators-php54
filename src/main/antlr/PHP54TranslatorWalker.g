@@ -85,7 +85,7 @@ useDeclaration
 definition
 	:	classDeclaration -> {$classDeclaration.st}
 	//|	interfaceDeclaration ->{$interfaceDeclaration.st}
-	//|	functionDeclaration -> {$functionDeclaration.st}
+	|	functionDeclaration -> {$functionDeclaration.st}
 	|	constDeclarationList ->{$constDeclarationList.st}
 	;
 	
@@ -360,4 +360,20 @@ block returns[List<Object> instructions]
 
 instruction
 	:	VariableId
+	;
+	
+functionDeclaration
+	:	^('function' 
+			FUNCTION_MODIFIER
+			^(TYPE typeModifier returnType)
+			Identifier
+			formalParameters
+			block
+		)	
+		-> method(
+			modifier={null},
+			identifier={$Identifier},
+			params={$formalParameters.st},
+			body={$block.instructions}
+		)
 	;

@@ -57,7 +57,7 @@ abstractMethod(modifier, identifier, params, primitiveCastings, castings, primit
 >>
 
 method(modifier, identifier, params, primitiveCastings, castings, primitiveTypeChecks, body) ::=<<
-<modifier> function <identifier>(<if(params)><params><endif>) {<if(body)>
+<if(modifier)><modifier> <endif>function <identifier>(<if(params)><params><endif>) {<if(body)>
 
     <body; separator="\n">
 
