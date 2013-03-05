@@ -130,7 +130,7 @@ classBodyDefinition
 	:	constDeclarationList -> {$constDeclarationList.st}
 	|	classMemberDeclaration	-> {$classMemberDeclaration.st}
 	//|	abstractConstructDestructDeclaration -> {$abstractConstructDestructDeclaration.st}
-	//|	constructDestructDeclaration -> {$constructDestructDeclaration.st}
+	|	constructDeclaration -> {$constructDeclaration.st}
 	|	abstractMethodDeclaration -> {$abstractMethodDeclaration.st}
 	|	methodDeclaration -> {$methodDeclaration.st}
 	;
@@ -212,17 +212,32 @@ primitiveTypesWithoutArray
 	|	TypeObject -> {%{$TypeObject.text}}
 	;
 
+constructDeclaration
+	:	^(identifier='__construct' 
+			^(METHOD_MODIFIER methodModifier)
+			^(TYPE typeModifier returnType)
+			formalParameters
+			block
+		)	
+		-> method(
+			modifier={$methodModifier.st},
+			identifier={$identifier},
+			params={$formalParameters.st},
+			body={$block.instructions}
+		)
+	;
+
 abstractMethodDeclaration
 	:	^(METHOD_DECLARATION
 			^(METHOD_MODIFIER abstractMethodModifier)
 			^(TYPE typeModifier returnType)
-			Identifier
+			(identfier=Identifier|identfier=Destruct)
 			formalParameters
 			BLOCK
 		)
 		-> abstractMethod(
 			modifier={$abstractMethodModifier.st},
-			identifier={$Identifier},
+			identifier={$identfier},
 			params={$formalParameters.st}
 		)
 	;
@@ -242,13 +257,13 @@ methodDeclaration
 	:	^(METHOD_DECLARATION
 			^(METHOD_MODIFIER methodModifier)
 			^(TYPE typeModifier returnType)
-			Identifier
+			(identfier=Identifier|identfier=Destruct)
 			formalParameters
 			block
 		)
 		-> method(
 			modifier={$methodModifier.st},
-			identifier={$Identifier},
+			identifier={$identfier},
 			params={$formalParameters.st},
 			body={$block.instructions}
 		)
