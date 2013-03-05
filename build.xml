@@ -135,7 +135,7 @@
             <arg path="${antlr}"/>
             <arg value="-o"/>
             <arg path="${antlr.copyLocation}"/>
-            <arg path="${antlr}/PHP54Translator.g"/>
+            <arg path="${antlr}/PHP54TranslatorWalker.g"/>
             <classpath>
                 <path refid="libset" />
             </classpath>

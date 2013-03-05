@@ -25,7 +25,8 @@ import ch.tutteli.tsphp.parser.antlr.ANTLRNoCaseStringStream;
 import ch.tutteli.tsphp.parser.antlr.TSPHPErrorReportingLexer;
 import ch.tutteli.tsphp.parser.antlr.TSPHPErrorReportingParser;
 import ch.tutteli.tsphp.parser.antlr.TSPHPParser;
-import ch.tutteli.tsphp.translators.php54.antlr.PHP54Translator;
+import ch.tutteli.tsphp.translators.php54.PHP54Translator;
+import ch.tutteli.tsphp.translators.php54.antlr.PHP54TranslatorWalker;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -52,7 +53,7 @@ public abstract class ATest
     protected String expectedResult;
     protected ITSPHPAst ast;
     protected CommonTreeNodeStream commonTreeNodeStream;
-    protected PHP54Translator translator;
+    protected PHP54TranslatorWalker translator;
     protected TreeRuleReturnScope result;
 
     public ATest(String theTestString, String theExpectedResult) {
@@ -89,7 +90,7 @@ public abstract class ATest
         //  CREATE TREE NODE STREAM FOR TREE PARSERS
         CommonTreeNodeStream nodes = new CommonTreeNodeStream(ast);
         nodes.setTokenStream(parser.getTokenStream());        // where to find tokens
-        translator = new PHP54Translator(nodes);
+        translator = new PHP54TranslatorWalker(nodes);
         translator.setTemplateLib(templates);
 
         run();

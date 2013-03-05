@@ -14,7 +14,7 @@
  * limitations under the License.
  * 
  */
-tree grammar PHP54Translator;
+tree grammar PHP54TranslatorWalker;
 
 options {
 	tokenVocab = TSPHP;
