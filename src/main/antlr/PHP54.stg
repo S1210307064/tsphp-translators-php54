@@ -52,6 +52,10 @@ variableDeclarationList(modifier,identifiers) ::=<<
 <if(modifier)><modifier> <endif><identifiers; separator=", ">;
 >>
 
+abstractMethod(modifier, identifier, params, primitiveCastings, castings, primitiveTypeChecks, body) ::=<<
+<modifier> function <identifier>(<if(params)><params><endif>);
+>>
+
 method(modifier, identifier, params, primitiveCastings, castings, primitiveTypeChecks, body) ::=<<
 <modifier> function <identifier>(<if(params)><params><endif>) {<if(body)>
 

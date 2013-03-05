@@ -66,10 +66,7 @@ public class MethodTest extends ATest
         collection.addAll(ParameterListHelper.getTestStrings(
                 "class a {function void set", "{}}",
                 "class a {\n    public function set"," {\n    }\n}"));
-//        collection.addAll(ParameterListHelper.getTestStringsForAbstract(
-//                "class a {abstract function void set", "}",
-//                "class a {\n    abstract public function set","\n}"));
-
+       
         return collection;
 
     }

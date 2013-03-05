@@ -124,7 +124,7 @@
 
     <target name="copyAntlr" depends="clean" description="copy antlr generated classes to src/java folder">
         <copy todir="${antlr.copyLocation}">
-            <fileset dir="${antlr.output}" includes="PHP54Translator.java"/>
+            <fileset dir="${antlr.output}" includes="PHP54TranslatorWalker.java"/>
         </copy>
     </target>
     

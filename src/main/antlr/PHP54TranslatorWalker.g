@@ -129,9 +129,9 @@ classBody
 classBodyDefinition
 	:	constDeclarationList -> {$constDeclarationList.st}
 	|	classMemberDeclaration	-> {$classMemberDeclaration.st}
-	//	|	abstractConstructDestructDeclaration -> {$abstractConstructDestructDeclaration.st}
+	//|	abstractConstructDestructDeclaration -> {$abstractConstructDestructDeclaration.st}
 	//|	constructDestructDeclaration -> {$constructDestructDeclaration.st}
-	//|	abstractMethodDeclaration -> {$abstractMethodDeclaration.st}
+	|	abstractMethodDeclaration -> {$abstractMethodDeclaration.st}
 	|	methodDeclaration -> {$methodDeclaration.st}
 	;
 	
@@ -210,6 +210,32 @@ primitiveTypesWithoutArray
 	:	scalarTypes -> {$scalarTypes.st}
 	|	TypeResource -> {%{$TypeResource.text}}
 	|	TypeObject -> {%{$TypeObject.text}}
+	;
+
+abstractMethodDeclaration
+	:	^(METHOD_DECLARATION
+			^(METHOD_MODIFIER abstractMethodModifier)
+			^(TYPE typeModifier returnType)
+			Identifier
+			formalParameters
+			BLOCK
+		)
+		-> abstractMethod(
+			modifier={$abstractMethodModifier.st},
+			identifier={$Identifier},
+			params={$formalParameters.st}
+		)
+	;
+	
+abstractMethodModifier
+	:	(	list+=abstractToken list+=accessModifier 
+		|	list+=accessModifier list+=abstractToken
+		)
+		-> modifier(modifiers={$list})
+	;
+
+abstractToken
+	:	Abstract -> {%{$Abstract.text}}
 	;
 
 methodDeclaration
