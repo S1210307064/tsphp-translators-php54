@@ -33,12 +33,12 @@ import org.junit.runners.Parameterized;
  * @author Robert Stoll <rstoll@tutteli.ch>
  */
 @RunWith(Parameterized.class)
-public class ConstructDestructTest extends ATest
+public class AbstractConstructDestructTest extends ATest
 {
 
     private static List<Object[]> collection;
 
-    public ConstructDestructTest(String testString, String expectedResult) {
+    public AbstractConstructDestructTest(String testString, String expectedResult) {
         super(testString, expectedResult);
     }
 
@@ -55,8 +55,8 @@ public class ConstructDestructTest extends ATest
     
         //parameters
         collection.addAll(ParameterListHelper.getTestStrings(
-                "class a {function __construct", "{}}",
-                "class a {\n    public function __construct", " {\n    }\n}"));
+                "class a {abstract function __construct", ";}",
+                "class a {\n    abstract public function __construct", ";\n}"));
     
         return collection;
 
@@ -64,32 +64,22 @@ public class ConstructDestructTest extends ATest
 
     private static void addModifiers() {
         String[][] variations = new String[][]{
-            {"", "public"},
-            //
-            {"private", "private"},
-            {"private final", "private final"},
-            //
-            {"protected", "protected"},
-            {"protected final", "protected final"},
-            //
-            {"public", "public"},
-            {"public final", "public final"},
-            //
-            {"final", "final public"},
-            {"final private", "final private"},
-            {"final protected", "final protected"},
-            {"final public", "final public"}
+            {"abstract", "abstract public"},
+            {"abstract protected", "abstract protected"},
+            {"abstract public", "abstract public"},
+            {"protected abstract", "protected abstract"},
+            {"public abstract", "public abstract"}
         };
 
 
         for (String[] variation : variations) {
             collection.add(new Object[]{
-                        "class a{" + variation[0] + " function __construct(){}}",
-                        "class a {\n    " + variation[1] + " function __construct() {\n    }\n}"
+                        "class a{" + variation[0] + " function __construct();}",
+                        "class a {\n    " + variation[1] + " function __construct();\n}"
                     });
             collection.add(new Object[]{
-                        "class a{" + variation[0] + " function __destruct(){}}",
-                        "class a {\n    " + variation[1] + " function __destruct() {\n    }\n}"
+                        "class a{" + variation[0] + " function __destruct();}",
+                        "class a {\n    " + variation[1] + " function __destruct();\n}"
                     });
         }
     }

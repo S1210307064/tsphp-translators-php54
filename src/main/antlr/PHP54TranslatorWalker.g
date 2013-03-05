@@ -129,7 +129,7 @@ classBody
 classBodyDefinition
 	:	constDeclarationList -> {$constDeclarationList.st}
 	|	classMemberDeclaration	-> {$classMemberDeclaration.st}
-	//|	abstractConstructDestructDeclaration -> {$abstractConstructDestructDeclaration.st}
+	|	abstractConstructDeclaration -> {$abstractConstructDeclaration.st}
 	|	constructDeclaration -> {$constructDeclaration.st}
 	|	abstractMethodDeclaration -> {$abstractMethodDeclaration.st}
 	|	methodDeclaration -> {$methodDeclaration.st}
@@ -211,7 +211,22 @@ primitiveTypesWithoutArray
 	|	TypeResource -> {%{$TypeResource.text}}
 	|	TypeObject -> {%{$TypeObject.text}}
 	;
-
+	
+abstractConstructDeclaration
+	:	^(identifier='__construct' 
+			^(METHOD_MODIFIER abstractMethodModifier)
+			^(TYPE typeModifier returnType)
+			formalParameters
+			block
+		)	
+		-> abstractMethod(
+			modifier={$abstractMethodModifier.st},
+			identifier={$identifier},
+			params={$formalParameters.st},
+			body={$block.instructions}
+		)
+	;
+	
 constructDeclaration
 	:	^(identifier='__construct' 
 			^(METHOD_MODIFIER methodModifier)
