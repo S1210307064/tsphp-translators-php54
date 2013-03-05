@@ -84,7 +84,7 @@ useDeclaration
 
 definition
 	:	classDeclaration -> {$classDeclaration.st}
-	//|	interfaceDeclaration ->{$interfaceDeclaration.st}
+	|	interfaceDeclaration ->{$interfaceDeclaration.st}
 	|	functionDeclaration -> {$functionDeclaration.st}
 	|	constDeclarationList ->{$constDeclarationList.st}
 	;
@@ -360,6 +360,31 @@ block returns[List<Object> instructions]
 
 instruction
 	:	VariableId
+	;
+	
+interfaceDeclaration
+	:	^('interface' 
+			^(CLASS_MODIFIER Abstract)
+			Identifier 
+			extendsDeclaration
+			interfaceBody
+		)
+		-> interface(
+			identifier={$Identifier}, 
+			ext={$extendsDeclaration.st},
+			body={$interfaceBody.st}
+		)
+	;
+	
+interfaceBody
+	:	^(INTERFACE_BODY def+=interfaceBodyDefinition*) -> body(statements={$def})
+	|	INTERFACE_BODY -> body(statements={null})
+	;
+
+interfaceBodyDefinition
+	:	constDeclarationList -> {$constDeclarationList.st}
+	//|	interfaceMethodDeclaration
+	//|	interfaceConstruct
 	;
 	
 functionDeclaration

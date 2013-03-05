@@ -46,7 +46,7 @@ public class ClassTest extends ATest
     @Parameterized.Parameters
     public static Collection<Object[]> testStrings() {
         return Arrays.asList(new Object[][]{
-//                    {"class a{};", "class a{}"},
+                    {"class a{};", "class a {}"},
                     {"class a extends b{};", "class a extends b {}"},
                     {"class a extends b\\c{};", "class a extends b\\c {}"},
                     {"class a extends b\\c\\d{};", "class a extends b\\c\\d {}"},
