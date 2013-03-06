@@ -377,8 +377,11 @@ instruction
 	
 expression
 options {backtrack=true;}
-	:   	primitiveAtomWithConstant -> {$primitiveAtomWithConstant.st}
-	|	VariableId -> {%{$VariableId.text}}
+	:   	primitiveAtomWithConstant 			-> {$primitiveAtomWithConstant.st}
+	|	^(TypeArray keyValuePairs+=arrayKeyValue*)	-> array(content ={$keyValuePairs})
+	|	VariableId 					-> {%{$VariableId.text}}
+
+	
     	//|	^(TypeArray .*)		{$type = symbolTable.getArrayTypeSymbol();}
     	//|  	symbol			{$type = $symbol.type;}
 	//|	unaryOperator 		{$type = $unaryOperator.type;}
@@ -396,6 +399,11 @@ primitiveAtomWithConstant
 	|	String
 	|	Null
 	|	CONSTANT
+	;
+
+arrayKeyValue
+	:	^('=>' key=expression value=expression) -> keyValue(key={$key.st}, value={$value.st})
+	|	expression -> {$expression.st}
 	;
 	
 interfaceDeclaration

@@ -83,6 +83,12 @@ expression(expression) ::= <<
 <if(expression)><expression>;<endif>
 >>
 
+array(content) ::= <<
+[<content; separator=", ">]
+>>
+keyValue(key, value) ::= <<
+<key> => <value>
+>>
 
 return(expression) ::= <<
 return<if(expression)> <expression><endif>;

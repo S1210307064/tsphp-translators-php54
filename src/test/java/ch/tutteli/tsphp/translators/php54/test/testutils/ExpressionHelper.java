@@ -155,7 +155,7 @@ public class ExpressionHelper
                     {"2.123","2.123"},
                     {"'a'","'a'"},
                     {"\"asdf\"","\"asdf\""},
-//                    {"[1,2,'a'=>3]","[1, 2, 'a' => 3]"},
+                    {"[1,2,'a'=>3]","[1, 2, 'a' => 3]"},
 //                    {"(int) clone $a + $b","(int) clone $a + $b"},
 //                    {"(-$a + $b) * $c","(-$a + $b) * $c"},
 //                    {"!($a instanceof Type) || $a < $b+$c == ~(1 | 3 & 12)","!($a instanceof Type) || $a < $b+$c == ~(1 | 3 & 12)"}
