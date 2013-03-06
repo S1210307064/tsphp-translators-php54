@@ -587,7 +587,7 @@ actualParameters returns[List<Object> parameters]
 	
 postFixCall
 	:	(	functionCall -> {$functionCall.st}
-		//|	methodCall -> methodCall
+		|	methodCall -> {$methodCall.st}
 		//|	selfOrParentMethodCall -> selfOrParentMethodCall
 		//|	staticMethodCall -> staticMethodCall
 		)
@@ -600,4 +600,9 @@ postFixCall
 functionCall
 	:	^(FUNCTION_CALL	identifier=TYPE_NAME actualParameters)
 		-> functionCall(identifier={$identifier.text}, parameters={$actualParameters.parameters})
+	;
+	
+methodCall
+	:	^(METHOD_CALL (callee=This|callee=VariableId) identifier=Identifier actualParameters)
+		-> methodCall(callee={$callee.text}, identifier={$identifier.text}, parameters={$actualParameters.parameters})
 	;

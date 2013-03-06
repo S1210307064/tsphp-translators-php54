@@ -121,6 +121,10 @@ functionCall(identifier, parameters) ::= <<
 <identifier>(<parameters; separator=", ">)
 >>
 
+methodCall(callee, identifier, parameters) ::= <<
+<callee>-><identifier>(<parameters; separator=", ">)
+>>
+
 keyValue(key, value) ::= <<
 <key> => <value>
 >>
