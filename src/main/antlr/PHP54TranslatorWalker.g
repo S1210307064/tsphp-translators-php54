@@ -164,9 +164,9 @@ classMemberDeclaration
 variableDeclarationList
 	:	^(VARIABLE_DECLARATION_LIST 
 			^(TYPE typeModifier allTypes) 
-			identifiers+=variableDeclaration+
+			variables+=variableDeclaration[$typeModifier.st]+
 		)
-		-> variableDeclarationList(modifier={$typeModifier.st},identifiers={$identifiers})
+		-> variableDeclarationList(variables={$variables})
 	;
 	
 typeModifier returns[boolean isCast, boolean isNullable]
@@ -190,9 +190,9 @@ accessModifier
 	|	Public -> {%{$Public.text}}
 	;
 	
-variableDeclaration
-	:	^(VariableId v=Int) -> assign(id={$VariableId},value={v})
-	|	VariableId -> {%{$VariableId.text}}
+variableDeclaration[StringTemplate modifier]
+	:	^(VariableId v=expression) -> variableDeclaration(modifier={modifier}, variableId={$VariableId.text}, initValue={v})
+	|	VariableId -> variableDeclaration(modifier={modifier}, variableId={$VariableId.text}, initValue={v})
 	;
 
 allTypes
@@ -431,8 +431,7 @@ functionDeclaration
 
 
 instruction
-	:	
-	//|	localVariableDeclaration ';'!
+	:	variableDeclarationList -> {$variableDeclarationList.st}
 	//|	ifCondition
 	//|	switchCondition
 	//|	forLoop
@@ -440,7 +439,7 @@ instruction
 	//|	whileLoop
 	//|	doWhileLoop
 	//|	tryCatch
-		^(EXPRESSION expression?) -> expression(expression={$expression.st})
+	|	^(EXPRESSION expression?) -> expression(expression={$expression.st})
 	|	^('return' expression?) -> return(expression = {$expression.st})
 	|	^('throw' expression) -> throw(expression = {$expression.st})
 	|	^('echo' exprs+=expression+) -> echo(expressions = {$exprs})

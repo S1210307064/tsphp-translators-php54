@@ -48,8 +48,12 @@ assign(id,value) ::=<<
 <id> = <value>
 >>
 
-variableDeclarationList(modifier,identifiers) ::=<<
-<if(modifier)><modifier> <endif><identifiers; separator=", ">;
+variableDeclarationList(variables) ::=<<
+<variables; separator="\n">
+>>
+
+variableDeclaration(modifier, variableId, initValue) ::= <<
+<if(modifier)><modifier> <endif><variableId><if(initValue)> = <initValue><endif>;
 >>
 
 abstractMethod(modifier, identifier, params, primitiveCastings, castings, primitiveTypeChecks, body) ::=<<

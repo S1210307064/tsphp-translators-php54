@@ -17,6 +17,7 @@
 package ch.tutteli.tsphp.translators.php54.test;
 
 import ch.tutteli.tsphp.translators.php54.test.testutils.ATranslatorTest;
+import ch.tutteli.tsphp.translators.php54.test.testutils.ExpressionHelper;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -32,10 +33,10 @@ import org.junit.runners.Parameterized;
  * @author Robert Stoll <rstoll@tutteli.ch>
  */
 @RunWith(Parameterized.class)
-public class ClassMemberTest extends ATranslatorTest
+public class VariableDeclarationTest extends ATranslatorTest
 {
 
-    public ClassMemberTest(String testString, String expectedResult) {
+    public VariableDeclarationTest(String testString, String expectedResult) {
         super(testString, expectedResult);
     }
 
@@ -47,37 +48,17 @@ public class ClassMemberTest extends ATranslatorTest
     @Parameterized.Parameters
     public static Collection<Object[]> testStrings() {
         List<Object[]> collection = new ArrayList<>();
-        String[][] variations = new String[][]{
-            {"", "public"},
-            {"private", "private"},
-            {"private static", "private static"},
-            {"protected", "protected"},
-            {"protected static", "protected static"},
-            {"public", "public"},
-            {"public static", "public static"},
-            {"static", "static public"},
-            {"static private", "static private"},
-            {"static protected", "static protected"},
-            {"static public", "static public"}
-        };
-        for (String[] variation : variations) {
+        collection.add(new Object[]{"int $a;", "$a;"});
+        collection.add(new Object[]{"int $a, $b=1;", "$a;\n$b = 1;"});
+        collection.add(new Object[]{"int $a=60*60, $b;", "$a = (60 * 60);\n$b;"});
+
+        List<String[]> expressions = ExpressionHelper.getExpressions();
+        for (String[] expression : expressions) {
             collection.add(new Object[]{
-                        "class a{" + variation[0] + " int $a=1;}",
-                        "class a {\n    " + variation[1] + " $a = 1;\n}"
-                    });
-            collection.add(new Object[]{
-                        "class a{" + variation[0] + " int $a;}",
-                        "class a {\n    " + variation[1] + " $a;\n}"
-                    });
-            collection.add(new Object[]{
-                        "class a{" + variation[0] + " int $a,$b=1;}",
-                        "class a {\n    " + variation[1] + " $a;\n    "+variation[1]+" $b = 1;\n}"
+                        "int $a=" + expression[0] + ";",
+                        "$a = " + expression[1] + ";"
                     });
         }
-        collection.add(new Object[]{
-                        "class a{private int $a,$b,$c=1;}",
-                        "class a {\n    private $a;\n    private $b;\n    private $c = 1;\n}"
-                    });
         return collection;
     }
 }
