@@ -83,6 +83,10 @@ echo(expressions) ::= <<
 echo <expressions; separator=", ">;
 >>
 
+throw(expression) ::= <<
+throw <expression>;
+>>
+
 primitiveCasting(typeVariableId)::=<<
 <if(!typeVariableId.isNullable)><typeVariableId.variableId> != null or \trigger_error('Argument <typeVariableId.variableId>'s type must be <typeVariableId.type>', \E_RECOVERABLE_ERROR);<endif>
 <typeVariableId.variableId> = (<typeVariableId.type>) <typeVariableId.variableId>;

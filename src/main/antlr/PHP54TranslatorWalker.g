@@ -371,8 +371,8 @@ instruction
 	//|	tryCatch
 	//|	expression ';' -> ^(EXPRESSION[$expression.start,"expr"] expression)
 	//|	'return'^ expression? ';'!
-	//|	'throw'^ expression ';'!
-		^('echo' exprs+=expression+) -> echo(expressions = {$exprs})
+		^('throw' expression) -> throw(expression = {$expression.st})
+	|	^('echo' exprs+=expression+) -> echo(expressions = {$exprs})
 	|	EXPRESSION -> {%{""}} // empty block or semicolon can be omitted 
 	;
 	
