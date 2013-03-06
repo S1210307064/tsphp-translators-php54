@@ -106,7 +106,7 @@ ternaryOperator(cond, ifCase, elseCase) ::= <<
 >>
 
 instanceof(expression, type) ::= <<
-<expression> instanceof <type>
+(<expression> instanceof <type>)
 >>
 
 new(type, parameters) ::= <<
@@ -115,6 +115,10 @@ new <type>(<parameters; separator=", ">)
 
 clone(expression) ::= <<
 clone <expression>
+>>
+
+functionCall(identifier, parameters) ::= <<
+<identifier>(<parameters; separator=", ">)
 >>
 
 keyValue(key, value) ::= <<

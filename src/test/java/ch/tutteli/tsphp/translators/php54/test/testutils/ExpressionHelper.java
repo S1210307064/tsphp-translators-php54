@@ -119,8 +119,8 @@ public class ExpressionHelper
                     {"!$a", "!$a"},
                     {"!!$a", "!!$a"},
                     {"!!! $a", "!!!$a"},
-                    {"$a instanceof MyClass", "$a instanceof MyClass"},
-                    {"$a instanceof $b", "$a instanceof $b"},
+                    {"$a instanceof MyClass", "($a instanceof MyClass)"},
+                    {"$a instanceof $b", "($a instanceof $b)"},
                     {"(Type) $a", "($a instanceof Type ? $a : \\trigger_error('Cast failed, the evaluation type of $a must be Type', \\E_RECOVERABLE_ERROR))"},
                     {"(int) $a", "(int) $a"},
                     {"~$a", "~$a"},
@@ -136,14 +136,10 @@ public class ExpressionHelper
                     {"+$a + $b", "($a + $b)"},
                     {"-$a - $b", "(-$a - $b)"},
                     {"clone $a", "clone $a"},
-//                    {"clone $a->a", "clone $a->a"},
+                    //                    {"clone $a->a", "clone $a->a"},
                     {"new Type", "new Type()"},
                     {"new Type()", "new Type()"},
                     {"new Type(1,$a,'hello')", "new Type(1, $a, 'hello')"},
-                    //                    {"foo()","foo()"},
-                    //                    {"\\foo(1,1+2,3)","\\foo(1, 1 + 2, 3)"},
-                    //                    {"$a->foo()","$a->foo()"},
-                    //                    {"$a->foo(true || false,123*9)","$a->foo(true || false, 123 * 9)"},
                     //                    {"exit","exit"},
                     //                    {"exit(1)","exit(1)"},
                     {"($a)", "$a"},
@@ -153,8 +149,12 @@ public class ExpressionHelper
                     {"--$a", "--$a"},
                     {"$a", "$a"},
                     //                    {"$a->a","$a->a"},
-                    //                    {"foo()","foo()"},
-                    //                    {"\\a\\foo()","\\a\\foo()"},
+                    //                    {"$a->foo()","$a->foo()"},
+                    //                    {"$a->foo(true || false,123*9)","$a->foo(true || false, 123 * 9)"},
+                    {"foo()", "foo()"},
+                    {"\\foo(1,1+2,3)", "\\foo(1, (1 + 2), 3)"},
+                    {"\\a\\foo()", "\\a\\foo()"},
+                    {"foo()", "foo()"},
                     //                    {"self::$a","self::$a"},
                     {"self::a", "self::a"},
                     {"parent::a", "parent::a"},
@@ -169,8 +169,12 @@ public class ExpressionHelper
                     {"'a'", "'a'"},
                     {"\"asdf\"", "\"asdf\""},
                     {"[1,2,'a'=>3]", "[1, 2, 'a' => 3]"},
-                    //                    {"(int) clone $a + $b","(int) clone $a + $b"},
-                    {"(-$a + $b) * $c", "((-$a + $b) * $c)"}, //                    {"!($a instanceof Type) || $a < $b+$c == ~(1 | 3 & 12)","!($a instanceof Type) || $a < $b+$c == ~(1 | 3 & 12)"}
+                    {"(int) clone $a + $b", "((int) clone $a + $b)"},
+                    {"(-$a + $b) * $c", "((-$a + $b) * $c)"},
+                    {
+                        "!($a instanceof Type) || $a < $b+$c == ~(1 | 3 & 12)",
+                        "(!($a instanceof Type) || (($a < ($b + $c)) == ~(1 | (3 & 12))))"
+                    }
                 };
     }
 }

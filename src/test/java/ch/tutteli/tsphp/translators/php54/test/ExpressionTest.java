@@ -57,8 +57,6 @@ public class ExpressionTest extends ATranslatorTest
                         expression[1] + ";"
                     });
         }
-
         return collection;
-
     }
 }
