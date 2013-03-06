@@ -157,7 +157,7 @@ public class ExpressionHelper
                     {"foo()", "foo()"},
                     {"self::foo()", "self::foo()"},
                     {"parent::foo()", "parent::foo()"},
-                    //                    {"Foo::foo()","Foo::foo()"},
+                                        {"Foo::foo()","Foo::foo()"},
                     //                    {"self::$a","self::$a"},
                     {"self::a", "self::a"},
                     {"parent::a", "parent::a"},

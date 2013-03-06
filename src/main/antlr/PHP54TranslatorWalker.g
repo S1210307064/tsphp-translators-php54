@@ -589,7 +589,7 @@ postFixCall
 	:	(	functionCall -> {$functionCall.st}
 		|	methodCall -> {$methodCall.st}
 		|	methodCallSelfOrParent -> {$methodCallSelfOrParent.st}
-		//|	staticMethodCall -> staticMethodCall
+		|	methodCallStatic ->{$methodCallStatic.st}
 		)
 		//(	memberAccess = '->' Identifier -> ^(CLASS_MEMBER_ACCESS[$memberAccess,"memAccess"] $postFixCall Identifier)
 		//|	arrayAccess = '[' expression ']' -> ^(ARRAY_ACCESS[$arrayAccess,"arrAccess"] $postFixCall expression)
@@ -612,3 +612,9 @@ methodCallSelfOrParent
 		-> methodCallStatic(callee={$callee.text}, identifier={$identifier.text}, parameters={$actualParameters.parameters})
 	;
 
+methodCallStatic
+	:	^(METHOD_CALL_STATIC TYPE_NAME identifier=Identifier actualParameters)	
+		-> methodCallStatic(callee={$TYPE_NAME.text}, identifier={$identifier.text}, parameters={$actualParameters.parameters})
+	;
+	
+	
