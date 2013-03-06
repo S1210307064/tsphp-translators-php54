@@ -79,6 +79,11 @@ interface(modifier, identifier, ext, impl, body) ::= <<
 interface <identifier><if(ext)> <ext><endif> <body>
 >>
 
+expression(expression) ::= <<
+<if(expression)><expression>;<endif>
+>>
+
+
 return(expression) ::= <<
 return<if(expression)> <expression><endif>;
 >>

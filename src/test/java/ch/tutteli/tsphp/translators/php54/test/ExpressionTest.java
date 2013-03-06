@@ -33,14 +33,12 @@ import org.junit.runners.Parameterized;
  * @author Robert Stoll <rstoll@tutteli.ch>
  */
 @RunWith(Parameterized.class)
-public class EchoTest extends ATranslatorTest
+public class ExpressionTest extends ATranslatorTest
 {
 
     private static List<Object[]> collection;
 
-   
-
-    public EchoTest(String testString, String expectedResult) {
+    public ExpressionTest(String testString, String expectedResult) {
         super(testString, expectedResult);
     }
 
@@ -53,19 +51,14 @@ public class EchoTest extends ATranslatorTest
     public static Collection<Object[]> testStrings() {
         collection = new ArrayList<>();
         List<String[]> expressions = ExpressionHelper.getExpressions();
-        for(String[] expression:expressions){
-               collection.add(new Object[]{
-                    "echo "+expression[0]+";",
-                    "echo "+expression[1]+";"
-                });
-                collection.add(new Object[]{
-                    "echo "+expression[0]+","+expression[0]+";",
-                    "echo "+expression[1]+", "+expression[1]+";"
-                });
+        for (String[] expression : expressions) {
+            collection.add(new Object[]{
+                        expression[0] + ";",
+                        expression[1] + ";"
+                    });
         }
-       
+
         return collection;
 
     }
-
 }

@@ -51,12 +51,12 @@ compilationUnit
 	;
 	
 namespace
+@init{String namespaceName = null;}
 	:	^('namespace' (name=TYPE_NAME|DEFAULT_NAMESPACE) namespaceBody)
 		{
-			String namespaceName = null; 
-		 	if(name!=null){
-		 		namespaceName=name.getText().substring(1,name.getText().length()-1);
-	 		}
+		    if(name!=null){
+		        namespaceName=name.getText().substring(1,name.getText().length()-1);
+	 	    }
 	  	}
 
 		 -> namespace(name={namespaceName},body={$namespaceBody.st})
@@ -331,10 +331,9 @@ paramDeclaration
 			parameterNormalOrOptional
 		)
 		{
-		    String variableId = $parameterNormalOrOptional.variableId;		    
 		    defaultValue =  $typeModifier.isNullable && typeName!=null ? "null" : $parameterNormalOrOptional.defaultValue;
 		}
-		-> parameter(type={$typeName.text}, variableId={variableId}, defaultValue={defaultValue})
+		-> parameter(type={$typeName.text}, variableId={$parameterNormalOrOptional.variableId}, defaultValue={defaultValue})
 	;
 arrayType
 	:	TypeArray -> {%{$TypeArray.text}}
@@ -369,17 +368,35 @@ instruction
 	//|	whileLoop
 	//|	doWhileLoop
 	//|	tryCatch
-	//|	expression ';' -> ^(EXPRESSION[$expression.start,"expr"] expression)
-		^('return' expression?) -> return(expression = {$expression.st})
+		^(EXPRESSION expression?) -> expression(expression={$expression.st})
+	|	^('return' expression?) -> return(expression = {$expression.st})
 	|	^('throw' expression) -> throw(expression = {$expression.st})
 	|	^('echo' exprs+=expression+) -> echo(expressions = {$exprs})
-	|	EXPRESSION -> {%{""}} // empty block or semicolon can be omitted 
+
 	;
 	
 expression
-	:	VariableId -> {%{$VariableId.text}}
+options {backtrack=true;}
+	:   	primitiveAtomWithConstant -> {$primitiveAtomWithConstant.st}
+	|	VariableId -> {%{$VariableId.text}}
+    	//|	^(TypeArray .*)		{$type = symbolTable.getArrayTypeSymbol();}
+    	//|  	symbol			{$type = $symbol.type;}
+	//|	unaryOperator 		{$type = $unaryOperator.type;}
+	//|	binaryOperator 		{$type = $binaryOperator.type;}
+ 	//|	^('@' expr=expression)	{$type = $expr.start.getEvalType();}
+      	//|	equalityOperator	{$type = $equalityOperator.type;}
+      	//|	assignOperator		{$type = $assignOperator.type;}
+    	;
+    	
+primitiveAtomWithConstant
+@after {$st = %{$text};}
+	:	Bool
+	|	Int
+	|	Float
+	|	String
+	|	Null
+	|	CONSTANT
 	;
-
 	
 interfaceDeclaration
 	:	^('interface' 
