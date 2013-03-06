@@ -432,18 +432,32 @@ functionDeclaration
 
 instruction
 	:	variableDeclarationList -> {$variableDeclarationList.st}
-	//|	ifCondition
-	//|	switchCondition
-	//|	forLoop
-	//|	foreachLoop
-	//|	whileLoop
-	//|	doWhileLoop
-	//|	tryCatch
+	|	ifCondition 		-> {$ifCondition.st}
+	//|	switchCondition 	-> {$switchCondition.st}
+	//|	forLoop 		-> {$forLoop.st}
+	//|	foreachLoop 		-> {$foreachLoop.st}
+	//|	whileLoop 		-> {$whileLoop.st}
+	//|	doWhileLoop 		-> {$doWhileLoop.st}
+	//|	tryCatch 		-> {$tryCatch.st}
 	|	^(EXPRESSION expression?) -> expression(expression={$expression.st})
 	|	^('return' expression?) -> return(expression = {$expression.st})
 	|	^('throw' expression) -> throw(expression = {$expression.st})
 	|	^('echo' exprs+=expression+) -> echo(expressions = {$exprs})
+	//|	break, continue return
 
+	;
+
+ifCondition
+	:	^('if' 
+			expression 
+			ifBlock=blockConditional
+			elseBlock=blockConditional?
+		)
+		-> if(condition={$expression.st}, ifBlock={$ifBlock.instructions}, elseBlock={$elseBlock.instructions})
+	;
+
+blockConditional returns[List<Object> instructions]
+	:	^(BLOCK_CONDITIONAL instr+=instruction*) {$instructions=$instr;}
 	;
 	
 expression

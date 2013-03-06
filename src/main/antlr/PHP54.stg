@@ -83,6 +83,14 @@ interface(modifier, identifier, ext, impl, body) ::= <<
 interface <identifier><if(ext)> <ext><endif> <body>
 >>
 
+if(condition, ifBlock, elseBlock) ::= <<
+if (<condition>) {
+    <ifBlock; separator="\n">
+}<if(elseBlock)> else {
+    <elseBlock; separator="\n">
+}<endif>
+>>
+
 expression(expression) ::= <<
 <if(expression)><expression>;<endif>
 >>
