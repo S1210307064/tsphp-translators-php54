@@ -54,22 +54,22 @@ public class IfTest extends ATranslatorTest
         for (Object[] expression : expressions) {
             collection.add(new Object[]{
                         "if(" + expression[0] + ") $a=1; else $a+=1;",
-                        "if (" + expression[1] + ") {\n    ($a = 1);\n} else {\n    ($a += 1);\n}"
+                        "if (" + expression[1] + ") {\n    $a = 1;\n} else {\n    $a += 1;\n}"
                     });
         }
         collection.addAll(Arrays.asList(new Object[][]{
                     {
                         "if(true) $a=1; else if(false) $b=1; else $c=2;",
-                        "if (true) {\n    ($a = 1);\n} else {\n    "
-                            + "if (false) {\n        ($b = 1);\n    } else {\n        ($c = 2);\n    }"
+                        "if (true) {\n    $a = 1;\n} else {\n    "
+                            + "if (false) {\n        $b = 1;\n    } else {\n        $c = 2;\n    }"
                         + "\n}"
                     },
                     {
                         "if(true) $a=1; else if(false) $b=1; else if($a<1) $c=2; else $d*=1;",
-                        "if (true) {\n    ($a = 1);\n} else {\n    "
-                            + "if (false) {\n        ($b = 1);\n    } else {\n        "
-                                + "if (($a < 1)) {\n            ($c = 2);\n        } "
-                                + "else {\n            ($d *= 1);\n        }"
+                        "if (true) {\n    $a = 1;\n} else {\n    "
+                            + "if (false) {\n        $b = 1;\n    } else {\n        "
+                                + "if ($a < 1) {\n            $c = 2;\n        } "
+                                + "else {\n            $d *= 1;\n        }"
                             + "\n    }"
                         + "\n}"
                     },}));

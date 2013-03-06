@@ -85,11 +85,11 @@ public class PostFixTest extends ATranslatorTest
         for (Object[] expression : tmp3) {
             collection.add(new Object[]{expression[0] + ";",expression[1]+";"});
             collection.add(new Object[]{
-                expression[0] + "[$i+$j%2];", expression[1]+"[($i + ($j % 2))];"
+                expression[0] + "[$i+$j%2];", expression[1]+"[$i + $j % 2];"
             });
             collection.add(new Object[]{
                         expression[0] + "->foo($a + $b);",
-                        expression[1] + "->foo(($a + $b));"
+                        expression[1] + "->foo($a + $b);"
                     });
         }
 

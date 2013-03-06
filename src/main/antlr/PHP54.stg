@@ -109,16 +109,16 @@ unaryPostOperator(operator, expression) ::= <<
 
 operator(o) ::= "<o>"
 
-binaryOperator(operator, left, right) ::= <<
-(<left> <operator> <right>)
+binaryOperator(operator, left, right, needParentheses) ::= <<
+<if(needParentheses)>(<endif><left> <operator> <right><if(needParentheses)>)<endif>
 >>
 
-ternaryOperator(cond, ifCase, elseCase) ::= <<
-(<cond> ? <ifCase> : <elseCase>)
+ternaryOperator(cond, ifCase, elseCase, needParentheses) ::= <<
+<if(needParentheses)>(<endif><cond> ? <ifCase> : <elseCase><if(needParentheses)>)<endif>
 >>
 
-instanceof(expression, type) ::= <<
-(<expression> instanceof <type>)
+instanceof(expression, type, needParentheses) ::= <<
+<if(needParentheses)>(<endif><expression> instanceof <type><if(needParentheses)>)<endif>
 >>
 
 new(type, parameters) ::= <<

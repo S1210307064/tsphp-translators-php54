@@ -50,7 +50,7 @@ public class VariableDeclarationTest extends ATranslatorTest
         List<Object[]> collection = new ArrayList<>();
         collection.add(new Object[]{"int $a;", "$a;"});
         collection.add(new Object[]{"int $a, $b=1;", "$a;\n$b = 1;"});
-        collection.add(new Object[]{"int $a=60*60, $b;", "$a = (60 * 60);\n$b;"});
+        collection.add(new Object[]{"int $a=60*60, $b;", "$a = 60 * 60;\n$b;"});
 
         List<String[]> expressions = ExpressionHelper.getExpressions();
         for (String[] expression : expressions) {

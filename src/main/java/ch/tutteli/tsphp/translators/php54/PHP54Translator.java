@@ -36,8 +36,13 @@ public class PHP54Translator implements ITranslator
 
     StringTemplateGroup templateGroup;
     List<Exception> exceptions = new ArrayList<>();
+    IPrecedenceHelper precedenceHelper;
 
     public PHP54Translator() {
+        this(new PrecedenceHelper());
+    }
+
+    public PHP54Translator(IPrecedenceHelper thePrecedenceHelper) {
         FileReader fileReader = null;
         try {
             // LOAD TEMPLATES (via classpath)
@@ -54,11 +59,14 @@ public class PHP54Translator implements ITranslator
                 //no furhter exceptio handling needed
             }
         }
+        precedenceHelper = thePrecedenceHelper;
     }
 
     @Override
     public String translate(TreeNodeStream stream) {
-        ErrorReportingPHP54TranslatorWalker translator = new ErrorReportingPHP54TranslatorWalker(stream);
+        ErrorReportingPHP54TranslatorWalker translator =
+                new ErrorReportingPHP54TranslatorWalker(stream, precedenceHelper);
+        
         translator.setTemplateLib(templateGroup);
 
         String translation = null;

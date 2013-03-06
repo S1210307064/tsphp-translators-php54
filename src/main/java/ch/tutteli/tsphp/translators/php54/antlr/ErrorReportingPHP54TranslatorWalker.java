@@ -17,6 +17,7 @@
 package ch.tutteli.tsphp.translators.php54.antlr;
 
 import ch.tutteli.tsphp.common.IErrorReporter;
+import ch.tutteli.tsphp.translators.php54.IPrecedenceHelper;
 import java.util.ArrayList;
 import java.util.List;
 import org.antlr.runtime.RecognitionException;
@@ -32,12 +33,8 @@ public class ErrorReportingPHP54TranslatorWalker extends PHP54TranslatorWalker i
 
     protected List<Exception> exceptions = new ArrayList<>();
 
-    public ErrorReportingPHP54TranslatorWalker(TreeNodeStream input) {
-        super(input);
-    }
-
-    public ErrorReportingPHP54TranslatorWalker(TreeNodeStream input, RecognizerSharedState state) {
-        super(input, state);
+    public ErrorReportingPHP54TranslatorWalker(TreeNodeStream input, IPrecedenceHelper precedenceHelper) {
+        super(input, precedenceHelper);
     }
 
     @Override

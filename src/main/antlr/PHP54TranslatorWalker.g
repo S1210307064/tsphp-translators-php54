@@ -42,9 +42,18 @@ options {
 package ch.tutteli.tsphp.translators.php54.antlr;
 
 import ch.tutteli.tsphp.common.ITSPHPAst;
+import  ch.tutteli.tsphp.translators.php54.IPrecedenceHelper;
 
 }
 
+@members{
+private IPrecedenceHelper precedenceHelper;
+
+public PHP54TranslatorWalker(TreeNodeStream input, IPrecedenceHelper thePrecedenceHelper) {
+    this(input);
+    precedenceHelper = thePrecedenceHelper;
+}
+}
 
 compilationUnit	
 	:	(n+=namespace) -> file(namespaces={$n})
@@ -503,14 +512,14 @@ staticAccess
  	;
  
 operator
- 	:	^(unaryPreOperator expr=expression) 				-> unaryPreOperator(operator ={$unaryPreOperator.st}, expression = {$expr.st})
-	|	^(unaryPostOperator expr=expression)				-> unaryPostOperator(operator = {$unaryPostOperator.st}, expression = {$expr.st})
-	|	^(binaryOperator left=expression right=expression) 		-> binaryOperator(operator={$binaryOperator.st}, left={$left.st}, right={$right.st})
-	|	^('?' cond=expression ifCase=expression elseCase=expression) 	-> ternaryOperator(cond={$cond.st}, ifCase={$ifCase.st}, elseCase={$elseCase.st})
-	|	castingOperator 						-> {$castingOperator.st}
-	|	^(Instanceof expr=expression (type=TYPE_NAME|type=VariableId))  -> instanceof(expression={$expr.st}, type={$type.text})
-	|	newOperator							-> {$newOperator.st}
-    	|	^('clone' expr=expression)					-> clone(expression={$expr.st})	
+ 	:	^(unaryPreOperator expr=expression) 					-> unaryPreOperator(operator ={$unaryPreOperator.st}, expression = {$expr.st})
+	|	^(unaryPostOperator expr=expression)					-> unaryPostOperator(operator = {$unaryPostOperator.st}, expression = {$expr.st})
+	|	^(binaryOperator left=expression right=expression) 			-> binaryOperator(operator={$binaryOperator.st}, left={$left.st}, right={$right.st}, needParentheses={$binaryOperator.needParentheses})
+	|	^(QuestionMark cond=expression ifCase=expression elseCase=expression) 	-> ternaryOperator(cond={$cond.st}, ifCase={$ifCase.st}, elseCase={$elseCase.st}, needParentheses={precedenceHelper.needParentheses($QuestionMark)})
+	|	castingOperator 							-> {$castingOperator.st}
+	|	^(Instanceof expr=expression (type=TYPE_NAME|type=VariableId))  	-> instanceof(expression={$expr.st}, type={$type.text}, needParentheses={precedenceHelper.needParentheses($Instanceof)})
+	|	newOperator								-> {$newOperator.st}
+    	|	^('clone' expr=expression)						-> clone(expression={$expr.st})	
  	; 	
 
 unaryPreOperator 
@@ -527,8 +536,11 @@ unaryPostOperator
     	|	POST_DECREMENT -> {%{"--"}}
     	;
 
-binaryOperator
-@after {$st = %operator(o={$start.getText()});}
+binaryOperator returns[boolean needParentheses]
+@after {
+    $st = %operator(o={$start.getText()});
+    $needParentheses = precedenceHelper.needParentheses($start);
+}
 	:	'or' 
 	|	'xor' 
 	|	'and' 
@@ -546,28 +558,30 @@ binaryOperator
 	|	'<<=' 
 	|	'>>=' 
 	
-	|	'==' 			
-	|	'!=' 
-	|	'<>' 
-	|	'==='
-	|	'!=='
-	
 	|	'||' 
 	|	'&&' 
 	|	'|' 
 	|	'^' 
 	|	'&' 
 	
+	|	'==' 			
+	|	'!=' 
+	|	'<>' 
+	|	'==='
+	|	'!=='
+	
 	|	'<' 
 	|	'<=' 
 	|	'>' 
 	|	'>=' 
+	
 	|	'<<' 
 	|	'>>' 
 	
 	|	'+' 
 	|	'-' 
 	|	'.' 
+	
 	|	'*' 
 	|	'/' 
 	|	'%' 

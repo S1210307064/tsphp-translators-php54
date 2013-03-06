@@ -25,6 +25,7 @@ import ch.tutteli.tsphp.parser.antlr.ANTLRNoCaseStringStream;
 import ch.tutteli.tsphp.parser.antlr.TSPHPErrorReportingLexer;
 import ch.tutteli.tsphp.parser.antlr.TSPHPErrorReportingParser;
 import ch.tutteli.tsphp.parser.antlr.TSPHPParser;
+import ch.tutteli.tsphp.translators.php54.PrecedenceHelper;
 import ch.tutteli.tsphp.translators.php54.antlr.ErrorReportingPHP54TranslatorWalker;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -88,7 +89,7 @@ public abstract class ATest
         StringTemplateGroup templates = new StringTemplateGroup(fr);
         fr.close();
         
-        translator = new ErrorReportingPHP54TranslatorWalker(commonTreeNodeStream);
+        translator = new ErrorReportingPHP54TranslatorWalker(commonTreeNodeStream, new PrecedenceHelper());
         translator.setTemplateLib(templates);
 
         run();
