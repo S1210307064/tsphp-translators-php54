@@ -452,6 +452,7 @@ options {backtrack=true;}
 	:   	primitiveAtomWithConstant 					-> {$primitiveAtomWithConstant.st}
 	|	^(TypeArray keyValuePairs+=arrayKeyValue*)			-> array(content ={$keyValuePairs})
 	|	VariableId 							-> {%{$VariableId.text}}
+	|	This								-> {%{$This.text}}
 	|	^(CLASS_STATIC_ACCESS staticAccess CONSTANT)    		-> classConstant(accessor={$staticAccess.st}, constant={$CONSTANT.text})
 	|	^(unaryPreOperator expr=expression) 				-> unaryPreOperator(operator ={$unaryPreOperator.st}, expression = {$expr.st})
 	|	^(unaryPostOperator expr=expression)				-> unaryPostOperator(operator = {$unaryPostOperator.st}, expression = {$expr.st})
@@ -610,8 +611,8 @@ methodCallStatic
 	;
 	
 postFixExpression
-	:	^(CLASS_MEMBER_ACCESS expression Identifier) 		-> classMemberAccess(expression={$expression.st}, identifier={$Identifier.text})
-	|	^(ARRAY_ACCESS expr=expression index=expression)	-> arrayAccess(expression={$expr.st}, index={$index.st})
-		//|	^(METHOD_CALL_POSTFIX[$call.start,"mpCall"] $postFixCall call)
+	:	^(CLASS_MEMBER_ACCESS expression Identifier) 			-> classMemberAccess(expression={$expression.st}, identifier={$Identifier.text})
+	|	^(ARRAY_ACCESS expr=expression index=expression)		-> arrayAccess(expression={$expr.st}, index={$index.st})
+	|	^(METHOD_CALL_POSTFIX expression Identifier actualParameters)	-> postFixCall(expression={$expression.st}, identifier={$Identifier.text}, parameters={$actualParameters.parameters})
 	;
 	

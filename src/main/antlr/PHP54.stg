@@ -137,6 +137,10 @@ arrayAccess(expression, identifier) ::= <<
 <expression>[<index>]
 >>
 
+postFixCall(expression, identifier, parameters) ::= <<
+<expression>-><identifier>(<parameters; separator=", ">)
+>>
+
 keyValue(key, value) ::= <<
 <key> => <value>
 >>
