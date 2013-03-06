@@ -449,13 +449,14 @@ instruction
 	
 expression
 options {backtrack=true;}
-	:   	primitiveAtomWithConstant 				-> {$primitiveAtomWithConstant.st}
-	|	^(TypeArray keyValuePairs+=arrayKeyValue*)		-> array(content ={$keyValuePairs})
-	|	VariableId 						-> {%{$VariableId.text}}
-	|	^(CLASS_STATIC_ACCESS staticAccess CONSTANT)    	-> classConstant(accessor={$staticAccess.st}, constant={$CONSTANT.text})
-	|	^(unaryPreOperator expr=expression) 			-> unaryPreOperator(operator ={$unaryPreOperator.st}, expression = {$expr.st})
-	|	^(unaryPostOperator expr=expression)			-> unaryPostOperator(operator = {$unaryPostOperator.st}, expression = {$expr.st})
-	|	^(binaryOperator left=expression right=expression) 	-> binaryOperator(operator={$binaryOperator.st}, left={$left.st}, right={$right.st})
+	:   	primitiveAtomWithConstant 					-> {$primitiveAtomWithConstant.st}
+	|	^(TypeArray keyValuePairs+=arrayKeyValue*)			-> array(content ={$keyValuePairs})
+	|	VariableId 							-> {%{$VariableId.text}}
+	|	^(CLASS_STATIC_ACCESS staticAccess CONSTANT)    		-> classConstant(accessor={$staticAccess.st}, constant={$CONSTANT.text})
+	|	^(unaryPreOperator expr=expression) 				-> unaryPreOperator(operator ={$unaryPreOperator.st}, expression = {$expr.st})
+	|	^(unaryPostOperator expr=expression)				-> unaryPostOperator(operator = {$unaryPostOperator.st}, expression = {$expr.st})
+	|	^(binaryOperator left=expression right=expression) 		-> binaryOperator(operator={$binaryOperator.st}, left={$left.st}, right={$right.st})
+	|	^('?' cond=expression ifCase=expression elseCase=expression) 	-> ternaryOperator(cond={$cond.st}, ifCase={$ifCase.st}, elseCase={$elseCase.st})
     	//|  	symbol			{$type = $symbol.type;}
 
  	//|	^('@' expr=expression)	{$type = $expr.start.getEvalType();}
@@ -547,6 +548,5 @@ binaryOperator
 	;
 
 castingOperator
-	:	CASTING_ASSIGN 	
-	|	CASTING
+	:	CASTING
 	;

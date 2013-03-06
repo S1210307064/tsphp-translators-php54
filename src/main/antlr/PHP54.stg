@@ -101,6 +101,10 @@ binaryOperator(operator, left, right) ::= <<
 <left> <operator> <right>
 >>
 
+ternaryOperator(cond, ifCase, elseCase) ::= <<
+<cond> ? <ifCase> : <elseCase>
+>>
+
 keyValue(key, value) ::= <<
 <key> => <value>
 >>
