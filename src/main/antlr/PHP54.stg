@@ -109,6 +109,10 @@ instanceof(expression, type) ::= <<
 <expression> instanceof <type>
 >>
 
+new(type, parameters) ::= <<
+new <type>(<parameters; separator=", ">)
+>>
+
 keyValue(key, value) ::= <<
 <key> => <value>
 >>

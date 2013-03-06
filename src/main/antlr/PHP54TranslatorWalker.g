@@ -459,6 +459,7 @@ options {backtrack=true;}
 	|	^('?' cond=expression ifCase=expression elseCase=expression) 	-> ternaryOperator(cond={$cond.st}, ifCase={$ifCase.st}, elseCase={$elseCase.st})
 	|	castingOperator 						-> {$castingOperator.st}
 	|	^(Instanceof expr=expression (type=TYPE_NAME|type=VariableId))  -> instanceof(expression={$expr.st}, type={$type.text})
+	|	newOperator							-> {$newOperator.st}
     	//|  	symbol			{$type = $symbol.type;}
     	;
     	
@@ -567,4 +568,14 @@ castingOperator
 			expression
 		)
 		-> cast(type={$TYPE_NAME.text}, expression={$expression.st})
+	;
+	
+newOperator
+	:	^('new' 
+			type=TYPE_NAME 
+			(	^(ACTUAL_PARAMETERS params+=expression+)
+			|	ACTUAL_PARAMETERS
+			)
+		)	
+		-> new(type={$type.text}, parameters={$params})
 	;

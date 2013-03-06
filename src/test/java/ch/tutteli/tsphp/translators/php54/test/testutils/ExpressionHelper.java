@@ -138,7 +138,9 @@ public class ExpressionHelper
                     {"-$a - $b", "(-$a - $b)"},
                     //                    {"clone $a","clone $a"},
                     //                    {"clone $a->a","clone $a->a"},
-                    //                    {"new Type","new Type"},
+                    {"new Type", "new Type()"},
+                    {"new Type()", "new Type()"},
+                    {"new Type(1,$a,'hello')", "new Type(1, $a, 'hello')"},
                     //                    {"foo()","foo()"},
                     //                    {"\\foo(1,1+2,3)","\\foo(1, 1 + 2, 3)"},
                     //                    {"$a->foo()","$a->foo()"},
@@ -169,8 +171,7 @@ public class ExpressionHelper
                     {"\"asdf\"", "\"asdf\""},
                     {"[1,2,'a'=>3]", "[1, 2, 'a' => 3]"},
                     //                    {"(int) clone $a + $b","(int) clone $a + $b"},
-                    {"(-$a + $b) * $c", "((-$a + $b) * $c)"}, 
-                    //                    {"!($a instanceof Type) || $a < $b+$c == ~(1 | 3 & 12)","!($a instanceof Type) || $a < $b+$c == ~(1 | 3 & 12)"}
+                    {"(-$a + $b) * $c", "((-$a + $b) * $c)"}, //                    {"!($a instanceof Type) || $a < $b+$c == ~(1 | 3 & 12)","!($a instanceof Type) || $a < $b+$c == ~(1 | 3 & 12)"}
                 };
     }
 }
