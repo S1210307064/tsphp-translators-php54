@@ -449,34 +449,32 @@ instruction
 	
 expression
 options {backtrack=true;}
-	:   	primitiveAtomWithConstant 					-> {$primitiveAtomWithConstant.st}
-	|	^(TypeArray keyValuePairs+=arrayKeyValue*)			-> array(content ={$keyValuePairs})
-	|	VariableId 							-> {%{$VariableId.text}}
-	|	This								-> {%{$This.text}}
-	|	^(CLASS_STATIC_ACCESS staticAccess CONSTANT)    		-> classConstant(accessor={$staticAccess.st}, constant={$CONSTANT.text})
-	|	^(unaryPreOperator expr=expression) 				-> unaryPreOperator(operator ={$unaryPreOperator.st}, expression = {$expr.st})
-	|	^(unaryPostOperator expr=expression)				-> unaryPostOperator(operator = {$unaryPostOperator.st}, expression = {$expr.st})
-	|	^(binaryOperator left=expression right=expression) 		-> binaryOperator(operator={$binaryOperator.st}, left={$left.st}, right={$right.st})
-	|	^('?' cond=expression ifCase=expression elseCase=expression) 	-> ternaryOperator(cond={$cond.st}, ifCase={$ifCase.st}, elseCase={$elseCase.st})
-	|	castingOperator 						-> {$castingOperator.st}
-	|	^(Instanceof expr=expression (type=TYPE_NAME|type=VariableId))  -> instanceof(expression={$expr.st}, type={$type.text})
-	|	newOperator							-> {$newOperator.st}
-    	|	^('clone' expr=expression)					-> clone(expression={$expr.st})
-    	|	functionCall 							-> {$functionCall.st}
-	|	methodCall 							-> {$methodCall.st}
-	|	methodCallSelfOrParent 						-> {$methodCallSelfOrParent.st}
-	|	methodCallStatic 						-> {$methodCallStatic.st}
-	|	postFixExpression						-> {$postFixExpression.st}
+	:   	atom 			-> {$atom.st}
+	|	operator		-> {$operator.st}
+    	|	functionCall 		-> {$functionCall.st}
+	|	methodCall 		-> {$methodCall.st}
+	|	methodCallSelfOrParent 	-> {$methodCallSelfOrParent.st}
+	|	methodCallStatic 	-> {$methodCallStatic.st}
+	|	classStaticAccess	-> {$classStaticAccess.st}
+	|	postFixExpression	-> {$postFixExpression.st}
     	;
+  
+atom
+	:	primitiveAtom 					-> {$primitiveAtom.st}
+	|	^(TypeArray keyValuePairs+=arrayKeyValue*)	-> array(content ={$keyValuePairs})
+	|	VariableId 					-> {%{$VariableId.text}}
+	|	This						-> {%{$This.text}}
+	|	CONSTANT					-> {%{$CONSTANT.text}}
+	|	^(CLASS_STATIC_ACCESS staticAccess CONSTANT)    -> classConstant(accessor={$staticAccess.st}, constant={$CONSTANT.text})
+	;
     	
-primitiveAtomWithConstant
+primitiveAtom
 @after {$st = %{$start.getText()};}
 	:	Bool
 	|	Int
 	|	Float
 	|	String
 	|	Null
-	|	CONSTANT
 	;
 
 arrayKeyValue
@@ -489,7 +487,17 @@ staticAccess
  	|	Self -> {%{$Self.text}}
  	|	Parent -> {%{$Parent.text}}
  	;
-	
+ 
+operator
+ 	:	^(unaryPreOperator expr=expression) 				-> unaryPreOperator(operator ={$unaryPreOperator.st}, expression = {$expr.st})
+	|	^(unaryPostOperator expr=expression)				-> unaryPostOperator(operator = {$unaryPostOperator.st}, expression = {$expr.st})
+	|	^(binaryOperator left=expression right=expression) 		-> binaryOperator(operator={$binaryOperator.st}, left={$left.st}, right={$right.st})
+	|	^('?' cond=expression ifCase=expression elseCase=expression) 	-> ternaryOperator(cond={$cond.st}, ifCase={$ifCase.st}, elseCase={$elseCase.st})
+	|	castingOperator 						-> {$castingOperator.st}
+	|	^(Instanceof expr=expression (type=TYPE_NAME|type=VariableId))  -> instanceof(expression={$expr.st}, type={$type.text})
+	|	newOperator							-> {$newOperator.st}
+    	|	^('clone' expr=expression)					-> clone(expression={$expr.st})	
+ 	; 	
 
 unaryPreOperator 
 	:	PRE_INCREMENT	-> {%{"++"}}
@@ -609,7 +617,12 @@ methodCallStatic
 	:	^(METHOD_CALL_STATIC TYPE_NAME identifier=Identifier actualParameters)	
 		-> methodCallStatic(callee={$TYPE_NAME.text}, identifier={$identifier.text}, parameters={$actualParameters.parameters})
 	;
-	
+
+classStaticAccess
+	:	^(CLASS_STATIC_ACCESS staticAccess (identifier=CLASS_STATIC_ACCESS_VARIABLE_ID|identifier=CONSTANT))
+		-> classMemberAccessStatic(accessor={$staticAccess.st}, identifier={$identifier.text})
+	;	
+
 postFixExpression
 	:	^(CLASS_MEMBER_ACCESS expression Identifier) 			-> classMemberAccess(expression={$expression.st}, identifier={$Identifier.text})
 	|	^(ARRAY_ACCESS expr=expression index=expression)		-> arrayAccess(expression={$expr.st}, index={$index.st})

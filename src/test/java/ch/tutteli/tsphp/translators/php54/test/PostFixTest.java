@@ -57,10 +57,10 @@ public class PostFixTest extends ATranslatorTest
             {"$a[0]", "$a[0]"},
             {"$this[0]", "$this[0]"},
             //
-//            {"self::$a", "self::$a"},
-//            {"parent::$a", "parent::$a"},
-//            {"Foo::$a", "Foo::$a"},
-//            {"\\bar\\Foo::$a", "\\bar\\Foo::$a"}
+            {"self::$a", "self::$a"},
+            {"parent::$a", "parent::$a"},
+            {"Foo::$a", "Foo::$a"},
+            {"\\bar\\Foo::$a", "\\bar\\Foo::$a"}
         };
         List<Object[]> tmp2 = new ArrayList<>();
         for (String[] expression : tmp1) {
