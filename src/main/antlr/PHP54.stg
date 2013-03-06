@@ -105,6 +105,10 @@ ternaryOperator(cond, ifCase, elseCase) ::= <<
 (<cond> ? <ifCase> : <elseCase>)
 >>
 
+instanceof(expression, type) ::= <<
+<expression> instanceof <type>
+>>
+
 keyValue(key, value) ::= <<
 <key> => <value>
 >>

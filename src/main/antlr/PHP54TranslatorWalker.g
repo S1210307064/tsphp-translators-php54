@@ -458,11 +458,8 @@ options {backtrack=true;}
 	|	^(binaryOperator left=expression right=expression) 		-> binaryOperator(operator={$binaryOperator.st}, left={$left.st}, right={$right.st})
 	|	^('?' cond=expression ifCase=expression elseCase=expression) 	-> ternaryOperator(cond={$cond.st}, ifCase={$ifCase.st}, elseCase={$elseCase.st})
 	|	castingOperator 						-> {$castingOperator.st}
+	|	^(Instanceof expr=expression (type=TYPE_NAME|type=VariableId))  -> instanceof(expression={$expr.st}, type={$type.text})
     	//|  	symbol			{$type = $symbol.type;}
-
- 	//|	^('@' expr=expression)	{$type = $expr.start.getEvalType();}
-      	//|	equalityOperator	{$type = $equalityOperator.type;}
-      	//|	assignOperator		{$type = $assignOperator.type;}
     	;
     	
 primitiveAtomWithConstant
