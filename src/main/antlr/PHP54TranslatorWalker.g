@@ -372,8 +372,12 @@ instruction
 	//|	expression ';' -> ^(EXPRESSION[$expression.start,"expr"] expression)
 	//|	'return'^ expression? ';'!
 	//|	'throw'^ expression ';'!
-	//|	'echo'^ expressionList ';'!
-		EXPRESSION -> {%{""}}// empty block or semicolon can be omitted 
+		^('echo' exprs+=expression+) -> echo(expressions = {$exprs})
+	|	EXPRESSION -> {%{""}} // empty block or semicolon can be omitted 
+	;
+	
+expression
+	:	VariableId -> {%{$VariableId.text}}
 	;
 
 	
