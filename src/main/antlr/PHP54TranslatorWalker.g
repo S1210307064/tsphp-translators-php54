@@ -84,10 +84,10 @@ useDeclaration
 	;
 
 definition
-	:	classDeclaration -> {$classDeclaration.st}
-	|	interfaceDeclaration ->{$interfaceDeclaration.st}
-	|	functionDeclaration -> {$functionDeclaration.st}
-	|	constDeclarationList ->{$constDeclarationList.st}
+	:	classDeclaration 	-> {$classDeclaration.st}
+	|	interfaceDeclaration 	-> {$interfaceDeclaration.st}
+	|	functionDeclaration 	-> {$functionDeclaration.st}
+	|	constDeclarationList 	-> {$constDeclarationList.st}
 	;
 	
 classDeclaration
@@ -128,12 +128,12 @@ classBody
 	;
 	
 classBodyDefinition
-	:	constDeclarationList -> {$constDeclarationList.st}
-	|	classMemberDeclaration	-> {$classMemberDeclaration.st}
-	|	abstractConstructDeclaration -> {$abstractConstructDeclaration.st}
-	|	constructDeclaration -> {$constructDeclaration.st}
-	|	abstractMethodDeclaration -> {$abstractMethodDeclaration.st}
-	|	methodDeclaration -> {$methodDeclaration.st}
+	:	constDeclarationList 		-> {$constDeclarationList.st}
+	|	classMemberDeclaration		-> {$classMemberDeclaration.st}
+	|	abstractConstructDeclaration 	-> {$abstractConstructDeclaration.st}
+	|	constructDeclaration 		-> {$constructDeclaration.st}
+	|	abstractMethodDeclaration 	-> {$abstractMethodDeclaration.st}
+	|	methodDeclaration 		-> {$methodDeclaration.st}
 	;
 	
 constDeclarationList
@@ -286,17 +286,17 @@ methodDeclaration
 	;
 
 methodModifier
-	:	(	list+=staticToken list+=finalToken list+=accessModifier
-		|	list+=staticToken list+=accessModifier list+=finalToken
+	:	(	list+=staticToken list+=finalToken 	list+=accessModifier
+		|	list+=staticToken list+=accessModifier 	list+=finalToken
 		|	list+=staticToken list+=accessModifier
 		
-		|	list+=finalToken list+=staticToken list+=accessModifier
-		|	list+=finalToken list+=accessModifier list+=staticToken 
+		|	list+=finalToken list+=staticToken 	list+=accessModifier
+		|	list+=finalToken list+=accessModifier 	list+=staticToken 
 		|	list+=finalToken list+=accessModifier
 		
 		
-		|	list+=accessModifier list+=finalToken list+=staticToken
-		|	list+=accessModifier list+=staticToken list+=finalToken
+		|	list+=accessModifier list+=finalToken 	list+=staticToken
+		|	list+=accessModifier list+=staticToken 	list+=finalToken
 		|	list+=accessModifier list+=staticToken
 		|	list+=accessModifier list+=finalToken
 		|	list+=accessModifier
@@ -357,60 +357,6 @@ block returns[List<Object> instructions]
 	:	^(BLOCK instr+=instruction*) {$instructions=$instr;}
 	|	BLOCK 
 	;
-
-instruction
-	:	
-	//|	localVariableDeclaration ';'!
-	//|	ifCondition
-	//|	switchCondition
-	//|	forLoop
-	//|	foreachLoop
-	//|	whileLoop
-	//|	doWhileLoop
-	//|	tryCatch
-		^(EXPRESSION expression?) -> expression(expression={$expression.st})
-	|	^('return' expression?) -> return(expression = {$expression.st})
-	|	^('throw' expression) -> throw(expression = {$expression.st})
-	|	^('echo' exprs+=expression+) -> echo(expressions = {$exprs})
-
-	;
-	
-expression
-options {backtrack=true;}
-	:   	primitiveAtomWithConstant 			-> {$primitiveAtomWithConstant.st}
-	|	^(TypeArray keyValuePairs+=arrayKeyValue*)	-> array(content ={$keyValuePairs})
-	|	VariableId 					-> {%{$VariableId.text}}
-	|	^(CLASS_STATIC_ACCESS staticAccess CONSTANT)    -> classConstant(accessor={$staticAccess.st}, constant={$CONSTANT.text})
-	
-    	//|	^(TypeArray .*)		{$type = symbolTable.getArrayTypeSymbol();}
-    	//|  	symbol			{$type = $symbol.type;}
-	//|	unaryOperator 		{$type = $unaryOperator.type;}
-	//|	binaryOperator 		{$type = $binaryOperator.type;}
- 	//|	^('@' expr=expression)	{$type = $expr.start.getEvalType();}
-      	//|	equalityOperator	{$type = $equalityOperator.type;}
-      	//|	assignOperator		{$type = $assignOperator.type;}
-    	;
-    	
-primitiveAtomWithConstant
-@after {$st = %{$text};}
-	:	Bool
-	|	Int
-	|	Float
-	|	String
-	|	Null
-	|	CONSTANT
-	;
-
-arrayKeyValue
-	:	^('=>' key=expression value=expression) -> keyValue(key={$key.st}, value={$value.st})
-	|	expression -> {$expression.st}
-	;
-	
-staticAccess
- 	:	TYPE_NAME -> {%{$TYPE_NAME.text}}
- 	|	Self -> {%{$Self.text}}
- 	|	Parent -> {%{$Parent.text}}
- 	;
 	
 interfaceDeclaration
 	:	^('interface' 
@@ -482,3 +428,73 @@ functionDeclaration
 			body={$block.instructions}
 		)
 	;
+
+
+instruction
+	:	
+	//|	localVariableDeclaration ';'!
+	//|	ifCondition
+	//|	switchCondition
+	//|	forLoop
+	//|	foreachLoop
+	//|	whileLoop
+	//|	doWhileLoop
+	//|	tryCatch
+		^(EXPRESSION expression?) -> expression(expression={$expression.st})
+	|	^('return' expression?) -> return(expression = {$expression.st})
+	|	^('throw' expression) -> throw(expression = {$expression.st})
+	|	^('echo' exprs+=expression+) -> echo(expressions = {$exprs})
+
+	;
+	
+expression
+options {backtrack=true;}
+	:   	primitiveAtomWithConstant 			-> {$primitiveAtomWithConstant.st}
+	|	^(TypeArray keyValuePairs+=arrayKeyValue*)	-> array(content ={$keyValuePairs})
+	|	VariableId 					-> {%{$VariableId.text}}
+	|	^(CLASS_STATIC_ACCESS staticAccess CONSTANT)    -> classConstant(accessor={$staticAccess.st}, constant={$CONSTANT.text})
+	|	^(unaryPreOperator expr=expression) 			-> unaryPreOperator(operator ={$unaryPreOperator.st}, expression = {$expr.st})
+	|	^(unaryPostOperator expr=expression)			-> unaryPostOperator(operator = {$unaryPostOperator.st}, expression = {$expr.st})
+    	//|  	symbol			{$type = $symbol.type;}
+	//|	unaryOperator 		{$type = $unaryOperator.type;}
+	//|	binaryOperator 		{$type = $binaryOperator.type;}
+ 	//|	^('@' expr=expression)	{$type = $expr.start.getEvalType();}
+      	//|	equalityOperator	{$type = $equalityOperator.type;}
+      	//|	assignOperator		{$type = $assignOperator.type;}
+    	;
+    	
+primitiveAtomWithConstant
+@after {$st = %{$start.getText()};}
+	:	Bool
+	|	Int
+	|	Float
+	|	String
+	|	Null
+	|	CONSTANT
+	;
+
+arrayKeyValue
+	:	^('=>' key=expression value=expression) -> keyValue(key={$key.st}, value={$value.st})
+	|	expression -> {$expression.st}
+	;
+	
+staticAccess
+ 	:	TYPE_NAME -> {%{$TYPE_NAME.text}}
+ 	|	Self -> {%{$Self.text}}
+ 	|	Parent -> {%{$Parent.text}}
+ 	;
+	
+
+unaryPreOperator 
+	:	PRE_INCREMENT	-> {%{"++"}}
+    	|	PRE_DECREMENT 	-> {%{"--"}}
+    	|	'@' 		-> {%{"@"}}
+    	|	'~' 		-> {%{"~"}}
+    	|	'!' 		-> {%{"!"}}
+    	|	UNARY_MINUS	-> {%{"-"}}
+   	;
+   	
+unaryPostOperator  
+	:	POST_INCREMENT -> {%{"++"}}
+    	|	POST_DECREMENT -> {%{"--"}}
+    	;
