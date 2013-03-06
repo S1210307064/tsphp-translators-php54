@@ -129,6 +129,10 @@ methodCallStatic(callee, identifier, parameters) ::= <<
 <callee>::<identifier>(<parameters; separator=", ">)
 >>
 
+classMemberAccess(expression, identifier) ::= <<
+<expression>-><identifier>
+>>
+
 keyValue(key, value) ::= <<
 <key> => <value>
 >>

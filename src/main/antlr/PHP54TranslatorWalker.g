@@ -461,7 +461,11 @@ options {backtrack=true;}
 	|	^(Instanceof expr=expression (type=TYPE_NAME|type=VariableId))  -> instanceof(expression={$expr.st}, type={$type.text})
 	|	newOperator							-> {$newOperator.st}
     	|	^('clone' expr=expression)					-> clone(expression={$expr.st})
-    	|   	postFixCall							-> {$postFixCall.st}
+    	|	functionCall 							-> {$functionCall.st}
+	|	methodCall 							-> {$methodCall.st}
+	|	methodCallSelfOrParent 						-> {$methodCallSelfOrParent.st}
+	|	methodCallStatic 						-> {$methodCallStatic.st}
+	|	postFixExpression						-> {$postFixExpression.st}
     	;
     	
 primitiveAtomWithConstant
@@ -584,18 +588,6 @@ actualParameters returns[List<Object> parameters]
 		|	ACTUAL_PARAMETERS
 		)	
 	;
-	
-postFixCall
-	:	(	functionCall -> {$functionCall.st}
-		|	methodCall -> {$methodCall.st}
-		|	methodCallSelfOrParent -> {$methodCallSelfOrParent.st}
-		|	methodCallStatic ->{$methodCallStatic.st}
-		)
-		//(	memberAccess = '->' Identifier -> ^(CLASS_MEMBER_ACCESS[$memberAccess,"memAccess"] $postFixCall Identifier)
-		//|	arrayAccess = '[' expression ']' -> ^(ARRAY_ACCESS[$arrayAccess,"arrAccess"] $postFixCall expression)
-		//|	call -> ^(METHOD_CALL_POSTFIX[$call.start,"mpCall"] $postFixCall call)
-		//)*
-	;
 
 functionCall
 	:	^(FUNCTION_CALL	identifier=TYPE_NAME actualParameters)
@@ -617,4 +609,9 @@ methodCallStatic
 		-> methodCallStatic(callee={$TYPE_NAME.text}, identifier={$identifier.text}, parameters={$actualParameters.parameters})
 	;
 	
+postFixExpression
+	:	^(CLASS_MEMBER_ACCESS expression Identifier) -> classMemberAccess(expression={$expression.st}, identifier={$Identifier.text})
+		//|	^(ARRAY_ACCESS $postFixCall expression)
+		//|	^(METHOD_CALL_POSTFIX[$call.start,"mpCall"] $postFixCall call)
+	;
 	
