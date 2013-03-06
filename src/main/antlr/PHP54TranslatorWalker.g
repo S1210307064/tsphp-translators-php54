@@ -457,6 +457,7 @@ options {backtrack=true;}
 	|	methodCallStatic 	-> {$methodCallStatic.st}
 	|	classStaticAccess	-> {$classStaticAccess.st}
 	|	postFixExpression	-> {$postFixExpression.st}
+	|	exit			-> {$exit.st}
     	;
   
 atom
@@ -627,5 +628,10 @@ postFixExpression
 	:	^(CLASS_MEMBER_ACCESS expression Identifier) 			-> classMemberAccess(expression={$expression.st}, identifier={$Identifier.text})
 	|	^(ARRAY_ACCESS expr=expression index=expression)		-> arrayAccess(expression={$expr.st}, index={$index.st})
 	|	^(METHOD_CALL_POSTFIX expression Identifier actualParameters)	-> postFixCall(expression={$expression.st}, identifier={$Identifier.text}, parameters={$actualParameters.parameters})
+	;
+
+exit
+	:	^('exit' expression?)	-> exit(expression={$expression.st})
+	|	Exit 			-> exit(expression={null})
 	;
 	

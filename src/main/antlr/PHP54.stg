@@ -145,6 +145,10 @@ postFixCall(expression, identifier, parameters) ::= <<
 <expression>-><identifier>(<parameters; separator=", ">)
 >>
 
+exit(expression) ::= <<
+exit<if(expression)>(<expression>)<endif>
+>>
+
 keyValue(key, value) ::= <<
 <key> => <value>
 >>
