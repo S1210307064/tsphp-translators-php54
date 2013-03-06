@@ -610,8 +610,8 @@ methodCallStatic
 	;
 	
 postFixExpression
-	:	^(CLASS_MEMBER_ACCESS expression Identifier) -> classMemberAccess(expression={$expression.st}, identifier={$Identifier.text})
-		//|	^(ARRAY_ACCESS $postFixCall expression)
+	:	^(CLASS_MEMBER_ACCESS expression Identifier) 		-> classMemberAccess(expression={$expression.st}, identifier={$Identifier.text})
+	|	^(ARRAY_ACCESS expr=expression index=expression)	-> arrayAccess(expression={$expr.st}, index={$index.st})
 		//|	^(METHOD_CALL_POSTFIX[$call.start,"mpCall"] $postFixCall call)
 	;
 	

@@ -133,6 +133,10 @@ classMemberAccess(expression, identifier) ::= <<
 <expression>-><identifier>
 >>
 
+arrayAccess(expression, identifier) ::= <<
+<expression>[<index>]
+>>
+
 keyValue(key, value) ::= <<
 <key> => <value>
 >>

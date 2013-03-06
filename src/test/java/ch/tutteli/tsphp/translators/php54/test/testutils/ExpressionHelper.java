@@ -148,6 +148,7 @@ public class ExpressionHelper
                     {"++$a", "++$a"},
                     {"--$a", "--$a"},
                     {"$a", "$a"},
+                    {"$a[0]", "$a[0]"},
                     {"$a->a", "$a->a"},
                     {"$a->foo()", "$a->foo()"},
                     {"$a->foo(true || false,123*9)", "$a->foo((true || false), (123 * 9))"},
