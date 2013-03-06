@@ -458,8 +458,9 @@ options {backtrack=true;}
 	|	^(binaryOperator left=expression right=expression) 		-> binaryOperator(operator={$binaryOperator.st}, left={$left.st}, right={$right.st})
 	|	^('?' cond=expression ifCase=expression elseCase=expression) 	-> ternaryOperator(cond={$cond.st}, ifCase={$ifCase.st}, elseCase={$elseCase.st})
 	|	castingOperator 						-> {$castingOperator.st}
-	|	^(Instanceof expr=expression (type=TYPE_NAME|type=VariableId))  -> instanceof(expression={$expr.st}, type={$type.text})
+	|	^(Instanceof expr=expression (type=TYPE_NAME|type=VariableId))  	-> instanceof(expression={$expr.st}, type={$type.text})
 	|	newOperator							-> {$newOperator.st}
+    	|	^('clone' expr=expression)						-> clone(expression={$expr.st})
     	//|  	symbol			{$type = $symbol.type;}
     	;
     	

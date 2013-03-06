@@ -113,6 +113,10 @@ new(type, parameters) ::= <<
 new <type>(<parameters; separator=", ">)
 >>
 
+clone(expression) ::= <<
+clone <expression>
+>>
+
 keyValue(key, value) ::= <<
 <key> => <value>
 >>
