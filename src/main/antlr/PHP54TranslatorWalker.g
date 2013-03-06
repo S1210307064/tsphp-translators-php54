@@ -70,6 +70,7 @@ namespaceBody
 statement
 	:	useDeclarationList -> {$useDeclarationList.st}
 	|	definition -> {$definition.st}
+	|	instruction -> {$instruction.st}
 	;
 	
 useDeclarationList
@@ -359,8 +360,22 @@ block returns[List<Object> instructions]
 	;
 
 instruction
-	:	VariableId
+	:	
+	//|	localVariableDeclaration ';'!
+	//|	ifCondition
+	//|	switchCondition
+	//|	forLoop
+	//|	foreachLoop
+	//|	whileLoop
+	//|	doWhileLoop
+	//|	tryCatch
+	//|	expression ';' -> ^(EXPRESSION[$expression.start,"expr"] expression)
+	//|	'return'^ expression? ';'!
+	//|	'throw'^ expression ';'!
+	//|	'echo'^ expressionList ';'!
+		EXPRESSION -> {%{""}}// empty block or semicolon can be omitted 
 	;
+
 	
 interfaceDeclaration
 	:	^('interface' 

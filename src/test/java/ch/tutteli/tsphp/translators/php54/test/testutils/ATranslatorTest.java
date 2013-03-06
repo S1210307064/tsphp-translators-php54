@@ -33,7 +33,7 @@ public abstract class ATranslatorTest extends ATest
 
     @Override
     public void check() {
-        Assert.assertFalse(testString + " failed. found exceptions", translator.hasFoundError());
+        Assert.assertFalse(testString + " failed. found exception(s). See output.", translator.hasFoundError());
         
         Assert.assertEquals(testString + " failed.", expectedResult,
                 result.getTemplate().toString().replaceAll("\r", ""));
