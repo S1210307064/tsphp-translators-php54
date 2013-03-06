@@ -199,12 +199,12 @@ allTypes
 	:	primitiveTypes
 	|	TYPE_NAME
 	;
-
+	
 primitiveTypes
-	:	scalarTypes
-	|	'array'
-	|	'resource'
-	|	'object'
+	:	scalarTypes 
+	|	TypeArray 
+	|	TypeResource 
+	|	TypeObject 
 	;
 	
 primitiveTypesWithoutArray
@@ -457,6 +457,7 @@ options {backtrack=true;}
 	|	^(unaryPostOperator expr=expression)				-> unaryPostOperator(operator = {$unaryPostOperator.st}, expression = {$expr.st})
 	|	^(binaryOperator left=expression right=expression) 		-> binaryOperator(operator={$binaryOperator.st}, left={$left.st}, right={$right.st})
 	|	^('?' cond=expression ifCase=expression elseCase=expression) 	-> ternaryOperator(cond={$cond.st}, ifCase={$ifCase.st}, elseCase={$elseCase.st})
+	|	castingOperator 						-> {$castingOperator.st}
     	//|  	symbol			{$type = $symbol.type;}
 
  	//|	^('@' expr=expression)	{$type = $expr.start.getEvalType();}
@@ -548,5 +549,25 @@ binaryOperator
 	;
 
 castingOperator
-	:	CASTING
+	:	^(CASTING
+			^(TYPE 
+				(	^(TYPE_MODIFIER Cast? (isNullable='?')?)
+				|	TYPE_MODIFIER
+				)
+				(type=scalarTypes|type=arrayType)
+			)
+			expression
+		)
+		-> primitiveCast(isNotNullable = {$isNullable!=null}, type={$type.st}, expression={$expression.st})
+		
+	|	^(CASTING
+			^(TYPE 
+				(	^(TYPE_MODIFIER Cast? '?'?)
+				|	TYPE_MODIFIER
+				)
+				TYPE_NAME
+			)
+			expression
+		)
+		-> cast(type={$TYPE_NAME.text}, expression={$expression.st})
 	;

@@ -98,11 +98,11 @@ unaryPostOperator(operator, expression) ::= <<
 operator(o) ::= "<o>"
 
 binaryOperator(operator, left, right) ::= <<
-<left> <operator> <right>
+(<left> <operator> <right>)
 >>
 
 ternaryOperator(cond, ifCase, elseCase) ::= <<
-<cond> ? <ifCase> : <elseCase>
+(<cond> ? <ifCase> : <elseCase>)
 >>
 
 keyValue(key, value) ::= <<
@@ -125,16 +125,14 @@ echo(expressions) ::= <<
 echo <expressions; separator=", ">;
 >>
 
-primitiveCasting(typeVariableId)::=<<
-<if(!typeVariableId.isNullable)><typeVariableId.variableId> != null or \trigger_error('Argument <typeVariableId.variableId>'s type must be <typeVariableId.type>', \E_RECOVERABLE_ERROR);<endif>
-<typeVariableId.variableId> = (<typeVariableId.type>) <typeVariableId.variableId>;
+primitiveCast(isNotNullable, type, expression)::=<<
+<if(isNotNullable)>( <expression> !== null ? <expression> : \trigger_error('Tried to cast null to the non nullable type <type>', \E_RECOVERABLE_ERROR))
+<else>(int) <expression>
+<endif>
 >>
 
-casting(typeVariableId)::=<<
-<typeVariableId.variableId> instanceof <typeVariableId.type> or \trigger_error('Argument <typeVariableIdst.variableId>'s type must be <typeVariableId.type>', \E_RECOVERABLE_ERROR);
+cast(type, expression)::=<<
+(<expression> instanceof <type> ? <expression> : \trigger_error('Cast failed, the evaluation type of <expression> must be <type>', \E_RECOVERABLE_ERROR))
 >>
 
-primitiveTypeCheck(typeVariableId)::=<<
-<if(!typeVariableId.isNullable)><typeVariableId.variableId> != null && <endif>is_<typeVariableId.type>(<typeVariableId.variableId>) or \trigger_error('Argument <typeVariableId.variableId>'s type must be <typeVariableId.type>', \E_RECOVERABLE_ERROR);
->>
 
