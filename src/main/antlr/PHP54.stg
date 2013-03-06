@@ -125,10 +125,8 @@ echo(expressions) ::= <<
 echo <expressions; separator=", ">;
 >>
 
-primitiveCast(isNotNullable, type, expression)::=<<
-<if(isNotNullable)>( <expression> !== null ? <expression> : \trigger_error('Tried to cast null to the non nullable type <type>', \E_RECOVERABLE_ERROR))
-<else>(int) <expression>
-<endif>
+primitiveCast(type, expression)::=<<
+(<type>) <expression>
 >>
 
 cast(type, expression)::=<<
