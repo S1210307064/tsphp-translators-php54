@@ -370,8 +370,8 @@ instruction
 	//|	doWhileLoop
 	//|	tryCatch
 	//|	expression ';' -> ^(EXPRESSION[$expression.start,"expr"] expression)
-	//|	'return'^ expression? ';'!
-		^('throw' expression) -> throw(expression = {$expression.st})
+		^('return' expression?) -> return(expression = {$expression.st})
+	|	^('throw' expression) -> throw(expression = {$expression.st})
 	|	^('echo' exprs+=expression+) -> echo(expressions = {$exprs})
 	|	EXPRESSION -> {%{""}} // empty block or semicolon can be omitted 
 	;

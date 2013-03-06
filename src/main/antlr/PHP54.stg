@@ -79,12 +79,16 @@ interface(modifier, identifier, ext, impl, body) ::= <<
 interface <identifier><if(ext)> <ext><endif> <body>
 >>
 
-echo(expressions) ::= <<
-echo <expressions; separator=", ">;
+return(expression) ::= <<
+return<if(expression)> <expression><endif>;
 >>
 
 throw(expression) ::= <<
 throw <expression>;
+>>
+
+echo(expressions) ::= <<
+echo <expressions; separator=", ">;
 >>
 
 primitiveCasting(typeVariableId)::=<<
