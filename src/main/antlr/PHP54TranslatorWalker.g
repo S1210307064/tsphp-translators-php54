@@ -588,7 +588,7 @@ actualParameters returns[List<Object> parameters]
 postFixCall
 	:	(	functionCall -> {$functionCall.st}
 		|	methodCall -> {$methodCall.st}
-		//|	selfOrParentMethodCall -> selfOrParentMethodCall
+		|	methodCallSelfOrParent -> {$methodCallSelfOrParent.st}
 		//|	staticMethodCall -> staticMethodCall
 		)
 		//(	memberAccess = '->' Identifier -> ^(CLASS_MEMBER_ACCESS[$memberAccess,"memAccess"] $postFixCall Identifier)
@@ -606,3 +606,9 @@ methodCall
 	:	^(METHOD_CALL (callee=This|callee=VariableId) identifier=Identifier actualParameters)
 		-> methodCall(callee={$callee.text}, identifier={$identifier.text}, parameters={$actualParameters.parameters})
 	;
+
+methodCallSelfOrParent
+	:	^(METHOD_CALL (callee=Self|callee=Parent) identifier=Identifier actualParameters)
+		-> methodCallStatic(callee={$callee.text}, identifier={$identifier.text}, parameters={$actualParameters.parameters})
+	;
+

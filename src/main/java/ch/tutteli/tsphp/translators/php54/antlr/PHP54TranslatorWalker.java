@@ -1,4 +1,4 @@
-// $ANTLR 3.x D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g 2013-03-06 16:59:49
+// $ANTLR 3.x D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g 2013-03-06 17:04:20
 
 /*
  * Copyright 2012 Robert Stoll <rstoll@tutteli.ch>
@@ -7629,26 +7629,61 @@ public static class STAttrMap extends HashMap<String, Object> {
 
 
 	// $ANTLR start "postFixCall"
-	// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:588:1: postFixCall : ( functionCall -> {$functionCall.st}| methodCall -> {$methodCall.st}) ;
+	// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:588:1: postFixCall : ( functionCall -> {$functionCall.st}| methodCall -> {$methodCall.st}| methodCallSelfOrParent -> {$methodCallSelfOrParent.st}) ;
 	public final PHP54TranslatorWalker.postFixCall_return postFixCall() throws RecognitionException {
 		PHP54TranslatorWalker.postFixCall_return retval = new PHP54TranslatorWalker.postFixCall_return();
 		retval.start = input.LT(1);
 
 		TreeRuleReturnScope functionCall92 =null;
 		TreeRuleReturnScope methodCall93 =null;
+		TreeRuleReturnScope methodCallSelfOrParent94 =null;
 
 		try {
-			// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:589:2: ( ( functionCall -> {$functionCall.st}| methodCall -> {$methodCall.st}) )
-			// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:589:4: ( functionCall -> {$functionCall.st}| methodCall -> {$methodCall.st})
+			// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:589:2: ( ( functionCall -> {$functionCall.st}| methodCall -> {$methodCall.st}| methodCallSelfOrParent -> {$methodCallSelfOrParent.st}) )
+			// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:589:4: ( functionCall -> {$functionCall.st}| methodCall -> {$methodCall.st}| methodCallSelfOrParent -> {$methodCallSelfOrParent.st})
 			{
-			// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:589:4: ( functionCall -> {$functionCall.st}| methodCall -> {$methodCall.st})
-			int alt63=2;
+			// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:589:4: ( functionCall -> {$functionCall.st}| methodCall -> {$methodCall.st}| methodCallSelfOrParent -> {$methodCallSelfOrParent.st})
+			int alt63=3;
 			int LA63_0 = input.LA(1);
 			if ( (LA63_0==FUNCTION_CALL) ) {
 				alt63=1;
 			}
 			else if ( (LA63_0==METHOD_CALL) ) {
-				alt63=2;
+				int LA63_2 = input.LA(2);
+				if ( (LA63_2==DOWN) ) {
+					int LA63_3 = input.LA(3);
+					if ( (LA63_3==This||LA63_3==VariableId) ) {
+						alt63=2;
+					}
+					else if ( (LA63_3==Parent||LA63_3==Self) ) {
+						alt63=3;
+					}
+					else {
+						if (state.backtracking>0) {state.failed=true; return retval;}
+						int nvaeMark = input.mark();
+						try {
+							for (int nvaeConsume = 0; nvaeConsume < 3 - 1; nvaeConsume++)
+								input.consume();
+							NoViableAltException nvae =
+								new NoViableAltException("", 63, 3, input);
+							throw nvae;
+						} finally {
+							input.rewind(nvaeMark);
+						}
+					}
+				}
+				else {
+					if (state.backtracking>0) {state.failed=true; return retval;}
+					int nvaeMark = input.mark();
+					try {
+						input.consume();
+						NoViableAltException nvae =
+							new NoViableAltException("", 63, 2, input);
+						throw nvae;
+					} finally {
+						input.rewind(nvaeMark);
+					}
+				}
 			}
 			else {
 				if (state.backtracking>0) {state.failed=true; return retval;}
@@ -7695,6 +7730,25 @@ public static class STAttrMap extends HashMap<String, Object> {
 
 					}
 					break;
+				case 3 :
+					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:591:5: methodCallSelfOrParent
+					{
+					pushFollow(FOLLOW_methodCallSelfOrParent_in_postFixCall3706);
+					methodCallSelfOrParent94=methodCallSelfOrParent();
+					state._fsp--;
+					if (state.failed) return retval;
+					// TEMPLATE REWRITE
+					if ( state.backtracking==0 ) {
+					  // 591:28: -> {$methodCallSelfOrParent.st}
+					  {
+					  	retval.st = (methodCallSelfOrParent94!=null?((StringTemplate)methodCallSelfOrParent94.getTemplate()):null);
+					  }
+
+
+					}
+
+					}
+					break;
 
 			}
 
@@ -7727,17 +7781,17 @@ public static class STAttrMap extends HashMap<String, Object> {
 		retval.start = input.LT(1);
 
 		ITSPHPAst identifier=null;
-		TreeRuleReturnScope actualParameters94 =null;
+		TreeRuleReturnScope actualParameters95 =null;
 
 		try {
 			// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:601:2: ( ^( FUNCTION_CALL identifier= TYPE_NAME actualParameters ) -> functionCall(identifier=$identifier.textparameters=$actualParameters.parameters))
 			// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:601:4: ^( FUNCTION_CALL identifier= TYPE_NAME actualParameters )
 			{
-			match(input,FUNCTION_CALL,FOLLOW_FUNCTION_CALL_in_functionCall3734); if (state.failed) return retval;
+			match(input,FUNCTION_CALL,FOLLOW_FUNCTION_CALL_in_functionCall3741); if (state.failed) return retval;
 			match(input, Token.DOWN, null); if (state.failed) return retval;
-			identifier=(ITSPHPAst)match(input,TYPE_NAME,FOLLOW_TYPE_NAME_in_functionCall3738); if (state.failed) return retval;
-			pushFollow(FOLLOW_actualParameters_in_functionCall3740);
-			actualParameters94=actualParameters();
+			identifier=(ITSPHPAst)match(input,TYPE_NAME,FOLLOW_TYPE_NAME_in_functionCall3745); if (state.failed) return retval;
+			pushFollow(FOLLOW_actualParameters_in_functionCall3747);
+			actualParameters95=actualParameters();
 			state._fsp--;
 			if (state.failed) return retval;
 			match(input, Token.UP, null); if (state.failed) return retval;
@@ -7746,7 +7800,7 @@ public static class STAttrMap extends HashMap<String, Object> {
 			if ( state.backtracking==0 ) {
 			  // 602:3: -> functionCall(identifier=$identifier.textparameters=$actualParameters.parameters)
 			  {
-			  	retval.st = templateLib.getInstanceOf("functionCall",new STAttrMap().put("identifier", (identifier!=null?identifier.getText():null)).put("parameters", (actualParameters94!=null?((PHP54TranslatorWalker.actualParameters_return)actualParameters94).parameters:null)));
+			  	retval.st = templateLib.getInstanceOf("functionCall",new STAttrMap().put("identifier", (identifier!=null?identifier.getText():null)).put("parameters", (actualParameters95!=null?((PHP54TranslatorWalker.actualParameters_return)actualParameters95).parameters:null)));
 			  }
 
 
@@ -7782,13 +7836,13 @@ public static class STAttrMap extends HashMap<String, Object> {
 
 		ITSPHPAst callee=null;
 		ITSPHPAst identifier=null;
-		TreeRuleReturnScope actualParameters95 =null;
+		TreeRuleReturnScope actualParameters96 =null;
 
 		try {
 			// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:606:2: ( ^( METHOD_CALL (callee= This |callee= VariableId ) identifier= Identifier actualParameters ) -> methodCall(callee=$callee.textidentifier=$identifier.textparameters=$actualParameters.parameters))
 			// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:606:4: ^( METHOD_CALL (callee= This |callee= VariableId ) identifier= Identifier actualParameters )
 			{
-			match(input,METHOD_CALL,FOLLOW_METHOD_CALL_in_methodCall3770); if (state.failed) return retval;
+			match(input,METHOD_CALL,FOLLOW_METHOD_CALL_in_methodCall3777); if (state.failed) return retval;
 			match(input, Token.DOWN, null); if (state.failed) return retval;
 			// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:606:18: (callee= This |callee= VariableId )
 			int alt64=2;
@@ -7809,21 +7863,21 @@ public static class STAttrMap extends HashMap<String, Object> {
 				case 1 :
 					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:606:19: callee= This
 					{
-					callee=(ITSPHPAst)match(input,This,FOLLOW_This_in_methodCall3775); if (state.failed) return retval;
+					callee=(ITSPHPAst)match(input,This,FOLLOW_This_in_methodCall3782); if (state.failed) return retval;
 					}
 					break;
 				case 2 :
 					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:606:31: callee= VariableId
 					{
-					callee=(ITSPHPAst)match(input,VariableId,FOLLOW_VariableId_in_methodCall3779); if (state.failed) return retval;
+					callee=(ITSPHPAst)match(input,VariableId,FOLLOW_VariableId_in_methodCall3786); if (state.failed) return retval;
 					}
 					break;
 
 			}
 
-			identifier=(ITSPHPAst)match(input,Identifier,FOLLOW_Identifier_in_methodCall3784); if (state.failed) return retval;
-			pushFollow(FOLLOW_actualParameters_in_methodCall3786);
-			actualParameters95=actualParameters();
+			identifier=(ITSPHPAst)match(input,Identifier,FOLLOW_Identifier_in_methodCall3791); if (state.failed) return retval;
+			pushFollow(FOLLOW_actualParameters_in_methodCall3793);
+			actualParameters96=actualParameters();
 			state._fsp--;
 			if (state.failed) return retval;
 			match(input, Token.UP, null); if (state.failed) return retval;
@@ -7832,7 +7886,7 @@ public static class STAttrMap extends HashMap<String, Object> {
 			if ( state.backtracking==0 ) {
 			  // 607:3: -> methodCall(callee=$callee.textidentifier=$identifier.textparameters=$actualParameters.parameters)
 			  {
-			  	retval.st = templateLib.getInstanceOf("methodCall",new STAttrMap().put("callee", (callee!=null?callee.getText():null)).put("identifier", (identifier!=null?identifier.getText():null)).put("parameters", (actualParameters95!=null?((PHP54TranslatorWalker.actualParameters_return)actualParameters95).parameters:null)));
+			  	retval.st = templateLib.getInstanceOf("methodCall",new STAttrMap().put("callee", (callee!=null?callee.getText():null)).put("identifier", (identifier!=null?identifier.getText():null)).put("parameters", (actualParameters96!=null?((PHP54TranslatorWalker.actualParameters_return)actualParameters96).parameters:null)));
 			  }
 
 
@@ -7851,6 +7905,92 @@ public static class STAttrMap extends HashMap<String, Object> {
 		return retval;
 	}
 	// $ANTLR end "methodCall"
+
+
+	public static class methodCallSelfOrParent_return extends TreeRuleReturnScope {
+		public StringTemplate st;
+		public Object getTemplate() { return st; }
+		public String toString() { return st==null?null:st.toString(); }
+	};
+
+
+	// $ANTLR start "methodCallSelfOrParent"
+	// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:610:1: methodCallSelfOrParent : ^( METHOD_CALL (callee= Self |callee= Parent ) identifier= Identifier actualParameters ) -> methodCallStatic(callee=$callee.textidentifier=$identifier.textparameters=$actualParameters.parameters);
+	public final PHP54TranslatorWalker.methodCallSelfOrParent_return methodCallSelfOrParent() throws RecognitionException {
+		PHP54TranslatorWalker.methodCallSelfOrParent_return retval = new PHP54TranslatorWalker.methodCallSelfOrParent_return();
+		retval.start = input.LT(1);
+
+		ITSPHPAst callee=null;
+		ITSPHPAst identifier=null;
+		TreeRuleReturnScope actualParameters97 =null;
+
+		try {
+			// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:611:2: ( ^( METHOD_CALL (callee= Self |callee= Parent ) identifier= Identifier actualParameters ) -> methodCallStatic(callee=$callee.textidentifier=$identifier.textparameters=$actualParameters.parameters))
+			// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:611:4: ^( METHOD_CALL (callee= Self |callee= Parent ) identifier= Identifier actualParameters )
+			{
+			match(input,METHOD_CALL,FOLLOW_METHOD_CALL_in_methodCallSelfOrParent3827); if (state.failed) return retval;
+			match(input, Token.DOWN, null); if (state.failed) return retval;
+			// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:611:18: (callee= Self |callee= Parent )
+			int alt65=2;
+			int LA65_0 = input.LA(1);
+			if ( (LA65_0==Self) ) {
+				alt65=1;
+			}
+			else if ( (LA65_0==Parent) ) {
+				alt65=2;
+			}
+			else {
+				if (state.backtracking>0) {state.failed=true; return retval;}
+				NoViableAltException nvae =
+					new NoViableAltException("", 65, 0, input);
+				throw nvae;
+			}
+			switch (alt65) {
+				case 1 :
+					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:611:19: callee= Self
+					{
+					callee=(ITSPHPAst)match(input,Self,FOLLOW_Self_in_methodCallSelfOrParent3832); if (state.failed) return retval;
+					}
+					break;
+				case 2 :
+					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:611:31: callee= Parent
+					{
+					callee=(ITSPHPAst)match(input,Parent,FOLLOW_Parent_in_methodCallSelfOrParent3836); if (state.failed) return retval;
+					}
+					break;
+
+			}
+
+			identifier=(ITSPHPAst)match(input,Identifier,FOLLOW_Identifier_in_methodCallSelfOrParent3841); if (state.failed) return retval;
+			pushFollow(FOLLOW_actualParameters_in_methodCallSelfOrParent3843);
+			actualParameters97=actualParameters();
+			state._fsp--;
+			if (state.failed) return retval;
+			match(input, Token.UP, null); if (state.failed) return retval;
+
+			// TEMPLATE REWRITE
+			if ( state.backtracking==0 ) {
+			  // 612:3: -> methodCallStatic(callee=$callee.textidentifier=$identifier.textparameters=$actualParameters.parameters)
+			  {
+			  	retval.st = templateLib.getInstanceOf("methodCallStatic",new STAttrMap().put("callee", (callee!=null?callee.getText():null)).put("identifier", (identifier!=null?identifier.getText():null)).put("parameters", (actualParameters97!=null?((PHP54TranslatorWalker.actualParameters_return)actualParameters97).parameters:null)));
+			  }
+
+
+			}
+
+			}
+
+		}
+		catch (RecognitionException re) {
+			reportError(re);
+			recover(input,re);
+		}
+		finally {
+			// do for sure before leaving
+		}
+		return retval;
+	}
+	// $ANTLR end "methodCallSelfOrParent"
 
 	// Delegated rules
 
@@ -8147,12 +8287,18 @@ public static class STAttrMap extends HashMap<String, Object> {
 	public static final BitSet FOLLOW_ACTUAL_PARAMETERS_in_actualParameters3667 = new BitSet(new long[]{0x0000000000000002L});
 	public static final BitSet FOLLOW_functionCall_in_postFixCall3686 = new BitSet(new long[]{0x0000000000000002L});
 	public static final BitSet FOLLOW_methodCall_in_postFixCall3696 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_FUNCTION_CALL_in_functionCall3734 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_TYPE_NAME_in_functionCall3738 = new BitSet(new long[]{0x0000000000000010L});
-	public static final BitSet FOLLOW_actualParameters_in_functionCall3740 = new BitSet(new long[]{0x0000000000000008L});
-	public static final BitSet FOLLOW_METHOD_CALL_in_methodCall3770 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_This_in_methodCall3775 = new BitSet(new long[]{0x0000000000000000L,0x0000000000004000L});
-	public static final BitSet FOLLOW_VariableId_in_methodCall3779 = new BitSet(new long[]{0x0000000000000000L,0x0000000000004000L});
-	public static final BitSet FOLLOW_Identifier_in_methodCall3784 = new BitSet(new long[]{0x0000000000000010L});
-	public static final BitSet FOLLOW_actualParameters_in_methodCall3786 = new BitSet(new long[]{0x0000000000000008L});
+	public static final BitSet FOLLOW_methodCallSelfOrParent_in_postFixCall3706 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_FUNCTION_CALL_in_functionCall3741 = new BitSet(new long[]{0x0000000000000004L});
+	public static final BitSet FOLLOW_TYPE_NAME_in_functionCall3745 = new BitSet(new long[]{0x0000000000000010L});
+	public static final BitSet FOLLOW_actualParameters_in_functionCall3747 = new BitSet(new long[]{0x0000000000000008L});
+	public static final BitSet FOLLOW_METHOD_CALL_in_methodCall3777 = new BitSet(new long[]{0x0000000000000004L});
+	public static final BitSet FOLLOW_This_in_methodCall3782 = new BitSet(new long[]{0x0000000000000000L,0x0000000000004000L});
+	public static final BitSet FOLLOW_VariableId_in_methodCall3786 = new BitSet(new long[]{0x0000000000000000L,0x0000000000004000L});
+	public static final BitSet FOLLOW_Identifier_in_methodCall3791 = new BitSet(new long[]{0x0000000000000010L});
+	public static final BitSet FOLLOW_actualParameters_in_methodCall3793 = new BitSet(new long[]{0x0000000000000008L});
+	public static final BitSet FOLLOW_METHOD_CALL_in_methodCallSelfOrParent3827 = new BitSet(new long[]{0x0000000000000004L});
+	public static final BitSet FOLLOW_Self_in_methodCallSelfOrParent3832 = new BitSet(new long[]{0x0000000000000000L,0x0000000000004000L});
+	public static final BitSet FOLLOW_Parent_in_methodCallSelfOrParent3836 = new BitSet(new long[]{0x0000000000000000L,0x0000000000004000L});
+	public static final BitSet FOLLOW_Identifier_in_methodCallSelfOrParent3841 = new BitSet(new long[]{0x0000000000000010L});
+	public static final BitSet FOLLOW_actualParameters_in_methodCallSelfOrParent3843 = new BitSet(new long[]{0x0000000000000008L});
 }

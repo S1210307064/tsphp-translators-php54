@@ -125,6 +125,10 @@ methodCall(callee, identifier, parameters) ::= <<
 <callee>-><identifier>(<parameters; separator=", ">)
 >>
 
+methodCallStatic(callee, identifier, parameters) ::= <<
+<callee>::<identifier>(<parameters; separator=", ">)
+>>
+
 keyValue(key, value) ::= <<
 <key> => <value>
 >>
