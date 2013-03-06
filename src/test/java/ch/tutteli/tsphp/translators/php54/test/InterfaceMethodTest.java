@@ -17,10 +17,13 @@
 package ch.tutteli.tsphp.translators.php54.test;
 
 import ch.tutteli.tsphp.translators.php54.test.testutils.ATranslatorTest;
+import ch.tutteli.tsphp.translators.php54.test.testutils.ParameterListHelper;
+import ch.tutteli.tsphp.translators.php54.test.testutils.TypeHelper;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import org.antlr.runtime.RecognitionException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -31,10 +34,14 @@ import org.junit.runners.Parameterized;
  * @author Robert Stoll <rstoll@tutteli.ch>
  */
 @RunWith(Parameterized.class)
-public class InterfaceConstantTest extends ATranslatorTest
+public class InterfaceMethodTest extends ATranslatorTest
 {
 
-    public InterfaceConstantTest(String testString, String expectedResult) {
+    private static List<Object[]> collection;
+
+   
+
+    public InterfaceMethodTest(String testString, String expectedResult) {
         super(testString, expectedResult);
     }
 
@@ -45,10 +52,21 @@ public class InterfaceConstantTest extends ATranslatorTest
 
     @Parameterized.Parameters
     public static Collection<Object[]> testStrings() {
-        return Arrays.asList(new Object[][]{
-                    {"interface a{const int a=1;}", "interface a {\n    const a = 1;\n}"},
-                    {"interface a{const int a=1,b=1;}", "interface a {\n    const a = 1, b = 1;\n}"},
-                    {"interface a{const int a=1; const float b=1;}", "interface a {\n    const a = 1;\n    const b = 1;\n}"},
-                });
+        collection = new ArrayList<>();
+        
+         //return values
+        collection.addAll(TypeHelper.getAllTypesWithModifier(
+                "interface a{function ", " get();}",
+                "interface a {\n    public function get();\n}",""));
+
+        //parameters
+        collection.addAll(ParameterListHelper.getTestStrings(
+                "interface a {function void set", ";}",
+                "interface a {\n    public function set",";\n}"));
+       
+        return collection;
+
     }
+
+
 }

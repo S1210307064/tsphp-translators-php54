@@ -383,8 +383,38 @@ interfaceBody
 
 interfaceBodyDefinition
 	:	constDeclarationList -> {$constDeclarationList.st}
-	//|	interfaceMethodDeclaration
-	//|	interfaceConstruct
+	|	interfaceConstructDeclaration -> {$interfaceConstructDeclaration.st}
+	|	interfaceMethodDeclaration -> {$interfaceMethodDeclaration.st}
+	;
+
+interfaceConstructDeclaration
+	:	^(identifier='__construct' 
+			^(METHOD_MODIFIER abstractMethodModifier)
+			^(TYPE typeModifier returnType)
+			formalParameters
+			block
+		)	
+		-> abstractMethod(
+			modifier={"public"},
+			identifier={$identifier},
+			params={$formalParameters.st},
+			body={$block.instructions}
+		)
+	;
+	
+interfaceMethodDeclaration
+	:	^(METHOD_DECLARATION
+			^(METHOD_MODIFIER abstractMethodModifier)
+			^(TYPE typeModifier returnType)
+			Identifier
+			formalParameters
+			BLOCK
+		)
+		-> abstractMethod(
+			modifier={"public"},
+			identifier={$Identifier},
+			params={$formalParameters.st}
+		)
 	;
 	
 functionDeclaration

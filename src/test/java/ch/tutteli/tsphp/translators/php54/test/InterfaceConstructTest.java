@@ -17,10 +17,12 @@
 package ch.tutteli.tsphp.translators.php54.test;
 
 import ch.tutteli.tsphp.translators.php54.test.testutils.ATranslatorTest;
+import ch.tutteli.tsphp.translators.php54.test.testutils.ParameterListHelper;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import org.antlr.runtime.RecognitionException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -31,10 +33,12 @@ import org.junit.runners.Parameterized;
  * @author Robert Stoll <rstoll@tutteli.ch>
  */
 @RunWith(Parameterized.class)
-public class InterfaceConstantTest extends ATranslatorTest
+public class InterfaceConstructTest extends ATranslatorTest
 {
 
-    public InterfaceConstantTest(String testString, String expectedResult) {
+    private static List<Object[]> collection;
+
+    public InterfaceConstructTest(String testString, String expectedResult) {
         super(testString, expectedResult);
     }
 
@@ -45,10 +49,23 @@ public class InterfaceConstantTest extends ATranslatorTest
 
     @Parameterized.Parameters
     public static Collection<Object[]> testStrings() {
-        return Arrays.asList(new Object[][]{
-                    {"interface a{const int a=1;}", "interface a {\n    const a = 1;\n}"},
-                    {"interface a{const int a=1,b=1;}", "interface a {\n    const a = 1, b = 1;\n}"},
-                    {"interface a{const int a=1; const float b=1;}", "interface a {\n    const a = 1;\n    const b = 1;\n}"},
+        collection = new ArrayList<>();
+
+        collection.add(new Object[]{
+                    "interface a{function __construct();}",
+                    "interface a {\n    public function __construct();\n}"
                 });
+        collection.add(new Object[]{
+                    "interface a{public function __construct();}",
+                    "interface a {\n    public function __construct();\n}"
+                });
+
+        //parameters
+        collection.addAll(ParameterListHelper.getTestStrings(
+                "interface a {function __construct", ";}",
+                "interface a {\n    public function __construct", ";\n}"));
+
+        return collection;
+
     }
 }

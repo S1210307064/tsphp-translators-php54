@@ -25,8 +25,7 @@ import ch.tutteli.tsphp.parser.antlr.ANTLRNoCaseStringStream;
 import ch.tutteli.tsphp.parser.antlr.TSPHPErrorReportingLexer;
 import ch.tutteli.tsphp.parser.antlr.TSPHPErrorReportingParser;
 import ch.tutteli.tsphp.parser.antlr.TSPHPParser;
-import ch.tutteli.tsphp.translators.php54.PHP54Translator;
-import ch.tutteli.tsphp.translators.php54.antlr.PHP54TranslatorWalker;
+import ch.tutteli.tsphp.translators.php54.antlr.ErrorReportingPHP54TranslatorWalker;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -53,18 +52,20 @@ public abstract class ATest
     protected String expectedResult;
     protected ITSPHPAst ast;
     protected CommonTreeNodeStream commonTreeNodeStream;
-    protected PHP54TranslatorWalker translator;
+    protected ErrorReportingPHP54TranslatorWalker translator;
     protected TreeRuleReturnScope result;
 
     public ATest(String theTestString, String theExpectedResult) {
         testString = theTestString;
         expectedResult = theExpectedResult;
     }
+    
+    protected abstract void check();
 
     public void translate() throws FileNotFoundException, IOException, RecognitionException {
         ITSPHPAstAdaptor adaptor = new TSPHPAstAdaptor();
         AstHelperRegistry.set(new AstHelper(adaptor));
-        
+
         CharStream stream = new ANTLRNoCaseStringStream(testString);
         TSPHPErrorReportingLexer lexer = new TSPHPErrorReportingLexer(stream);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
@@ -86,11 +87,8 @@ public abstract class ATest
         FileReader fr = new FileReader(url.getFile());
         StringTemplateGroup templates = new StringTemplateGroup(fr);
         fr.close();
-
-        //  CREATE TREE NODE STREAM FOR TREE PARSERS
-        CommonTreeNodeStream nodes = new CommonTreeNodeStream(ast);
-        nodes.setTokenStream(parser.getTokenStream());        // where to find tokens
-        translator = new PHP54TranslatorWalker(nodes);
+        
+        translator = new ErrorReportingPHP54TranslatorWalker(commonTreeNodeStream);
         translator.setTemplateLib(templates);
 
         run();
@@ -105,9 +103,5 @@ public abstract class ATest
     protected void run() throws RecognitionException {
         result = translator.statement();
     }
-
-    public void check() {
-        Assert.assertEquals(testString + " failed.", expectedResult,
-                result.getTemplate().toString().replaceAll("\r", ""));
-    }
+   
 }

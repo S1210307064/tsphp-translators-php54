@@ -1,17 +1,3 @@
-package ch.tutteli.tsphp.translators.php54.test;
-
-import ch.tutteli.tsphp.translators.php54.test.testutils.ATest;
-import ch.tutteli.tsphp.translators.php54.test.testutils.ParameterListHelper;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import org.antlr.runtime.RecognitionException;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-
 /*
  * Copyright 2012 Robert Stoll <rstoll@tutteli.ch>
  * 
@@ -28,12 +14,26 @@ import org.junit.runners.Parameterized;
  * limitations under the License.
  * 
  */
+package ch.tutteli.tsphp.translators.php54.test;
+
+import ch.tutteli.tsphp.translators.php54.test.testutils.ATranslatorTest;
+import ch.tutteli.tsphp.translators.php54.test.testutils.ParameterListHelper;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import org.antlr.runtime.RecognitionException;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+
 /**
  *
  * @author Robert Stoll <rstoll@tutteli.ch>
  */
 @RunWith(Parameterized.class)
-public class AbstractConstructDestructTest extends ATest
+public class AbstractConstructDestructTest extends ATranslatorTest
 {
 
     private static List<Object[]> collection;
@@ -52,12 +52,12 @@ public class AbstractConstructDestructTest extends ATest
         collection = new ArrayList<>();
 
         addModifiers();
-    
+
         //parameters
         collection.addAll(ParameterListHelper.getTestStrings(
                 "class a {abstract function __construct", ";}",
                 "class a {\n    abstract public function __construct", ";\n}"));
-    
+
         return collection;
 
     }

@@ -1,18 +1,3 @@
-package ch.tutteli.tsphp.translators.php54.test;
-
-
-import ch.tutteli.tsphp.parser.antlr.TSPHPParser;
-import ch.tutteli.tsphp.translators.php54.test.testutils.ATest;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.Collection;
-import org.antlr.runtime.ParserRuleReturnScope;
-import org.antlr.runtime.RecognitionException;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-
 /*
  * Copyright 2012 Robert Stoll <rstoll@tutteli.ch>
  * 
@@ -29,12 +14,26 @@ import org.junit.runners.Parameterized;
  * limitations under the License.
  * 
  */
+package ch.tutteli.tsphp.translators.php54.test;
+
+import ch.tutteli.tsphp.parser.antlr.TSPHPParser;
+import ch.tutteli.tsphp.translators.php54.test.testutils.ATranslatorTest;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.Collection;
+import org.antlr.runtime.ParserRuleReturnScope;
+import org.antlr.runtime.RecognitionException;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+
 /**
  *
  * @author Robert Stoll <rstoll@tutteli.ch>
  */
 @RunWith(Parameterized.class)
-public class NamespaceTest extends ATest
+public class NamespaceTest extends ATranslatorTest
 {
 
     public NamespaceTest(String testString, String expectedResult) {

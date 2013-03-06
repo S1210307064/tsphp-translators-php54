@@ -17,7 +17,7 @@
 package ch.tutteli.tsphp.translators.php54;
 
 import ch.tutteli.tsphp.common.ITranslator;
-import ch.tutteli.tsphp.translators.php54.antlr.PHP54TranslatorWalker;
+import ch.tutteli.tsphp.translators.php54.antlr.ErrorReportingPHP54TranslatorWalker;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
@@ -58,7 +58,7 @@ public class PHP54Translator implements ITranslator
 
     @Override
     public String translate(TreeNodeStream stream) {
-        PHP54TranslatorWalker translator = new PHP54TranslatorWalker(stream);
+        ErrorReportingPHP54TranslatorWalker translator = new ErrorReportingPHP54TranslatorWalker(stream);
         translator.setTemplateLib(templateGroup);
 
         String translation = null;
@@ -66,6 +66,9 @@ public class PHP54Translator implements ITranslator
             translation = translator.compilationUnit().getTemplate().toString();
         } catch (RecognitionException ex) {
             exceptions.add(ex);
+        }
+        if (translator.hasFoundError()) {
+            exceptions.addAll(translator.getExceptions());
         }
         return translation;
     }
