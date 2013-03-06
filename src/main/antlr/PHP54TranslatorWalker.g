@@ -380,7 +380,7 @@ options {backtrack=true;}
 	:   	primitiveAtomWithConstant 			-> {$primitiveAtomWithConstant.st}
 	|	^(TypeArray keyValuePairs+=arrayKeyValue*)	-> array(content ={$keyValuePairs})
 	|	VariableId 					-> {%{$VariableId.text}}
-
+	|	^(CLASS_STATIC_ACCESS staticAccess CONSTANT)    -> classConstant(accessor={$staticAccess.st}, constant={$CONSTANT.text})
 	
     	//|	^(TypeArray .*)		{$type = symbolTable.getArrayTypeSymbol();}
     	//|  	symbol			{$type = $symbol.type;}
@@ -405,6 +405,12 @@ arrayKeyValue
 	:	^('=>' key=expression value=expression) -> keyValue(key={$key.st}, value={$value.st})
 	|	expression -> {$expression.st}
 	;
+	
+staticAccess
+ 	:	TYPE_NAME -> {%{$TYPE_NAME.text}}
+ 	|	Self -> {%{$Self.text}}
+ 	|	Parent -> {%{$Parent.text}}
+ 	;
 	
 interfaceDeclaration
 	:	^('interface' 

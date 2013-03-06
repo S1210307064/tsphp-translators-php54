@@ -67,7 +67,7 @@ method(modifier, identifier, params, primitiveCastings, castings, primitiveTypeC
 <endif>}
 >>
 
-parameterList(declarations) ::=<<
+parameterList(declarations) ::= <<
 <declarations; separator=", ">
 >>
 
@@ -88,6 +88,10 @@ array(content) ::= <<
 >>
 keyValue(key, value) ::= <<
 <key> => <value>
+>>
+
+classConstant(accessor, constant) ::= <<
+<accessor>::<constant>
 >>
 
 return(expression) ::= <<
