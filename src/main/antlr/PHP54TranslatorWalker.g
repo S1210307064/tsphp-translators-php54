@@ -449,15 +449,15 @@ instruction
 	
 expression
 options {backtrack=true;}
-	:   	primitiveAtomWithConstant 			-> {$primitiveAtomWithConstant.st}
-	|	^(TypeArray keyValuePairs+=arrayKeyValue*)	-> array(content ={$keyValuePairs})
-	|	VariableId 					-> {%{$VariableId.text}}
-	|	^(CLASS_STATIC_ACCESS staticAccess CONSTANT)    -> classConstant(accessor={$staticAccess.st}, constant={$CONSTANT.text})
+	:   	primitiveAtomWithConstant 				-> {$primitiveAtomWithConstant.st}
+	|	^(TypeArray keyValuePairs+=arrayKeyValue*)		-> array(content ={$keyValuePairs})
+	|	VariableId 						-> {%{$VariableId.text}}
+	|	^(CLASS_STATIC_ACCESS staticAccess CONSTANT)    	-> classConstant(accessor={$staticAccess.st}, constant={$CONSTANT.text})
 	|	^(unaryPreOperator expr=expression) 			-> unaryPreOperator(operator ={$unaryPreOperator.st}, expression = {$expr.st})
 	|	^(unaryPostOperator expr=expression)			-> unaryPostOperator(operator = {$unaryPostOperator.st}, expression = {$expr.st})
+	|	^(binaryOperator left=expression right=expression) 	-> binaryOperator(operator={$binaryOperator.st}, left={$left.st}, right={$right.st})
     	//|  	symbol			{$type = $symbol.type;}
-	//|	unaryOperator 		{$type = $unaryOperator.type;}
-	//|	binaryOperator 		{$type = $binaryOperator.type;}
+
  	//|	^('@' expr=expression)	{$type = $expr.start.getEvalType();}
       	//|	equalityOperator	{$type = $equalityOperator.type;}
       	//|	assignOperator		{$type = $assignOperator.type;}
@@ -498,3 +498,55 @@ unaryPostOperator
 	:	POST_INCREMENT -> {%{"++"}}
     	|	POST_DECREMENT -> {%{"--"}}
     	;
+
+binaryOperator
+@after {$st = %operator(o={$start.getText()});}
+	:	'or' 
+	|	'xor' 
+	|	'and' 
+	
+	|	'=' 
+	|	'+='
+	|	'-='
+	|	'*='
+	|	'/='
+	|	'&='
+	|	'|='
+	|	'^='
+	|	'%='
+	|	'.='
+	|	'<<=' 
+	|	'>>=' 
+	
+	|	'==' 			
+	|	'!=' 
+	|	'<>' 
+	|	'==='
+	|	'!=='
+	
+	|	'||' 
+	|	'&&' 
+	|	'|' 
+	|	'^' 
+	|	'&' 
+	
+	|	'<' 
+	|	'<=' 
+	|	'>' 
+	|	'>=' 
+	|	'<<' 
+	|	'>>' 
+	
+	|	'+' 
+	|	'-' 
+	|	'.' 
+	|	'*' 
+	|	'/' 
+	|	'%' 
+	
+	;
+
+castingOperator
+	:	CASTING_ASSIGN 	
+	|	CASTING
+	;

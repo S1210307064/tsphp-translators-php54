@@ -95,6 +95,12 @@ unaryPostOperator(operator, expression) ::= <<
 <expression><operator>
 >>
 
+operator(o) ::= "<o>"
+
+binaryOperator(operator, left, right) ::= <<
+<left> <operator> <right>
+>>
+
 keyValue(key, value) ::= <<
 <key> => <value>
 >>
