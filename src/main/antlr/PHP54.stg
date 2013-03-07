@@ -48,11 +48,15 @@ assign(id,value) ::=<<
 <id> = <value>
 >>
 
-variableDeclarationList(variables) ::=<<
+variableDeclarationList(modifier,identifiers) ::=<<
+<if(modifier)><modifier> <endif><identifiers; separator=", ">;
+>>
+
+localVariableDeclarationList(variables) ::=<<
 <variables; separator="\n">
 >>
 
-variableDeclaration(modifier, variableId, initValue) ::= <<
+localVariableDeclaration(modifier, variableId, initValue) ::= <<
 <if(modifier)><modifier> <endif><variableId><if(initValue)> = <initValue><endif>;
 >>
 
@@ -105,6 +109,17 @@ switchContent(labels, block) ::= <<
 caseLabel(label) ::= <<
 case <label>:
 >>
+
+for(init, condition, update, block) ::= <<
+for (<init> <condition> <update>) {
+    <block; separator="\n">
+}
+>>
+
+expressionList(expressions,semicolonAtTheEnd) ::= <<
+<expressions; separator=", "><if(semicolonAtTheEnd)>;<endif>
+>>
+
 
 expression(expression) ::= <<
 <if(expression)><expression>;<endif>

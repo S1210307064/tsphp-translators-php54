@@ -169,13 +169,21 @@ scalarTypes
 classMemberDeclaration
 	:	^(CLASS_MEMBER variableDeclarationList) -> {$variableDeclarationList.st}
 	;
-
+	
 variableDeclarationList
 	:	^(VARIABLE_DECLARATION_LIST 
 			^(TYPE typeModifier allTypes) 
-			variables+=variableDeclaration[$typeModifier.st]+
+			identifiers+=variableDeclaration+
 		)
-		-> variableDeclarationList(variables={$variables})
+		-> variableDeclarationList(modifier={$typeModifier.st},identifiers={$identifiers})
+	;
+	
+localVariableDeclarationList
+	:	^(VARIABLE_DECLARATION_LIST 
+			^(TYPE typeModifier allTypes) 
+			variables+=localVariableDeclaration[$typeModifier.st]+
+		)
+		-> localVariableDeclarationList(variables={$variables})
 	;
 	
 typeModifier returns[boolean isCast, boolean isNullable]
@@ -198,10 +206,15 @@ accessModifier
 	|	Protected -> {%{$Protected.text}}
 	|	Public -> {%{$Public.text}}
 	;
+
+variableDeclaration
+	:	^(VariableId expression) -> assign(id={$VariableId},value={$expression.st})
+	|	VariableId -> {%{$VariableId.text}}
+	;
 	
-variableDeclaration[StringTemplate modifier]
-	:	^(VariableId v=expression) -> variableDeclaration(modifier={modifier}, variableId={$VariableId.text}, initValue={v})
-	|	VariableId -> variableDeclaration(modifier={modifier}, variableId={$VariableId.text}, initValue={v})
+localVariableDeclaration[StringTemplate modifier]
+	:	^(VariableId v=expression) -> localVariableDeclaration(modifier={modifier}, variableId={$VariableId.text}, initValue={v})
+	|	VariableId -> localVariableDeclaration(modifier={modifier}, variableId={$VariableId.text}, initValue={null})
 	;
 
 allTypes
@@ -440,10 +453,10 @@ functionDeclaration
 
 
 instruction
-	:	variableDeclarationList 	-> {$variableDeclarationList.st}
+	:	localVariableDeclarationList 	-> {$localVariableDeclarationList.st}
 	|	ifCondition 			-> {$ifCondition.st}
 	|	switchCondition 		-> {$switchCondition.st}
-	//|	forLoop 			-> {$forLoop.st}
+	|	forLoop 			-> {$forLoop.st}
 	//|	foreachLoop 			-> {$foreachLoop.st}
 	//|	whileLoop 			-> {$whileLoop.st}
 	//|	doWhileLoop 			-> {$doWhileLoop.st}
@@ -483,6 +496,21 @@ switchContent
 caseLabel
 	:	expression 	-> caseLabel(label={$expression.st})
 	|	Default		-> {%{$Default.text+":"}}
+	;
+
+forLoop
+	:	^('for' 
+			(init=variableDeclarationList|init=expressionList[true])
+			condition=expressionList[true]
+			update=expressionList[false]
+			blockConditional
+		)
+		-> for(init={$init.st}, condition={$condition.st}, update={$update.st}, block={$blockConditional.instructions})
+	;
+	
+expressionList[boolean semicolonAtTheEnd]
+	:	^(EXPRESSION_LIST expr+=expression*) -> expressionList(expressions={$expr}, semicolonAtTheEnd={semicolonAtTheEnd})
+	|	EXPRESSION_LIST -> expressionList(expressions={null}, semicolonAtTheEnd={semicolonAtTheEnd})
 	;
 
 expression

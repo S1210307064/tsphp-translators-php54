@@ -59,18 +59,22 @@ public class IfTest extends ATranslatorTest
         }
         collection.addAll(Arrays.asList(new Object[][]{
                     {
+                        "if(true){$a=1;}",
+                        "if (true) {\n    $a = 1;\n}"
+                    },
+                    {
                         "if(true) $a=1; else if(false) $b=1; else $c=2;",
                         "if (true) {\n    $a = 1;\n} else {\n    "
-                            + "if (false) {\n        $b = 1;\n    } else {\n        $c = 2;\n    }"
+                        + "if (false) {\n        $b = 1;\n    } else {\n        $c = 2;\n    }"
                         + "\n}"
                     },
                     {
                         "if(true) $a=1; else if(false) $b=1; else if($a<1) $c=2; else $d*=1;",
                         "if (true) {\n    $a = 1;\n} else {\n    "
-                            + "if (false) {\n        $b = 1;\n    } else {\n        "
-                                + "if ($a < 1) {\n            $c = 2;\n        } "
-                                + "else {\n            $d *= 1;\n        }"
-                            + "\n    }"
+                        + "if (false) {\n        $b = 1;\n    } else {\n        "
+                        + "if ($a < 1) {\n            $c = 2;\n        } "
+                        + "else {\n            $d *= 1;\n        }"
+                        + "\n    }"
                         + "\n}"
                     },}));
 

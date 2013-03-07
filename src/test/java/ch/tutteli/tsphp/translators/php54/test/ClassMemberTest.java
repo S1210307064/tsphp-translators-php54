@@ -71,12 +71,12 @@ public class ClassMemberTest extends ATranslatorTest
                     });
             collection.add(new Object[]{
                         "class a{" + variation[0] + " int $a,$b=1;}",
-                        "class a {\n    " + variation[1] + " $a;\n    "+variation[1]+" $b = 1;\n}"
+                        "class a {\n    " + variation[1] + " $a, $b = 1;\n}"
                     });
         }
         collection.add(new Object[]{
                         "class a{private int $a,$b,$c=1;}",
-                        "class a {\n    private $a;\n    private $b;\n    private $c = 1;\n}"
+                        "class a {\n    private $a, $b, $c = 1;\n}"
                     });
         return collection;
     }
