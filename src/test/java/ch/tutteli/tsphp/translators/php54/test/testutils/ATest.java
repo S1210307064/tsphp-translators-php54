@@ -22,8 +22,8 @@ import ch.tutteli.tsphp.common.ITSPHPAst;
 import ch.tutteli.tsphp.common.ITSPHPAstAdaptor;
 import ch.tutteli.tsphp.common.TSPHPAstAdaptor;
 import ch.tutteli.tsphp.parser.antlr.ANTLRNoCaseStringStream;
-import ch.tutteli.tsphp.parser.antlr.TSPHPErrorReportingLexer;
-import ch.tutteli.tsphp.parser.antlr.TSPHPErrorReportingParser;
+import ch.tutteli.tsphp.parser.antlr.ErrorReportingTSPHPLexer;
+import ch.tutteli.tsphp.parser.antlr.ErrorReportingTSPHPParser;
 import ch.tutteli.tsphp.parser.antlr.TSPHPParser;
 import ch.tutteli.tsphp.translators.php54.PrecedenceHelper;
 import ch.tutteli.tsphp.translators.php54.antlr.ErrorReportingPHP54TranslatorWalker;
@@ -68,10 +68,10 @@ public abstract class ATest
         AstHelperRegistry.set(new AstHelper(adaptor));
 
         CharStream stream = new ANTLRNoCaseStringStream(testString);
-        TSPHPErrorReportingLexer lexer = new TSPHPErrorReportingLexer(stream);
+        ErrorReportingTSPHPLexer lexer = new ErrorReportingTSPHPLexer(stream);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
 
-        TSPHPErrorReportingParser parser = new TSPHPErrorReportingParser(tokens);
+        ErrorReportingTSPHPParser parser = new ErrorReportingTSPHPParser(tokens);
         parser.setTreeAdaptor(adaptor);
 
         ParserRuleReturnScope parserResult = parserRun(parser);

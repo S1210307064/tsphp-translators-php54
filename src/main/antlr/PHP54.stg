@@ -91,6 +91,21 @@ if (<condition>) {
 }<endif>
 >>
 
+switch(condition, content) ::= <<
+switch (<condition>) {
+    <content; separator="\n">
+}
+>>
+
+switchContent(labels, block) ::= <<
+<labels; separator="\n">
+    <block; separator="\n">
+>>
+
+caseLabel(label) ::= <<
+case <label>:
+>>
+
 expression(expression) ::= <<
 <if(expression)><expression>;<endif>
 >>
@@ -179,6 +194,14 @@ throw <expression>;
 
 echo(expressions) ::= <<
 echo <expressions; separator=", ">;
+>>
+
+break(index) ::= <<
+break<if(index)> <index><endif>;
+>>
+
+continue(index) ::= <<
+continue<if(index)> <index><endif>;
 >>
 
 primitiveCast(type, expression)::=<<
