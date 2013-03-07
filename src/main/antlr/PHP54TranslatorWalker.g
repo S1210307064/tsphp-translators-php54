@@ -458,7 +458,7 @@ instruction
 	|	switchCondition 		-> {$switchCondition.st}
 	|	forLoop 			-> {$forLoop.st}
 	|	foreachLoop 			-> {$foreachLoop.st}
-	//|	whileLoop 			-> {$whileLoop.st}
+	|	whileLoop 			-> {$whileLoop.st}
 	//|	doWhileLoop 			-> {$doWhileLoop.st}
 	//|	tryCatch 			-> {$tryCatch.st}
 	|	^(EXPRESSION expression?)	-> expression(expression={$expression.st})
@@ -529,6 +529,10 @@ foreachLoop
 			blockConditional
 		)
 		-> foreach(array={$expression.st}, keyVariableId={$keyVariableId.text}, valueVariableId={$valueVariableId.text}, block={$blockConditional.instructions})
+	;
+
+whileLoop
+	:	^('while' expression blockConditional) -> while(condition={$expression.st}, block={$blockConditional.instructions})
 	;
 
 expression

@@ -34,10 +34,10 @@ import org.junit.runners.Parameterized;
  * @author Robert Stoll <rstoll@tutteli.ch>
  */
 @RunWith(Parameterized.class)
-public class ForeachTest extends ATranslatorTest
+public class WhileTest extends ATranslatorTest
 {
 
-    public ForeachTest(String testString, String expectedResult) {
+    public WhileTest(String testString, String expectedResult) {
         super(testString, expectedResult);
     }
 
@@ -50,38 +50,28 @@ public class ForeachTest extends ATranslatorTest
     public static Collection<Object[]> testStrings() {
         List<Object[]> collection = new ArrayList<>();
         List<String[]> expressions = ExpressionHelper.getExpressions();
-        for (Object[] expression : expressions) {
+       for (Object[] expression : expressions) {
             collection.add(new Object[]{
-                        "foreach(" + expression[0] + " as object $v);",
-                        "foreach (" + expression[1] + " as $v) {\n}"
+                        "while(" + expression[0] + ") $a=1;",
+                        "while (" + expression[1] + ") {\n    $a = 1;\n}"
                     });
+//            collection.add(new Object[]{
+//                        "do $a=1; while(" + expression[0] + ");",
+//                        "(do (cBlock (expr (= $a 1))) " + expression[1] + ")"
+//                    });
         }
         collection.addAll(Arrays.asList(new Object[][]{
+                    {"while( true  ) $a=1;", "while (true) {\n    $a = 1;\n}"},
+                    {"while( true  ){$a=1;}", "while (true) {\n    $a = 1;\n}"},
                     {
-                        "foreach($a as int $k => MyClass $v)$a=1;",
-                        "foreach ($a as $k => $v) {\n    $a = 1;\n}"
+                        "while( true  ){$a=1;int $b=2;}",
+                        "while (true) {\n    $a = 1;\n    $b = 2;\n}"
                     },
-                    {
-                        "foreach($a as float $v) $a=1;",
-                        "foreach ($a as $v) {\n    $a = 1;\n}"
-                    },
-                    {
-                        "foreach($a as string $k => string $v){$a=1;}",
-                        "foreach ($a as $k => $v) {\n    $a = 1;\n}"
-                    },
-                    {
-                        "foreach($a as bool $v) {$a=1;}",
-                        "foreach ($a as $v) {\n    $a = 1;\n}"
-                    },
-                    {
-                        "foreach($a as bool $k=> array $v){$a=1; $b=2;}",
-                        "foreach ($a as $k => $v) {\n    $a = 1;\n    $b = 2;\n}"
-                    },
-                    {
-                        "foreach($a as int $v) {$a=1; $b=3;}",
-                        "foreach ($a as $v) {\n    $a = 1;\n    $b = 3;\n}"
-                    }
+//                    {"do $a=1; while( true  );", "(do (cBlock (expr (= $a 1))) true)"},
+//                    {"do {$a=1;} while( true  );", "(do (cBlock (expr (= $a 1))) true)"},
+//                    {"do {$a=1;$b=2;}while( true  );", "(do (cBlock (expr (= $a 1)) (expr (= $b 2))) true)"}
                 }));
         return collection;
+      
     }
 }

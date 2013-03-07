@@ -126,6 +126,12 @@ foreach (<array> as <if(keyVariableId)><keyVariableId> => <endif><valueVariableI
 }
 >>
 
+while(condition, block) ::= <<
+while (<condition>) {
+    <block; separator="\n">
+}
+>>
+
 expression(expression) ::= <<
 <if(expression)><expression>;<endif>
 >>
