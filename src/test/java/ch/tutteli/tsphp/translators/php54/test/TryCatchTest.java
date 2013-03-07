@@ -31,10 +31,10 @@ import org.junit.runners.Parameterized;
  * @author Robert Stoll <rstoll@tutteli.ch>
  */
 @RunWith(Parameterized.class)
-public class ClassConstantTest extends ATranslatorTest
+public class TryCatchTest extends ATranslatorTest
 {
 
-    public ClassConstantTest(String testString, String expectedResult) {
+    public TryCatchTest(String testString, String expectedResult) {
         super(testString, expectedResult);
     }
 
@@ -46,20 +46,20 @@ public class ClassConstantTest extends ATranslatorTest
     @Parameterized.Parameters
     public static Collection<Object[]> testStrings() {
         return Arrays.asList(new Object[][]{
-                    {"class a{const int a=1;}", "class a {\n    const a = 1;\n}"},
-                    {"class a{const int a=1,b=1;}", "class a {\n    const a = 1, b = 1;\n}"},
                     {
-                        "class a{const int a='hello'; const float b=1;}",
-                        "class a {\n    const a = 'hello';\n    const b = 1;\n}"
+                        "try{$a=1;}catch(\\Exception $e){}",
+                        "try {\n    $a = 1;\n} catch (\\Exception $e) {\n}"
                     },
                     {
-                        "class a{const int a=true; const float b=null;}",
-                        "class a {\n    const a = true;\n    const b = null;\n}"
+                        "try{$a=1;}catch(\\Exception $e){} catch(\\a\\MyException $e){$a=1;$b=2;}",
+                        "try {\n    $a = 1;\n} catch (\\Exception $e) {\n} "
+                            + "catch (\\a\\MyException $e) {\n    $a = 1;\n    $b = 2;\n}"
                     },
-                     {
-                        "class a{const int a=Foo::a; const float b=self::a;}",
-                        "class a {\n    const a = Foo::a;\n    const b = self::a;\n}"
-                    },
+                    {
+                        "try{$a=1;}catch(a $e){} catch(b $e){$a=1;$b=2;}catch(c $e){}",
+                         "try {\n    $a = 1;\n} catch (a $e) {\n} "
+                            + "catch (b $e) {\n    $a = 1;\n    $b = 2;\n} catch (c $e) {\n}"
+                    }
                 });
     }
 }

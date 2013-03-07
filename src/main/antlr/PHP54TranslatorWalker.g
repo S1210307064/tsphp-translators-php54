@@ -53,6 +53,7 @@ public PHP54TranslatorWalker(TreeNodeStream input, IPrecedenceHelper thePreceden
     this(input);
     precedenceHelper = thePrecedenceHelper;
 }
+
 }
 
 compilationUnit	
@@ -154,8 +155,13 @@ constDeclarationList
 	;
 	
 constantAssignment
-	:	^(Identifier v=Int)
-		 -> assign(id={$Identifier}, value={v})
+	:	^(Identifier v=unaryPrimitiveAtom)
+		 -> assign(id={$Identifier}, value={$unaryPrimitiveAtom.st})
+	;
+	
+unaryPrimitiveAtom
+	:	primitiveAtomWithConstant -> {$primitiveAtomWithConstant.st}
+	|	^(UNARY_MINUS primitiveAtomWithConstant) -> unaryPostOperator(operator = {$UNARY_MINUS.text}, expression = {$primitiveAtomWithConstant.st})
 	;
 
 scalarTypes
@@ -460,7 +466,7 @@ instruction
 	|	foreachLoop 			-> {$foreachLoop.st}
 	|	whileLoop 			-> {$whileLoop.st}
 	|	doWhileLoop 			-> {$doWhileLoop.st}
-	//|	tryCatch 			-> {$tryCatch.st}
+	|	tryCatch 			-> {$tryCatch.st}
 	|	^(EXPRESSION expression?)	-> expression(expression={$expression.st})
 	|	^('return' expression?) 	-> return(expression = {$expression.st})
 	|	^('throw' expression)		-> throw(expression = {$expression.st})
@@ -539,6 +545,22 @@ doWhileLoop
 	:	^('do' blockConditional expression) -> doWhile(block={$blockConditional.instructions}, condition={$expression.st})
 	;
 
+tryCatch
+	:	^('try' blockConditional catchBlocks+=catchBlock+) 
+		-> tryCatch(tryBlock={$blockConditional.instructions}, catchBlocks={$catchBlocks})
+	;
+	
+catchBlock
+	:	^('catch'
+			^(VARIABLE_DECLARATION_LIST
+				^(TYPE TYPE_MODIFIER TYPE_NAME)
+				VariableId
+			)
+			blockConditional
+		)
+		-> catchBlock(type={$TYPE_NAME.text}, variableId={$VariableId.text}, block={$blockConditional.instructions})
+	;
+
 expression
 options {backtrack=true;}
 	:   	atom 			-> {$atom.st}
@@ -553,21 +575,20 @@ options {backtrack=true;}
     	;
   
 atom
-	:	primitiveAtom 					-> {$primitiveAtom.st}
+	:	primitiveAtomWithConstant 			-> {$primitiveAtomWithConstant.st}
 	|	^(TypeArray keyValuePairs+=arrayKeyValue*)	-> array(content ={$keyValuePairs})
 	|	VariableId 					-> {%{$VariableId.text}}
 	|	This						-> {%{$This.text}}
-	|	CONSTANT					-> {%{$CONSTANT.text}}
-	|	^(CLASS_STATIC_ACCESS staticAccess CONSTANT)    -> classConstant(accessor={$staticAccess.st}, constant={$CONSTANT.text})
 	;
     	
-primitiveAtom
-@after {$st = %{$start.getText()};}
-	:	Bool
-	|	Int
-	|	Float
-	|	String
-	|	Null
+primitiveAtomWithConstant
+	:	Bool 						-> {%{$Bool.text}}
+	|	Int						-> {%{$Int.text}}
+	|	Float						-> {%{$Float.text}}
+	|	String						-> {%{$String.text}}
+	|	Null						-> {%{$Null.text}}
+	|	CONSTANT					-> {%{$CONSTANT.text}}
+	|	^(CLASS_STATIC_ACCESS staticAccess CONSTANT)    -> classConstant(accessor={$staticAccess.st}, constant={$CONSTANT.text})
 	;
 
 arrayKeyValue
