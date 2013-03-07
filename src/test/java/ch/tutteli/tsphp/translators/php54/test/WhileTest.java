@@ -55,10 +55,10 @@ public class WhileTest extends ATranslatorTest
                         "while(" + expression[0] + ") $a=1;",
                         "while (" + expression[1] + ") {\n    $a = 1;\n}"
                     });
-//            collection.add(new Object[]{
-//                        "do $a=1; while(" + expression[0] + ");",
-//                        "(do (cBlock (expr (= $a 1))) " + expression[1] + ")"
-//                    });
+            collection.add(new Object[]{
+                        "do $a=1; while(" + expression[0] + ");",
+                        "do {\n    $a = 1;\n} while(" + expression[1] + ");"
+                    });
         }
         collection.addAll(Arrays.asList(new Object[][]{
                     {"while( true  ) $a=1;", "while (true) {\n    $a = 1;\n}"},
@@ -67,9 +67,9 @@ public class WhileTest extends ATranslatorTest
                         "while( true  ){$a=1;int $b=2;}",
                         "while (true) {\n    $a = 1;\n    $b = 2;\n}"
                     },
-//                    {"do $a=1; while( true  );", "(do (cBlock (expr (= $a 1))) true)"},
-//                    {"do {$a=1;} while( true  );", "(do (cBlock (expr (= $a 1))) true)"},
-//                    {"do {$a=1;$b=2;}while( true  );", "(do (cBlock (expr (= $a 1)) (expr (= $b 2))) true)"}
+                    {"do $a=1; while( true  );",  "do {\n    $a = 1;\n} while(true);"},
+                    {"do {$a=1;} while( true  );", "do {\n    $a = 1;\n} while(true);"},
+                    {"do {$a=1;$b=2;}while( true  );", "do {\n    $a = 1;\n    $b = 2;\n} while(true);"}
                 }));
         return collection;
       

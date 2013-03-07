@@ -1,4 +1,4 @@
-// $ANTLR 3.x D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g 2013-03-07 02:11:00
+// $ANTLR 3.x D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g 2013-03-07 02:14:48
 
 /*
  * Copyright 2012 Robert Stoll <rstoll@tutteli.ch>
@@ -462,7 +462,7 @@ public static class STAttrMap extends HashMap<String, Object> {
 						do {
 							int alt2=2;
 							int LA2_0 = input.LA(1);
-							if ( (LA2_0==Break||LA2_0==CONSTANT_DECLARATION_LIST||LA2_0==Class||LA2_0==Continue||LA2_0==EXPRESSION||LA2_0==Echo||(LA2_0 >= For && LA2_0 <= Function)||LA2_0==If||LA2_0==Interface||LA2_0==Return||LA2_0==Switch||LA2_0==Throw||LA2_0==Use||LA2_0==VARIABLE_DECLARATION_LIST||LA2_0==While) ) {
+							if ( (LA2_0==Break||LA2_0==CONSTANT_DECLARATION_LIST||LA2_0==Class||LA2_0==Continue||LA2_0==Do||LA2_0==EXPRESSION||LA2_0==Echo||(LA2_0 >= For && LA2_0 <= Function)||LA2_0==If||LA2_0==Interface||LA2_0==Return||LA2_0==Switch||LA2_0==Throw||LA2_0==Use||LA2_0==VARIABLE_DECLARATION_LIST||LA2_0==While) ) {
 								alt2=1;
 							}
 
@@ -566,6 +566,7 @@ public static class STAttrMap extends HashMap<String, Object> {
 				break;
 			case Break:
 			case Continue:
+			case Do:
 			case EXPRESSION:
 			case Echo:
 			case For:
@@ -5258,7 +5259,7 @@ public static class STAttrMap extends HashMap<String, Object> {
 						do {
 							int alt39=2;
 							int LA39_0 = input.LA(1);
-							if ( (LA39_0==Break||LA39_0==Continue||LA39_0==EXPRESSION||LA39_0==Echo||(LA39_0 >= For && LA39_0 <= Foreach)||LA39_0==If||LA39_0==Return||LA39_0==Switch||LA39_0==Throw||LA39_0==VARIABLE_DECLARATION_LIST||LA39_0==While) ) {
+							if ( (LA39_0==Break||LA39_0==Continue||LA39_0==Do||LA39_0==EXPRESSION||LA39_0==Echo||(LA39_0 >= For && LA39_0 <= Foreach)||LA39_0==If||LA39_0==Return||LA39_0==Switch||LA39_0==Throw||LA39_0==VARIABLE_DECLARATION_LIST||LA39_0==While) ) {
 								alt39=1;
 							}
 
@@ -5845,7 +5846,7 @@ public static class STAttrMap extends HashMap<String, Object> {
 
 
 	// $ANTLR start "instruction"
-	// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:455:1: instruction : ( localVariableDeclarationList -> {$localVariableDeclarationList.st}| ifCondition -> {$ifCondition.st}| switchCondition -> {$switchCondition.st}| forLoop -> {$forLoop.st}| foreachLoop -> {$foreachLoop.st}| whileLoop -> {$whileLoop.st}| ^( EXPRESSION ( expression )? ) -> expression(expression=$expression.st)| ^( 'return' ( expression )? ) -> return(expression=$expression.st)| ^( 'throw' expression ) -> throw(expression=$expression.st)| ^( 'echo' (exprs+= expression )+ ) -> echo(expressions=$exprs)| ^( 'break' (index= Int )? ) -> break(index=$index.text)| 'break' -> break(index=null)| ^( 'continue' (index= Int )? ) -> continue(index=$index.text)| 'continue' -> continue(index=null));
+	// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:455:1: instruction : ( localVariableDeclarationList -> {$localVariableDeclarationList.st}| ifCondition -> {$ifCondition.st}| switchCondition -> {$switchCondition.st}| forLoop -> {$forLoop.st}| foreachLoop -> {$foreachLoop.st}| whileLoop -> {$whileLoop.st}| doWhileLoop -> {$doWhileLoop.st}| ^( EXPRESSION ( expression )? ) -> expression(expression=$expression.st)| ^( 'return' ( expression )? ) -> return(expression=$expression.st)| ^( 'throw' expression ) -> throw(expression=$expression.st)| ^( 'echo' (exprs+= expression )+ ) -> echo(expressions=$exprs)| ^( 'break' (index= Int )? ) -> break(index=$index.text)| 'break' -> break(index=null)| ^( 'continue' (index= Int )? ) -> continue(index=$index.text)| 'continue' -> continue(index=null));
 	public final PHP54TranslatorWalker.instruction_return instruction() throws RecognitionException {
 		PHP54TranslatorWalker.instruction_return retval = new PHP54TranslatorWalker.instruction_return();
 		retval.start = input.LT(1);
@@ -5858,13 +5859,14 @@ public static class STAttrMap extends HashMap<String, Object> {
 		TreeRuleReturnScope forLoop78 =null;
 		TreeRuleReturnScope foreachLoop79 =null;
 		TreeRuleReturnScope whileLoop80 =null;
-		TreeRuleReturnScope expression81 =null;
+		TreeRuleReturnScope doWhileLoop81 =null;
 		TreeRuleReturnScope expression82 =null;
 		TreeRuleReturnScope expression83 =null;
+		TreeRuleReturnScope expression84 =null;
 		RuleReturnScope exprs = null;
 		try {
-			// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:456:2: ( localVariableDeclarationList -> {$localVariableDeclarationList.st}| ifCondition -> {$ifCondition.st}| switchCondition -> {$switchCondition.st}| forLoop -> {$forLoop.st}| foreachLoop -> {$foreachLoop.st}| whileLoop -> {$whileLoop.st}| ^( EXPRESSION ( expression )? ) -> expression(expression=$expression.st)| ^( 'return' ( expression )? ) -> return(expression=$expression.st)| ^( 'throw' expression ) -> throw(expression=$expression.st)| ^( 'echo' (exprs+= expression )+ ) -> echo(expressions=$exprs)| ^( 'break' (index= Int )? ) -> break(index=$index.text)| 'break' -> break(index=null)| ^( 'continue' (index= Int )? ) -> continue(index=$index.text)| 'continue' -> continue(index=null))
-			int alt49=14;
+			// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:456:2: ( localVariableDeclarationList -> {$localVariableDeclarationList.st}| ifCondition -> {$ifCondition.st}| switchCondition -> {$switchCondition.st}| forLoop -> {$forLoop.st}| foreachLoop -> {$foreachLoop.st}| whileLoop -> {$whileLoop.st}| doWhileLoop -> {$doWhileLoop.st}| ^( EXPRESSION ( expression )? ) -> expression(expression=$expression.st)| ^( 'return' ( expression )? ) -> return(expression=$expression.st)| ^( 'throw' expression ) -> throw(expression=$expression.st)| ^( 'echo' (exprs+= expression )+ ) -> echo(expressions=$exprs)| ^( 'break' (index= Int )? ) -> break(index=$index.text)| 'break' -> break(index=null)| ^( 'continue' (index= Int )? ) -> continue(index=$index.text)| 'continue' -> continue(index=null))
+			int alt49=15;
 			switch ( input.LA(1) ) {
 			case VARIABLE_DECLARATION_LIST:
 				{
@@ -5896,34 +5898,39 @@ public static class STAttrMap extends HashMap<String, Object> {
 				alt49=6;
 				}
 				break;
-			case EXPRESSION:
+			case Do:
 				{
 				alt49=7;
 				}
 				break;
-			case Return:
+			case EXPRESSION:
 				{
 				alt49=8;
 				}
 				break;
-			case Throw:
+			case Return:
 				{
 				alt49=9;
 				}
 				break;
-			case Echo:
+			case Throw:
 				{
 				alt49=10;
 				}
 				break;
+			case Echo:
+				{
+				alt49=11;
+				}
+				break;
 			case Break:
 				{
-				int LA49_11 = input.LA(2);
-				if ( (LA49_11==DOWN) ) {
-					alt49=11;
-				}
-				else if ( (LA49_11==UP||LA49_11==Break||LA49_11==CONSTANT_DECLARATION_LIST||LA49_11==Class||LA49_11==Continue||LA49_11==EXPRESSION||LA49_11==Echo||(LA49_11 >= For && LA49_11 <= Function)||LA49_11==If||LA49_11==Interface||LA49_11==Return||LA49_11==Switch||LA49_11==Throw||LA49_11==Use||LA49_11==VARIABLE_DECLARATION_LIST||LA49_11==While) ) {
+				int LA49_12 = input.LA(2);
+				if ( (LA49_12==DOWN) ) {
 					alt49=12;
+				}
+				else if ( (LA49_12==UP||LA49_12==Break||LA49_12==CONSTANT_DECLARATION_LIST||LA49_12==Class||LA49_12==Continue||LA49_12==Do||LA49_12==EXPRESSION||LA49_12==Echo||(LA49_12 >= For && LA49_12 <= Function)||LA49_12==If||LA49_12==Interface||LA49_12==Return||LA49_12==Switch||LA49_12==Throw||LA49_12==Use||LA49_12==VARIABLE_DECLARATION_LIST||LA49_12==While) ) {
+					alt49=13;
 				}
 				else {
 					if (state.backtracking>0) {state.failed=true; return retval;}
@@ -5931,7 +5938,7 @@ public static class STAttrMap extends HashMap<String, Object> {
 					try {
 						input.consume();
 						NoViableAltException nvae =
-							new NoViableAltException("", 49, 11, input);
+							new NoViableAltException("", 49, 12, input);
 						throw nvae;
 					} finally {
 						input.rewind(nvaeMark);
@@ -5941,12 +5948,12 @@ public static class STAttrMap extends HashMap<String, Object> {
 				break;
 			case Continue:
 				{
-				int LA49_12 = input.LA(2);
-				if ( (LA49_12==DOWN) ) {
-					alt49=13;
-				}
-				else if ( (LA49_12==UP||LA49_12==Break||LA49_12==CONSTANT_DECLARATION_LIST||LA49_12==Class||LA49_12==Continue||LA49_12==EXPRESSION||LA49_12==Echo||(LA49_12 >= For && LA49_12 <= Function)||LA49_12==If||LA49_12==Interface||LA49_12==Return||LA49_12==Switch||LA49_12==Throw||LA49_12==Use||LA49_12==VARIABLE_DECLARATION_LIST||LA49_12==While) ) {
+				int LA49_13 = input.LA(2);
+				if ( (LA49_13==DOWN) ) {
 					alt49=14;
+				}
+				else if ( (LA49_13==UP||LA49_13==Break||LA49_13==CONSTANT_DECLARATION_LIST||LA49_13==Class||LA49_13==Continue||LA49_13==Do||LA49_13==EXPRESSION||LA49_13==Echo||(LA49_13 >= For && LA49_13 <= Function)||LA49_13==If||LA49_13==Interface||LA49_13==Return||LA49_13==Switch||LA49_13==Throw||LA49_13==Use||LA49_13==VARIABLE_DECLARATION_LIST||LA49_13==While) ) {
+					alt49=15;
 				}
 				else {
 					if (state.backtracking>0) {state.failed=true; return retval;}
@@ -5954,7 +5961,7 @@ public static class STAttrMap extends HashMap<String, Object> {
 					try {
 						input.consume();
 						NoViableAltException nvae =
-							new NoViableAltException("", 49, 12, input);
+							new NoViableAltException("", 49, 13, input);
 						throw nvae;
 					} finally {
 						input.rewind(nvaeMark);
@@ -6084,9 +6091,28 @@ public static class STAttrMap extends HashMap<String, Object> {
 					}
 					break;
 				case 7 :
+					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:462:4: doWhileLoop
+					{
+					pushFollow(FOLLOW_doWhileLoop_in_instruction2631);
+					doWhileLoop81=doWhileLoop();
+					state._fsp--;
+					if (state.failed) return retval;
+					// TEMPLATE REWRITE
+					if ( state.backtracking==0 ) {
+					  // 462:19: -> {$doWhileLoop.st}
+					  {
+					  	retval.st = (doWhileLoop81!=null?((StringTemplate)doWhileLoop81.getTemplate()):null);
+					  }
+
+
+					}
+
+					}
+					break;
+				case 8 :
 					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:464:4: ^( EXPRESSION ( expression )? )
 					{
-					match(input,EXPRESSION,FOLLOW_EXPRESSION_in_instruction2636); if (state.failed) return retval;
+					match(input,EXPRESSION,FOLLOW_EXPRESSION_in_instruction2646); if (state.failed) return retval;
 					if ( input.LA(1)==Token.DOWN ) {
 						match(input, Token.DOWN, null); if (state.failed) return retval;
 						// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:464:17: ( expression )?
@@ -6099,8 +6125,8 @@ public static class STAttrMap extends HashMap<String, Object> {
 							case 1 :
 								// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:464:17: expression
 								{
-								pushFollow(FOLLOW_expression_in_instruction2638);
-								expression81=expression();
+								pushFollow(FOLLOW_expression_in_instruction2648);
+								expression82=expression();
 								state._fsp--;
 								if (state.failed) return retval;
 								}
@@ -6115,7 +6141,7 @@ public static class STAttrMap extends HashMap<String, Object> {
 					if ( state.backtracking==0 ) {
 					  // 464:30: -> expression(expression=$expression.st)
 					  {
-					  	retval.st = templateLib.getInstanceOf("expression",new STAttrMap().put("expression", (expression81!=null?((StringTemplate)expression81.getTemplate()):null)));
+					  	retval.st = templateLib.getInstanceOf("expression",new STAttrMap().put("expression", (expression82!=null?((StringTemplate)expression82.getTemplate()):null)));
 					  }
 
 
@@ -6123,10 +6149,10 @@ public static class STAttrMap extends HashMap<String, Object> {
 
 					}
 					break;
-				case 8 :
+				case 9 :
 					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:465:4: ^( 'return' ( expression )? )
 					{
-					match(input,Return,FOLLOW_Return_in_instruction2655); if (state.failed) return retval;
+					match(input,Return,FOLLOW_Return_in_instruction2665); if (state.failed) return retval;
 					if ( input.LA(1)==Token.DOWN ) {
 						match(input, Token.DOWN, null); if (state.failed) return retval;
 						// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:465:15: ( expression )?
@@ -6139,8 +6165,8 @@ public static class STAttrMap extends HashMap<String, Object> {
 							case 1 :
 								// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:465:15: expression
 								{
-								pushFollow(FOLLOW_expression_in_instruction2657);
-								expression82=expression();
+								pushFollow(FOLLOW_expression_in_instruction2667);
+								expression83=expression();
 								state._fsp--;
 								if (state.failed) return retval;
 								}
@@ -6155,30 +6181,7 @@ public static class STAttrMap extends HashMap<String, Object> {
 					if ( state.backtracking==0 ) {
 					  // 465:29: -> return(expression=$expression.st)
 					  {
-					  	retval.st = templateLib.getInstanceOf("return",new STAttrMap().put("expression", (expression82!=null?((StringTemplate)expression82.getTemplate()):null)));
-					  }
-
-
-					}
-
-					}
-					break;
-				case 9 :
-					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:466:4: ^( 'throw' expression )
-					{
-					match(input,Throw,FOLLOW_Throw_in_instruction2677); if (state.failed) return retval;
-					match(input, Token.DOWN, null); if (state.failed) return retval;
-					pushFollow(FOLLOW_expression_in_instruction2679);
-					expression83=expression();
-					state._fsp--;
-					if (state.failed) return retval;
-					match(input, Token.UP, null); if (state.failed) return retval;
-
-					// TEMPLATE REWRITE
-					if ( state.backtracking==0 ) {
-					  // 466:27: -> throw(expression=$expression.st)
-					  {
-					  	retval.st = templateLib.getInstanceOf("throw",new STAttrMap().put("expression", (expression83!=null?((StringTemplate)expression83.getTemplate()):null)));
+					  	retval.st = templateLib.getInstanceOf("return",new STAttrMap().put("expression", (expression83!=null?((StringTemplate)expression83.getTemplate()):null)));
 					  }
 
 
@@ -6187,9 +6190,32 @@ public static class STAttrMap extends HashMap<String, Object> {
 					}
 					break;
 				case 10 :
+					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:466:4: ^( 'throw' expression )
+					{
+					match(input,Throw,FOLLOW_Throw_in_instruction2687); if (state.failed) return retval;
+					match(input, Token.DOWN, null); if (state.failed) return retval;
+					pushFollow(FOLLOW_expression_in_instruction2689);
+					expression84=expression();
+					state._fsp--;
+					if (state.failed) return retval;
+					match(input, Token.UP, null); if (state.failed) return retval;
+
+					// TEMPLATE REWRITE
+					if ( state.backtracking==0 ) {
+					  // 466:27: -> throw(expression=$expression.st)
+					  {
+					  	retval.st = templateLib.getInstanceOf("throw",new STAttrMap().put("expression", (expression84!=null?((StringTemplate)expression84.getTemplate()):null)));
+					  }
+
+
+					}
+
+					}
+					break;
+				case 11 :
 					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:467:4: ^( 'echo' (exprs+= expression )+ )
 					{
-					match(input,Echo,FOLLOW_Echo_in_instruction2698); if (state.failed) return retval;
+					match(input,Echo,FOLLOW_Echo_in_instruction2708); if (state.failed) return retval;
 					match(input, Token.DOWN, null); if (state.failed) return retval;
 					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:467:18: (exprs+= expression )+
 					int cnt46=0;
@@ -6205,7 +6231,7 @@ public static class STAttrMap extends HashMap<String, Object> {
 						case 1 :
 							// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:467:18: exprs+= expression
 							{
-							pushFollow(FOLLOW_expression_in_instruction2702);
+							pushFollow(FOLLOW_expression_in_instruction2712);
 							exprs=expression();
 							state._fsp--;
 							if (state.failed) return retval;
@@ -6238,10 +6264,10 @@ public static class STAttrMap extends HashMap<String, Object> {
 
 					}
 					break;
-				case 11 :
+				case 12 :
 					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:468:4: ^( 'break' (index= Int )? )
 					{
-					match(input,Break,FOLLOW_Break_in_instruction2721); if (state.failed) return retval;
+					match(input,Break,FOLLOW_Break_in_instruction2731); if (state.failed) return retval;
 					if ( input.LA(1)==Token.DOWN ) {
 						match(input, Token.DOWN, null); if (state.failed) return retval;
 						// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:468:14: (index= Int )?
@@ -6254,7 +6280,7 @@ public static class STAttrMap extends HashMap<String, Object> {
 							case 1 :
 								// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:468:15: index= Int
 								{
-								index=(ITSPHPAst)match(input,Int,FOLLOW_Int_in_instruction2726); if (state.failed) return retval;
+								index=(ITSPHPAst)match(input,Int,FOLLOW_Int_in_instruction2736); if (state.failed) return retval;
 								}
 								break;
 
@@ -6275,10 +6301,10 @@ public static class STAttrMap extends HashMap<String, Object> {
 
 					}
 					break;
-				case 12 :
+				case 13 :
 					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:469:4: 'break'
 					{
-					match(input,Break,FOLLOW_Break_in_instruction2744); if (state.failed) return retval;
+					match(input,Break,FOLLOW_Break_in_instruction2754); if (state.failed) return retval;
 					// TEMPLATE REWRITE
 					if ( state.backtracking==0 ) {
 					  // 469:15: -> break(index=null)
@@ -6291,10 +6317,10 @@ public static class STAttrMap extends HashMap<String, Object> {
 
 					}
 					break;
-				case 13 :
+				case 14 :
 					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:470:4: ^( 'continue' (index= Int )? )
 					{
-					match(input,Continue,FOLLOW_Continue_in_instruction2762); if (state.failed) return retval;
+					match(input,Continue,FOLLOW_Continue_in_instruction2772); if (state.failed) return retval;
 					if ( input.LA(1)==Token.DOWN ) {
 						match(input, Token.DOWN, null); if (state.failed) return retval;
 						// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:470:17: (index= Int )?
@@ -6307,7 +6333,7 @@ public static class STAttrMap extends HashMap<String, Object> {
 							case 1 :
 								// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:470:18: index= Int
 								{
-								index=(ITSPHPAst)match(input,Int,FOLLOW_Int_in_instruction2767); if (state.failed) return retval;
+								index=(ITSPHPAst)match(input,Int,FOLLOW_Int_in_instruction2777); if (state.failed) return retval;
 								}
 								break;
 
@@ -6328,10 +6354,10 @@ public static class STAttrMap extends HashMap<String, Object> {
 
 					}
 					break;
-				case 14 :
+				case 15 :
 					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:471:4: 'continue'
 					{
-					match(input,Continue,FOLLOW_Continue_in_instruction2784); if (state.failed) return retval;
+					match(input,Continue,FOLLOW_Continue_in_instruction2794); if (state.failed) return retval;
 					// TEMPLATE REWRITE
 					if ( state.backtracking==0 ) {
 					  // 471:17: -> continue(index=null)
@@ -6374,19 +6400,19 @@ public static class STAttrMap extends HashMap<String, Object> {
 
 		TreeRuleReturnScope ifBlock =null;
 		TreeRuleReturnScope elseBlock =null;
-		TreeRuleReturnScope expression84 =null;
+		TreeRuleReturnScope expression85 =null;
 
 		try {
 			// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:475:2: ( ^( 'if' expression ifBlock= blockConditional (elseBlock= blockConditional )? ) -> if(condition=$expression.stifBlock=$ifBlock.instructionselseBlock=$elseBlock.instructions))
 			// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:475:4: ^( 'if' expression ifBlock= blockConditional (elseBlock= blockConditional )? )
 			{
-			match(input,If,FOLLOW_If_in_ifCondition2807); if (state.failed) return retval;
+			match(input,If,FOLLOW_If_in_ifCondition2817); if (state.failed) return retval;
 			match(input, Token.DOWN, null); if (state.failed) return retval;
-			pushFollow(FOLLOW_expression_in_ifCondition2813);
-			expression84=expression();
+			pushFollow(FOLLOW_expression_in_ifCondition2823);
+			expression85=expression();
 			state._fsp--;
 			if (state.failed) return retval;
-			pushFollow(FOLLOW_blockConditional_in_ifCondition2821);
+			pushFollow(FOLLOW_blockConditional_in_ifCondition2831);
 			ifBlock=blockConditional();
 			state._fsp--;
 			if (state.failed) return retval;
@@ -6400,7 +6426,7 @@ public static class STAttrMap extends HashMap<String, Object> {
 				case 1 :
 					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:478:13: elseBlock= blockConditional
 					{
-					pushFollow(FOLLOW_blockConditional_in_ifCondition2828);
+					pushFollow(FOLLOW_blockConditional_in_ifCondition2838);
 					elseBlock=blockConditional();
 					state._fsp--;
 					if (state.failed) return retval;
@@ -6415,7 +6441,7 @@ public static class STAttrMap extends HashMap<String, Object> {
 			if ( state.backtracking==0 ) {
 			  // 480:3: -> if(condition=$expression.stifBlock=$ifBlock.instructionselseBlock=$elseBlock.instructions)
 			  {
-			  	retval.st = templateLib.getInstanceOf("if",new STAttrMap().put("condition", (expression84!=null?((StringTemplate)expression84.getTemplate()):null)).put("ifBlock", (ifBlock!=null?((PHP54TranslatorWalker.blockConditional_return)ifBlock).instructions:null)).put("elseBlock", (elseBlock!=null?((PHP54TranslatorWalker.blockConditional_return)elseBlock).instructions:null)));
+			  	retval.st = templateLib.getInstanceOf("if",new STAttrMap().put("condition", (expression85!=null?((StringTemplate)expression85.getTemplate()):null)).put("ifBlock", (ifBlock!=null?((PHP54TranslatorWalker.blockConditional_return)ifBlock).instructions:null)).put("elseBlock", (elseBlock!=null?((PHP54TranslatorWalker.blockConditional_return)elseBlock).instructions:null)));
 			  }
 
 
@@ -6456,7 +6482,7 @@ public static class STAttrMap extends HashMap<String, Object> {
 			// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:484:2: ( ^( BLOCK_CONDITIONAL (instr+= instruction )* ) )
 			// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:484:4: ^( BLOCK_CONDITIONAL (instr+= instruction )* )
 			{
-			match(input,BLOCK_CONDITIONAL,FOLLOW_BLOCK_CONDITIONAL_in_blockConditional2869); if (state.failed) return retval;
+			match(input,BLOCK_CONDITIONAL,FOLLOW_BLOCK_CONDITIONAL_in_blockConditional2879); if (state.failed) return retval;
 			if ( input.LA(1)==Token.DOWN ) {
 				match(input, Token.DOWN, null); if (state.failed) return retval;
 				// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:484:29: (instr+= instruction )*
@@ -6464,7 +6490,7 @@ public static class STAttrMap extends HashMap<String, Object> {
 				do {
 					int alt51=2;
 					int LA51_0 = input.LA(1);
-					if ( (LA51_0==Break||LA51_0==Continue||LA51_0==EXPRESSION||LA51_0==Echo||(LA51_0 >= For && LA51_0 <= Foreach)||LA51_0==If||LA51_0==Return||LA51_0==Switch||LA51_0==Throw||LA51_0==VARIABLE_DECLARATION_LIST||LA51_0==While) ) {
+					if ( (LA51_0==Break||LA51_0==Continue||LA51_0==Do||LA51_0==EXPRESSION||LA51_0==Echo||(LA51_0 >= For && LA51_0 <= Foreach)||LA51_0==If||LA51_0==Return||LA51_0==Switch||LA51_0==Throw||LA51_0==VARIABLE_DECLARATION_LIST||LA51_0==While) ) {
 						alt51=1;
 					}
 
@@ -6472,7 +6498,7 @@ public static class STAttrMap extends HashMap<String, Object> {
 					case 1 :
 						// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:484:29: instr+= instruction
 						{
-						pushFollow(FOLLOW_instruction_in_blockConditional2873);
+						pushFollow(FOLLOW_instruction_in_blockConditional2883);
 						instr=instruction();
 						state._fsp--;
 						if (state.failed) return retval;
@@ -6519,16 +6545,16 @@ public static class STAttrMap extends HashMap<String, Object> {
 		retval.start = input.LT(1);
 
 		List<Object> list_content=null;
-		TreeRuleReturnScope expression85 =null;
+		TreeRuleReturnScope expression86 =null;
 		RuleReturnScope content = null;
 		try {
 			// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:488:2: ( ^( 'switch' expression (content+= switchContent )* ) -> switch(condition=$expression.stcontent=$content))
 			// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:488:4: ^( 'switch' expression (content+= switchContent )* )
 			{
-			match(input,Switch,FOLLOW_Switch_in_switchCondition2889); if (state.failed) return retval;
+			match(input,Switch,FOLLOW_Switch_in_switchCondition2899); if (state.failed) return retval;
 			match(input, Token.DOWN, null); if (state.failed) return retval;
-			pushFollow(FOLLOW_expression_in_switchCondition2891);
-			expression85=expression();
+			pushFollow(FOLLOW_expression_in_switchCondition2901);
+			expression86=expression();
 			state._fsp--;
 			if (state.failed) return retval;
 			// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:488:33: (content+= switchContent )*
@@ -6544,7 +6570,7 @@ public static class STAttrMap extends HashMap<String, Object> {
 				case 1 :
 					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:488:33: content+= switchContent
 					{
-					pushFollow(FOLLOW_switchContent_in_switchCondition2895);
+					pushFollow(FOLLOW_switchContent_in_switchCondition2905);
 					content=switchContent();
 					state._fsp--;
 					if (state.failed) return retval;
@@ -6564,7 +6590,7 @@ public static class STAttrMap extends HashMap<String, Object> {
 			if ( state.backtracking==0 ) {
 			  // 488:51: -> switch(condition=$expression.stcontent=$content)
 			  {
-			  	retval.st = templateLib.getInstanceOf("switch",new STAttrMap().put("condition", (expression85!=null?((StringTemplate)expression85.getTemplate()):null)).put("content", list_content));
+			  	retval.st = templateLib.getInstanceOf("switch",new STAttrMap().put("condition", (expression86!=null?((StringTemplate)expression86.getTemplate()):null)).put("content", list_content));
 			  }
 
 
@@ -6599,13 +6625,13 @@ public static class STAttrMap extends HashMap<String, Object> {
 		retval.start = input.LT(1);
 
 		List<Object> list_labels=null;
-		TreeRuleReturnScope blockConditional86 =null;
+		TreeRuleReturnScope blockConditional87 =null;
 		RuleReturnScope labels = null;
 		try {
 			// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:492:2: ( ^( SWITCH_CASES (labels+= caseLabel )+ ) blockConditional -> switchContent(labels=$labelsblock=$blockConditional.instructions))
 			// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:492:4: ^( SWITCH_CASES (labels+= caseLabel )+ ) blockConditional
 			{
-			match(input,SWITCH_CASES,FOLLOW_SWITCH_CASES_in_switchContent2923); if (state.failed) return retval;
+			match(input,SWITCH_CASES,FOLLOW_SWITCH_CASES_in_switchContent2933); if (state.failed) return retval;
 			match(input, Token.DOWN, null); if (state.failed) return retval;
 			// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:492:25: (labels+= caseLabel )+
 			int cnt53=0;
@@ -6621,7 +6647,7 @@ public static class STAttrMap extends HashMap<String, Object> {
 				case 1 :
 					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:492:25: labels+= caseLabel
 					{
-					pushFollow(FOLLOW_caseLabel_in_switchContent2927);
+					pushFollow(FOLLOW_caseLabel_in_switchContent2937);
 					labels=caseLabel();
 					state._fsp--;
 					if (state.failed) return retval;
@@ -6642,15 +6668,15 @@ public static class STAttrMap extends HashMap<String, Object> {
 
 			match(input, Token.UP, null); if (state.failed) return retval;
 
-			pushFollow(FOLLOW_blockConditional_in_switchContent2931);
-			blockConditional86=blockConditional();
+			pushFollow(FOLLOW_blockConditional_in_switchContent2941);
+			blockConditional87=blockConditional();
 			state._fsp--;
 			if (state.failed) return retval;
 			// TEMPLATE REWRITE
 			if ( state.backtracking==0 ) {
 			  // 493:3: -> switchContent(labels=$labelsblock=$blockConditional.instructions)
 			  {
-			  	retval.st = templateLib.getInstanceOf("switchContent",new STAttrMap().put("labels", list_labels).put("block", (blockConditional86!=null?((PHP54TranslatorWalker.blockConditional_return)blockConditional86).instructions:null)));
+			  	retval.st = templateLib.getInstanceOf("switchContent",new STAttrMap().put("labels", list_labels).put("block", (blockConditional87!=null?((PHP54TranslatorWalker.blockConditional_return)blockConditional87).instructions:null)));
 			  }
 
 
@@ -6684,8 +6710,8 @@ public static class STAttrMap extends HashMap<String, Object> {
 		PHP54TranslatorWalker.caseLabel_return retval = new PHP54TranslatorWalker.caseLabel_return();
 		retval.start = input.LT(1);
 
-		ITSPHPAst Default88=null;
-		TreeRuleReturnScope expression87 =null;
+		ITSPHPAst Default89=null;
+		TreeRuleReturnScope expression88 =null;
 
 		try {
 			// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:497:2: ( expression -> caseLabel(label=$expression.st)| Default -> {%{$Default.text+\":\"}})
@@ -6707,15 +6733,15 @@ public static class STAttrMap extends HashMap<String, Object> {
 				case 1 :
 					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:497:4: expression
 					{
-					pushFollow(FOLLOW_expression_in_caseLabel2959);
-					expression87=expression();
+					pushFollow(FOLLOW_expression_in_caseLabel2969);
+					expression88=expression();
 					state._fsp--;
 					if (state.failed) return retval;
 					// TEMPLATE REWRITE
 					if ( state.backtracking==0 ) {
 					  // 497:16: -> caseLabel(label=$expression.st)
 					  {
-					  	retval.st = templateLib.getInstanceOf("caseLabel",new STAttrMap().put("label", (expression87!=null?((StringTemplate)expression87.getTemplate()):null)));
+					  	retval.st = templateLib.getInstanceOf("caseLabel",new STAttrMap().put("label", (expression88!=null?((StringTemplate)expression88.getTemplate()):null)));
 					  }
 
 
@@ -6726,12 +6752,12 @@ public static class STAttrMap extends HashMap<String, Object> {
 				case 2 :
 					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:498:4: Default
 					{
-					Default88=(ITSPHPAst)match(input,Default,FOLLOW_Default_in_caseLabel2974); if (state.failed) return retval;
+					Default89=(ITSPHPAst)match(input,Default,FOLLOW_Default_in_caseLabel2984); if (state.failed) return retval;
 					// TEMPLATE REWRITE
 					if ( state.backtracking==0 ) {
 					  // 498:13: -> {%{$Default.text+\":\"}}
 					  {
-					  	retval.st = new StringTemplate(templateLib,(Default88!=null?Default88.getText():null)+":");
+					  	retval.st = new StringTemplate(templateLib,(Default89!=null?Default89.getText():null)+":");
 					  }
 
 
@@ -6770,13 +6796,13 @@ public static class STAttrMap extends HashMap<String, Object> {
 		TreeRuleReturnScope init =null;
 		TreeRuleReturnScope condition =null;
 		TreeRuleReturnScope update =null;
-		TreeRuleReturnScope blockConditional89 =null;
+		TreeRuleReturnScope blockConditional90 =null;
 
 		try {
 			// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:502:2: ( ^( 'for' (init= variableDeclarationList |init= expressionList[true] ) condition= expressionList[true] update= expressionList[false] blockConditional ) -> for(init=$init.stcondition=$condition.stupdate=$update.stblock=$blockConditional.instructions))
 			// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:502:4: ^( 'for' (init= variableDeclarationList |init= expressionList[true] ) condition= expressionList[true] update= expressionList[false] blockConditional )
 			{
-			match(input,For,FOLLOW_For_in_forLoop2991); if (state.failed) return retval;
+			match(input,For,FOLLOW_For_in_forLoop3001); if (state.failed) return retval;
 			match(input, Token.DOWN, null); if (state.failed) return retval;
 			// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:503:4: (init= variableDeclarationList |init= expressionList[true] )
 			int alt55=2;
@@ -6797,7 +6823,7 @@ public static class STAttrMap extends HashMap<String, Object> {
 				case 1 :
 					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:503:5: init= variableDeclarationList
 					{
-					pushFollow(FOLLOW_variableDeclarationList_in_forLoop3000);
+					pushFollow(FOLLOW_variableDeclarationList_in_forLoop3010);
 					init=variableDeclarationList();
 					state._fsp--;
 					if (state.failed) return retval;
@@ -6806,7 +6832,7 @@ public static class STAttrMap extends HashMap<String, Object> {
 				case 2 :
 					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:503:34: init= expressionList[true]
 					{
-					pushFollow(FOLLOW_expressionList_in_forLoop3004);
+					pushFollow(FOLLOW_expressionList_in_forLoop3014);
 					init=expressionList(true);
 					state._fsp--;
 					if (state.failed) return retval;
@@ -6815,16 +6841,16 @@ public static class STAttrMap extends HashMap<String, Object> {
 
 			}
 
-			pushFollow(FOLLOW_expressionList_in_forLoop3013);
+			pushFollow(FOLLOW_expressionList_in_forLoop3023);
 			condition=expressionList(true);
 			state._fsp--;
 			if (state.failed) return retval;
-			pushFollow(FOLLOW_expressionList_in_forLoop3021);
+			pushFollow(FOLLOW_expressionList_in_forLoop3031);
 			update=expressionList(false);
 			state._fsp--;
 			if (state.failed) return retval;
-			pushFollow(FOLLOW_blockConditional_in_forLoop3027);
-			blockConditional89=blockConditional();
+			pushFollow(FOLLOW_blockConditional_in_forLoop3037);
+			blockConditional90=blockConditional();
 			state._fsp--;
 			if (state.failed) return retval;
 			match(input, Token.UP, null); if (state.failed) return retval;
@@ -6833,7 +6859,7 @@ public static class STAttrMap extends HashMap<String, Object> {
 			if ( state.backtracking==0 ) {
 			  // 508:3: -> for(init=$init.stcondition=$condition.stupdate=$update.stblock=$blockConditional.instructions)
 			  {
-			  	retval.st = templateLib.getInstanceOf("for",new STAttrMap().put("init", (init!=null?((StringTemplate)init.getTemplate()):null)).put("condition", (condition!=null?((StringTemplate)condition.getTemplate()):null)).put("update", (update!=null?((StringTemplate)update.getTemplate()):null)).put("block", (blockConditional89!=null?((PHP54TranslatorWalker.blockConditional_return)blockConditional89).instructions:null)));
+			  	retval.st = templateLib.getInstanceOf("for",new STAttrMap().put("init", (init!=null?((StringTemplate)init.getTemplate()):null)).put("condition", (condition!=null?((StringTemplate)condition.getTemplate()):null)).put("update", (update!=null?((StringTemplate)update.getTemplate()):null)).put("block", (blockConditional90!=null?((PHP54TranslatorWalker.blockConditional_return)blockConditional90).instructions:null)));
 			  }
 
 
@@ -6904,7 +6930,7 @@ public static class STAttrMap extends HashMap<String, Object> {
 				case 1 :
 					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:512:4: ^( EXPRESSION_LIST (expr+= expression )* )
 					{
-					match(input,EXPRESSION_LIST,FOLLOW_EXPRESSION_LIST_in_expressionList3071); if (state.failed) return retval;
+					match(input,EXPRESSION_LIST,FOLLOW_EXPRESSION_LIST_in_expressionList3081); if (state.failed) return retval;
 					if ( input.LA(1)==Token.DOWN ) {
 						match(input, Token.DOWN, null); if (state.failed) return retval;
 						// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:512:26: (expr+= expression )*
@@ -6920,7 +6946,7 @@ public static class STAttrMap extends HashMap<String, Object> {
 							case 1 :
 								// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:512:26: expr+= expression
 								{
-								pushFollow(FOLLOW_expression_in_expressionList3075);
+								pushFollow(FOLLOW_expression_in_expressionList3085);
 								expr=expression();
 								state._fsp--;
 								if (state.failed) return retval;
@@ -6952,7 +6978,7 @@ public static class STAttrMap extends HashMap<String, Object> {
 				case 2 :
 					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:513:4: EXPRESSION_LIST
 					{
-					match(input,EXPRESSION_LIST,FOLLOW_EXPRESSION_LIST_in_expressionList3096); if (state.failed) return retval;
+					match(input,EXPRESSION_LIST,FOLLOW_EXPRESSION_LIST_in_expressionList3106); if (state.failed) return retval;
 					// TEMPLATE REWRITE
 					if ( state.backtracking==0 ) {
 					  // 513:20: -> expressionList(expressions=nullsemicolonAtTheEnd=semicolonAtTheEnd)
@@ -6995,17 +7021,17 @@ public static class STAttrMap extends HashMap<String, Object> {
 
 		ITSPHPAst keyVariableId=null;
 		ITSPHPAst valueVariableId=null;
-		TreeRuleReturnScope expression90 =null;
-		TreeRuleReturnScope blockConditional91 =null;
+		TreeRuleReturnScope expression91 =null;
+		TreeRuleReturnScope blockConditional92 =null;
 
 		try {
 			// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:517:2: ( ^( 'foreach' expression ( ^( VARIABLE_DECLARATION_LIST ^( TYPE TYPE_MODIFIER scalarTypes ) keyVariableId= VariableId ) )? ^( VARIABLE_DECLARATION_LIST ^( TYPE TYPE_MODIFIER allTypes ) valueVariableId= VariableId ) blockConditional ) -> foreach(array=$expression.stkeyVariableId=$keyVariableId.textvalueVariableId=$valueVariableId.textblock=$blockConditional.instructions))
 			// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:517:4: ^( 'foreach' expression ( ^( VARIABLE_DECLARATION_LIST ^( TYPE TYPE_MODIFIER scalarTypes ) keyVariableId= VariableId ) )? ^( VARIABLE_DECLARATION_LIST ^( TYPE TYPE_MODIFIER allTypes ) valueVariableId= VariableId ) blockConditional )
 			{
-			match(input,Foreach,FOLLOW_Foreach_in_foreachLoop3123); if (state.failed) return retval;
+			match(input,Foreach,FOLLOW_Foreach_in_foreachLoop3133); if (state.failed) return retval;
 			match(input, Token.DOWN, null); if (state.failed) return retval;
-			pushFollow(FOLLOW_expression_in_foreachLoop3129);
-			expression90=expression();
+			pushFollow(FOLLOW_expression_in_foreachLoop3139);
+			expression91=expression();
 			state._fsp--;
 			if (state.failed) return retval;
 			// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:522:4: ( ^( VARIABLE_DECLARATION_LIST ^( TYPE TYPE_MODIFIER scalarTypes ) keyVariableId= VariableId ) )?
@@ -7045,18 +7071,18 @@ public static class STAttrMap extends HashMap<String, Object> {
 				case 1 :
 					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:522:6: ^( VARIABLE_DECLARATION_LIST ^( TYPE TYPE_MODIFIER scalarTypes ) keyVariableId= VariableId )
 					{
-					match(input,VARIABLE_DECLARATION_LIST,FOLLOW_VARIABLE_DECLARATION_LIST_in_foreachLoop3149); if (state.failed) return retval;
+					match(input,VARIABLE_DECLARATION_LIST,FOLLOW_VARIABLE_DECLARATION_LIST_in_foreachLoop3159); if (state.failed) return retval;
 					match(input, Token.DOWN, null); if (state.failed) return retval;
-					match(input,TYPE,FOLLOW_TYPE_in_foreachLoop3157); if (state.failed) return retval;
+					match(input,TYPE,FOLLOW_TYPE_in_foreachLoop3167); if (state.failed) return retval;
 					match(input, Token.DOWN, null); if (state.failed) return retval;
-					match(input,TYPE_MODIFIER,FOLLOW_TYPE_MODIFIER_in_foreachLoop3159); if (state.failed) return retval;
-					pushFollow(FOLLOW_scalarTypes_in_foreachLoop3161);
+					match(input,TYPE_MODIFIER,FOLLOW_TYPE_MODIFIER_in_foreachLoop3169); if (state.failed) return retval;
+					pushFollow(FOLLOW_scalarTypes_in_foreachLoop3171);
 					scalarTypes();
 					state._fsp--;
 					if (state.failed) return retval;
 					match(input, Token.UP, null); if (state.failed) return retval;
 
-					keyVariableId=(ITSPHPAst)match(input,VariableId,FOLLOW_VariableId_in_foreachLoop3172); if (state.failed) return retval;
+					keyVariableId=(ITSPHPAst)match(input,VariableId,FOLLOW_VariableId_in_foreachLoop3182); if (state.failed) return retval;
 					match(input, Token.UP, null); if (state.failed) return retval;
 
 					}
@@ -7064,22 +7090,22 @@ public static class STAttrMap extends HashMap<String, Object> {
 
 			}
 
-			match(input,VARIABLE_DECLARATION_LIST,FOLLOW_VARIABLE_DECLARATION_LIST_in_foreachLoop3195); if (state.failed) return retval;
+			match(input,VARIABLE_DECLARATION_LIST,FOLLOW_VARIABLE_DECLARATION_LIST_in_foreachLoop3205); if (state.failed) return retval;
 			match(input, Token.DOWN, null); if (state.failed) return retval;
-			match(input,TYPE,FOLLOW_TYPE_in_foreachLoop3198); if (state.failed) return retval;
+			match(input,TYPE,FOLLOW_TYPE_in_foreachLoop3208); if (state.failed) return retval;
 			match(input, Token.DOWN, null); if (state.failed) return retval;
-			match(input,TYPE_MODIFIER,FOLLOW_TYPE_MODIFIER_in_foreachLoop3200); if (state.failed) return retval;
-			pushFollow(FOLLOW_allTypes_in_foreachLoop3202);
+			match(input,TYPE_MODIFIER,FOLLOW_TYPE_MODIFIER_in_foreachLoop3210); if (state.failed) return retval;
+			pushFollow(FOLLOW_allTypes_in_foreachLoop3212);
 			allTypes();
 			state._fsp--;
 			if (state.failed) return retval;
 			match(input, Token.UP, null); if (state.failed) return retval;
 
-			valueVariableId=(ITSPHPAst)match(input,VariableId,FOLLOW_VariableId_in_foreachLoop3207); if (state.failed) return retval;
+			valueVariableId=(ITSPHPAst)match(input,VariableId,FOLLOW_VariableId_in_foreachLoop3217); if (state.failed) return retval;
 			match(input, Token.UP, null); if (state.failed) return retval;
 
-			pushFollow(FOLLOW_blockConditional_in_foreachLoop3214);
-			blockConditional91=blockConditional();
+			pushFollow(FOLLOW_blockConditional_in_foreachLoop3224);
+			blockConditional92=blockConditional();
 			state._fsp--;
 			if (state.failed) return retval;
 			match(input, Token.UP, null); if (state.failed) return retval;
@@ -7088,7 +7114,7 @@ public static class STAttrMap extends HashMap<String, Object> {
 			if ( state.backtracking==0 ) {
 			  // 531:3: -> foreach(array=$expression.stkeyVariableId=$keyVariableId.textvalueVariableId=$valueVariableId.textblock=$blockConditional.instructions)
 			  {
-			  	retval.st = templateLib.getInstanceOf("foreach",new STAttrMap().put("array", (expression90!=null?((StringTemplate)expression90.getTemplate()):null)).put("keyVariableId", (keyVariableId!=null?keyVariableId.getText():null)).put("valueVariableId", (valueVariableId!=null?valueVariableId.getText():null)).put("block", (blockConditional91!=null?((PHP54TranslatorWalker.blockConditional_return)blockConditional91).instructions:null)));
+			  	retval.st = templateLib.getInstanceOf("foreach",new STAttrMap().put("array", (expression91!=null?((StringTemplate)expression91.getTemplate()):null)).put("keyVariableId", (keyVariableId!=null?keyVariableId.getText():null)).put("valueVariableId", (valueVariableId!=null?valueVariableId.getText():null)).put("block", (blockConditional92!=null?((PHP54TranslatorWalker.blockConditional_return)blockConditional92).instructions:null)));
 			  }
 
 
@@ -7122,21 +7148,21 @@ public static class STAttrMap extends HashMap<String, Object> {
 		PHP54TranslatorWalker.whileLoop_return retval = new PHP54TranslatorWalker.whileLoop_return();
 		retval.start = input.LT(1);
 
-		TreeRuleReturnScope expression92 =null;
-		TreeRuleReturnScope blockConditional93 =null;
+		TreeRuleReturnScope expression93 =null;
+		TreeRuleReturnScope blockConditional94 =null;
 
 		try {
 			// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:535:2: ( ^( 'while' expression blockConditional ) -> while(condition=$expression.stblock=$blockConditional.instructions))
 			// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:535:4: ^( 'while' expression blockConditional )
 			{
-			match(input,While,FOLLOW_While_in_whileLoop3256); if (state.failed) return retval;
+			match(input,While,FOLLOW_While_in_whileLoop3266); if (state.failed) return retval;
 			match(input, Token.DOWN, null); if (state.failed) return retval;
-			pushFollow(FOLLOW_expression_in_whileLoop3258);
-			expression92=expression();
+			pushFollow(FOLLOW_expression_in_whileLoop3268);
+			expression93=expression();
 			state._fsp--;
 			if (state.failed) return retval;
-			pushFollow(FOLLOW_blockConditional_in_whileLoop3260);
-			blockConditional93=blockConditional();
+			pushFollow(FOLLOW_blockConditional_in_whileLoop3270);
+			blockConditional94=blockConditional();
 			state._fsp--;
 			if (state.failed) return retval;
 			match(input, Token.UP, null); if (state.failed) return retval;
@@ -7145,7 +7171,7 @@ public static class STAttrMap extends HashMap<String, Object> {
 			if ( state.backtracking==0 ) {
 			  // 535:43: -> while(condition=$expression.stblock=$blockConditional.instructions)
 			  {
-			  	retval.st = templateLib.getInstanceOf("while",new STAttrMap().put("condition", (expression92!=null?((StringTemplate)expression92.getTemplate()):null)).put("block", (blockConditional93!=null?((PHP54TranslatorWalker.blockConditional_return)blockConditional93).instructions:null)));
+			  	retval.st = templateLib.getInstanceOf("while",new STAttrMap().put("condition", (expression93!=null?((StringTemplate)expression93.getTemplate()):null)).put("block", (blockConditional94!=null?((PHP54TranslatorWalker.blockConditional_return)blockConditional94).instructions:null)));
 			  }
 
 
@@ -7166,6 +7192,63 @@ public static class STAttrMap extends HashMap<String, Object> {
 	// $ANTLR end "whileLoop"
 
 
+	public static class doWhileLoop_return extends TreeRuleReturnScope {
+		public StringTemplate st;
+		public Object getTemplate() { return st; }
+		public String toString() { return st==null?null:st.toString(); }
+	};
+
+
+	// $ANTLR start "doWhileLoop"
+	// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:538:1: doWhileLoop : ^( 'do' blockConditional expression ) -> doWhile(block=$blockConditional.instructionscondition=$expression.st);
+	public final PHP54TranslatorWalker.doWhileLoop_return doWhileLoop() throws RecognitionException {
+		PHP54TranslatorWalker.doWhileLoop_return retval = new PHP54TranslatorWalker.doWhileLoop_return();
+		retval.start = input.LT(1);
+
+		TreeRuleReturnScope blockConditional95 =null;
+		TreeRuleReturnScope expression96 =null;
+
+		try {
+			// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:539:2: ( ^( 'do' blockConditional expression ) -> doWhile(block=$blockConditional.instructionscondition=$expression.st))
+			// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:539:4: ^( 'do' blockConditional expression )
+			{
+			match(input,Do,FOLLOW_Do_in_doWhileLoop3297); if (state.failed) return retval;
+			match(input, Token.DOWN, null); if (state.failed) return retval;
+			pushFollow(FOLLOW_blockConditional_in_doWhileLoop3299);
+			blockConditional95=blockConditional();
+			state._fsp--;
+			if (state.failed) return retval;
+			pushFollow(FOLLOW_expression_in_doWhileLoop3301);
+			expression96=expression();
+			state._fsp--;
+			if (state.failed) return retval;
+			match(input, Token.UP, null); if (state.failed) return retval;
+
+			// TEMPLATE REWRITE
+			if ( state.backtracking==0 ) {
+			  // 539:40: -> doWhile(block=$blockConditional.instructionscondition=$expression.st)
+			  {
+			  	retval.st = templateLib.getInstanceOf("doWhile",new STAttrMap().put("block", (blockConditional95!=null?((PHP54TranslatorWalker.blockConditional_return)blockConditional95).instructions:null)).put("condition", (expression96!=null?((StringTemplate)expression96.getTemplate()):null)));
+			  }
+
+
+			}
+
+			}
+
+		}
+		catch (RecognitionException re) {
+			reportError(re);
+			recover(input,re);
+		}
+		finally {
+			// do for sure before leaving
+		}
+		return retval;
+	}
+	// $ANTLR end "doWhileLoop"
+
+
 	public static class expression_return extends TreeRuleReturnScope {
 		public StringTemplate st;
 		public Object getTemplate() { return st; }
@@ -7174,23 +7257,23 @@ public static class STAttrMap extends HashMap<String, Object> {
 
 
 	// $ANTLR start "expression"
-	// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:538:1: expression options {backtrack=true; } : ( atom -> {$atom.st}| operator -> {$operator.st}| functionCall -> {$functionCall.st}| methodCall -> {$methodCall.st}| methodCallSelfOrParent -> {$methodCallSelfOrParent.st}| methodCallStatic -> {$methodCallStatic.st}| classStaticAccess -> {$classStaticAccess.st}| postFixExpression -> {$postFixExpression.st}| exit -> {$exit.st});
+	// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:542:1: expression options {backtrack=true; } : ( atom -> {$atom.st}| operator -> {$operator.st}| functionCall -> {$functionCall.st}| methodCall -> {$methodCall.st}| methodCallSelfOrParent -> {$methodCallSelfOrParent.st}| methodCallStatic -> {$methodCallStatic.st}| classStaticAccess -> {$classStaticAccess.st}| postFixExpression -> {$postFixExpression.st}| exit -> {$exit.st});
 	public final PHP54TranslatorWalker.expression_return expression() throws RecognitionException {
 		PHP54TranslatorWalker.expression_return retval = new PHP54TranslatorWalker.expression_return();
 		retval.start = input.LT(1);
 
-		TreeRuleReturnScope atom94 =null;
-		TreeRuleReturnScope operator95 =null;
-		TreeRuleReturnScope functionCall96 =null;
-		TreeRuleReturnScope methodCall97 =null;
-		TreeRuleReturnScope methodCallSelfOrParent98 =null;
-		TreeRuleReturnScope methodCallStatic99 =null;
-		TreeRuleReturnScope classStaticAccess100 =null;
-		TreeRuleReturnScope postFixExpression101 =null;
-		TreeRuleReturnScope exit102 =null;
+		TreeRuleReturnScope atom97 =null;
+		TreeRuleReturnScope operator98 =null;
+		TreeRuleReturnScope functionCall99 =null;
+		TreeRuleReturnScope methodCall100 =null;
+		TreeRuleReturnScope methodCallSelfOrParent101 =null;
+		TreeRuleReturnScope methodCallStatic102 =null;
+		TreeRuleReturnScope classStaticAccess103 =null;
+		TreeRuleReturnScope postFixExpression104 =null;
+		TreeRuleReturnScope exit105 =null;
 
 		try {
-			// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:540:2: ( atom -> {$atom.st}| operator -> {$operator.st}| functionCall -> {$functionCall.st}| methodCall -> {$methodCall.st}| methodCallSelfOrParent -> {$methodCallSelfOrParent.st}| methodCallStatic -> {$methodCallStatic.st}| classStaticAccess -> {$classStaticAccess.st}| postFixExpression -> {$postFixExpression.st}| exit -> {$exit.st})
+			// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:544:2: ( atom -> {$atom.st}| operator -> {$operator.st}| functionCall -> {$functionCall.st}| methodCall -> {$methodCall.st}| methodCallSelfOrParent -> {$methodCallSelfOrParent.st}| methodCallStatic -> {$methodCallStatic.st}| classStaticAccess -> {$classStaticAccess.st}| postFixExpression -> {$postFixExpression.st}| exit -> {$exit.st})
 			int alt59=9;
 			switch ( input.LA(1) ) {
 			case Bool:
@@ -7539,17 +7622,17 @@ public static class STAttrMap extends HashMap<String, Object> {
 			}
 			switch (alt59) {
 				case 1 :
-					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:540:7: atom
+					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:544:7: atom
 					{
-					pushFollow(FOLLOW_atom_in_expression3296);
-					atom94=atom();
+					pushFollow(FOLLOW_atom_in_expression3337);
+					atom97=atom();
 					state._fsp--;
 					if (state.failed) return retval;
 					// TEMPLATE REWRITE
 					if ( state.backtracking==0 ) {
-					  // 540:15: -> {$atom.st}
+					  // 544:15: -> {$atom.st}
 					  {
-					  	retval.st = (atom94!=null?((StringTemplate)atom94.getTemplate()):null);
+					  	retval.st = (atom97!=null?((StringTemplate)atom97.getTemplate()):null);
 					  }
 
 
@@ -7558,17 +7641,17 @@ public static class STAttrMap extends HashMap<String, Object> {
 					}
 					break;
 				case 2 :
-					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:541:4: operator
+					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:545:4: operator
 					{
-					pushFollow(FOLLOW_operator_in_expression3308);
-					operator95=operator();
+					pushFollow(FOLLOW_operator_in_expression3349);
+					operator98=operator();
 					state._fsp--;
 					if (state.failed) return retval;
 					// TEMPLATE REWRITE
 					if ( state.backtracking==0 ) {
-					  // 541:14: -> {$operator.st}
+					  // 545:14: -> {$operator.st}
 					  {
-					  	retval.st = (operator95!=null?((StringTemplate)operator95.getTemplate()):null);
+					  	retval.st = (operator98!=null?((StringTemplate)operator98.getTemplate()):null);
 					  }
 
 
@@ -7577,17 +7660,17 @@ public static class STAttrMap extends HashMap<String, Object> {
 					}
 					break;
 				case 3 :
-					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:542:8: functionCall
+					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:546:8: functionCall
 					{
-					pushFollow(FOLLOW_functionCall_in_expression3322);
-					functionCall96=functionCall();
+					pushFollow(FOLLOW_functionCall_in_expression3363);
+					functionCall99=functionCall();
 					state._fsp--;
 					if (state.failed) return retval;
 					// TEMPLATE REWRITE
 					if ( state.backtracking==0 ) {
-					  // 542:23: -> {$functionCall.st}
+					  // 546:23: -> {$functionCall.st}
 					  {
-					  	retval.st = (functionCall96!=null?((StringTemplate)functionCall96.getTemplate()):null);
+					  	retval.st = (functionCall99!=null?((StringTemplate)functionCall99.getTemplate()):null);
 					  }
 
 
@@ -7596,17 +7679,17 @@ public static class STAttrMap extends HashMap<String, Object> {
 					}
 					break;
 				case 4 :
-					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:543:4: methodCall
+					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:547:4: methodCall
 					{
-					pushFollow(FOLLOW_methodCall_in_expression3333);
-					methodCall97=methodCall();
+					pushFollow(FOLLOW_methodCall_in_expression3374);
+					methodCall100=methodCall();
 					state._fsp--;
 					if (state.failed) return retval;
 					// TEMPLATE REWRITE
 					if ( state.backtracking==0 ) {
-					  // 543:17: -> {$methodCall.st}
+					  // 547:17: -> {$methodCall.st}
 					  {
-					  	retval.st = (methodCall97!=null?((StringTemplate)methodCall97.getTemplate()):null);
+					  	retval.st = (methodCall100!=null?((StringTemplate)methodCall100.getTemplate()):null);
 					  }
 
 
@@ -7615,17 +7698,17 @@ public static class STAttrMap extends HashMap<String, Object> {
 					}
 					break;
 				case 5 :
-					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:544:4: methodCallSelfOrParent
+					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:548:4: methodCallSelfOrParent
 					{
-					pushFollow(FOLLOW_methodCallSelfOrParent_in_expression3344);
-					methodCallSelfOrParent98=methodCallSelfOrParent();
+					pushFollow(FOLLOW_methodCallSelfOrParent_in_expression3385);
+					methodCallSelfOrParent101=methodCallSelfOrParent();
 					state._fsp--;
 					if (state.failed) return retval;
 					// TEMPLATE REWRITE
 					if ( state.backtracking==0 ) {
-					  // 544:28: -> {$methodCallSelfOrParent.st}
+					  // 548:28: -> {$methodCallSelfOrParent.st}
 					  {
-					  	retval.st = (methodCallSelfOrParent98!=null?((StringTemplate)methodCallSelfOrParent98.getTemplate()):null);
+					  	retval.st = (methodCallSelfOrParent101!=null?((StringTemplate)methodCallSelfOrParent101.getTemplate()):null);
 					  }
 
 
@@ -7634,17 +7717,17 @@ public static class STAttrMap extends HashMap<String, Object> {
 					}
 					break;
 				case 6 :
-					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:545:4: methodCallStatic
+					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:549:4: methodCallStatic
 					{
-					pushFollow(FOLLOW_methodCallStatic_in_expression3354);
-					methodCallStatic99=methodCallStatic();
+					pushFollow(FOLLOW_methodCallStatic_in_expression3395);
+					methodCallStatic102=methodCallStatic();
 					state._fsp--;
 					if (state.failed) return retval;
 					// TEMPLATE REWRITE
 					if ( state.backtracking==0 ) {
-					  // 545:22: -> {$methodCallStatic.st}
+					  // 549:22: -> {$methodCallStatic.st}
 					  {
-					  	retval.st = (methodCallStatic99!=null?((StringTemplate)methodCallStatic99.getTemplate()):null);
+					  	retval.st = (methodCallStatic102!=null?((StringTemplate)methodCallStatic102.getTemplate()):null);
 					  }
 
 
@@ -7653,17 +7736,17 @@ public static class STAttrMap extends HashMap<String, Object> {
 					}
 					break;
 				case 7 :
-					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:546:4: classStaticAccess
+					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:550:4: classStaticAccess
 					{
-					pushFollow(FOLLOW_classStaticAccess_in_expression3364);
-					classStaticAccess100=classStaticAccess();
+					pushFollow(FOLLOW_classStaticAccess_in_expression3405);
+					classStaticAccess103=classStaticAccess();
 					state._fsp--;
 					if (state.failed) return retval;
 					// TEMPLATE REWRITE
 					if ( state.backtracking==0 ) {
-					  // 546:22: -> {$classStaticAccess.st}
+					  // 550:22: -> {$classStaticAccess.st}
 					  {
-					  	retval.st = (classStaticAccess100!=null?((StringTemplate)classStaticAccess100.getTemplate()):null);
+					  	retval.st = (classStaticAccess103!=null?((StringTemplate)classStaticAccess103.getTemplate()):null);
 					  }
 
 
@@ -7672,17 +7755,17 @@ public static class STAttrMap extends HashMap<String, Object> {
 					}
 					break;
 				case 8 :
-					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:547:4: postFixExpression
+					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:551:4: postFixExpression
 					{
-					pushFollow(FOLLOW_postFixExpression_in_expression3373);
-					postFixExpression101=postFixExpression();
+					pushFollow(FOLLOW_postFixExpression_in_expression3414);
+					postFixExpression104=postFixExpression();
 					state._fsp--;
 					if (state.failed) return retval;
 					// TEMPLATE REWRITE
 					if ( state.backtracking==0 ) {
-					  // 547:22: -> {$postFixExpression.st}
+					  // 551:22: -> {$postFixExpression.st}
 					  {
-					  	retval.st = (postFixExpression101!=null?((StringTemplate)postFixExpression101.getTemplate()):null);
+					  	retval.st = (postFixExpression104!=null?((StringTemplate)postFixExpression104.getTemplate()):null);
 					  }
 
 
@@ -7691,17 +7774,17 @@ public static class STAttrMap extends HashMap<String, Object> {
 					}
 					break;
 				case 9 :
-					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:548:4: exit
+					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:552:4: exit
 					{
-					pushFollow(FOLLOW_exit_in_expression3382);
-					exit102=exit();
+					pushFollow(FOLLOW_exit_in_expression3423);
+					exit105=exit();
 					state._fsp--;
 					if (state.failed) return retval;
 					// TEMPLATE REWRITE
 					if ( state.backtracking==0 ) {
-					  // 548:11: -> {$exit.st}
+					  // 552:11: -> {$exit.st}
 					  {
-					  	retval.st = (exit102!=null?((StringTemplate)exit102.getTemplate()):null);
+					  	retval.st = (exit105!=null?((StringTemplate)exit105.getTemplate()):null);
 					  }
 
 
@@ -7732,21 +7815,21 @@ public static class STAttrMap extends HashMap<String, Object> {
 
 
 	// $ANTLR start "atom"
-	// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:551:1: atom : ( primitiveAtom -> {$primitiveAtom.st}| ^( TypeArray (keyValuePairs+= arrayKeyValue )* ) -> array(content=$keyValuePairs)| VariableId -> {%{$VariableId.text}}| This -> {%{$This.text}}| CONSTANT -> {%{$CONSTANT.text}}| ^( CLASS_STATIC_ACCESS staticAccess CONSTANT ) -> classConstant(accessor=$staticAccess.stconstant=$CONSTANT.text));
+	// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:555:1: atom : ( primitiveAtom -> {$primitiveAtom.st}| ^( TypeArray (keyValuePairs+= arrayKeyValue )* ) -> array(content=$keyValuePairs)| VariableId -> {%{$VariableId.text}}| This -> {%{$This.text}}| CONSTANT -> {%{$CONSTANT.text}}| ^( CLASS_STATIC_ACCESS staticAccess CONSTANT ) -> classConstant(accessor=$staticAccess.stconstant=$CONSTANT.text));
 	public final PHP54TranslatorWalker.atom_return atom() throws RecognitionException {
 		PHP54TranslatorWalker.atom_return retval = new PHP54TranslatorWalker.atom_return();
 		retval.start = input.LT(1);
 
-		ITSPHPAst VariableId104=null;
-		ITSPHPAst This105=null;
-		ITSPHPAst CONSTANT106=null;
-		ITSPHPAst CONSTANT108=null;
+		ITSPHPAst VariableId107=null;
+		ITSPHPAst This108=null;
+		ITSPHPAst CONSTANT109=null;
+		ITSPHPAst CONSTANT111=null;
 		List<Object> list_keyValuePairs=null;
-		TreeRuleReturnScope primitiveAtom103 =null;
-		TreeRuleReturnScope staticAccess107 =null;
+		TreeRuleReturnScope primitiveAtom106 =null;
+		TreeRuleReturnScope staticAccess110 =null;
 		RuleReturnScope keyValuePairs = null;
 		try {
-			// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:552:2: ( primitiveAtom -> {$primitiveAtom.st}| ^( TypeArray (keyValuePairs+= arrayKeyValue )* ) -> array(content=$keyValuePairs)| VariableId -> {%{$VariableId.text}}| This -> {%{$This.text}}| CONSTANT -> {%{$CONSTANT.text}}| ^( CLASS_STATIC_ACCESS staticAccess CONSTANT ) -> classConstant(accessor=$staticAccess.stconstant=$CONSTANT.text))
+			// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:556:2: ( primitiveAtom -> {$primitiveAtom.st}| ^( TypeArray (keyValuePairs+= arrayKeyValue )* ) -> array(content=$keyValuePairs)| VariableId -> {%{$VariableId.text}}| This -> {%{$This.text}}| CONSTANT -> {%{$CONSTANT.text}}| ^( CLASS_STATIC_ACCESS staticAccess CONSTANT ) -> classConstant(accessor=$staticAccess.stconstant=$CONSTANT.text))
 			int alt61=6;
 			switch ( input.LA(1) ) {
 			case Bool:
@@ -7791,17 +7874,17 @@ public static class STAttrMap extends HashMap<String, Object> {
 			}
 			switch (alt61) {
 				case 1 :
-					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:552:4: primitiveAtom
+					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:556:4: primitiveAtom
 					{
-					pushFollow(FOLLOW_primitiveAtom_in_atom3405);
-					primitiveAtom103=primitiveAtom();
+					pushFollow(FOLLOW_primitiveAtom_in_atom3446);
+					primitiveAtom106=primitiveAtom();
 					state._fsp--;
 					if (state.failed) return retval;
 					// TEMPLATE REWRITE
 					if ( state.backtracking==0 ) {
-					  // 552:23: -> {$primitiveAtom.st}
+					  // 556:23: -> {$primitiveAtom.st}
 					  {
-					  	retval.st = (primitiveAtom103!=null?((StringTemplate)primitiveAtom103.getTemplate()):null);
+					  	retval.st = (primitiveAtom106!=null?((StringTemplate)primitiveAtom106.getTemplate()):null);
 					  }
 
 
@@ -7810,12 +7893,12 @@ public static class STAttrMap extends HashMap<String, Object> {
 					}
 					break;
 				case 2 :
-					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:553:4: ^( TypeArray (keyValuePairs+= arrayKeyValue )* )
+					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:557:4: ^( TypeArray (keyValuePairs+= arrayKeyValue )* )
 					{
-					match(input,TypeArray,FOLLOW_TypeArray_in_atom3420); if (state.failed) return retval;
+					match(input,TypeArray,FOLLOW_TypeArray_in_atom3461); if (state.failed) return retval;
 					if ( input.LA(1)==Token.DOWN ) {
 						match(input, Token.DOWN, null); if (state.failed) return retval;
-						// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:553:29: (keyValuePairs+= arrayKeyValue )*
+						// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:557:29: (keyValuePairs+= arrayKeyValue )*
 						loop60:
 						do {
 							int alt60=2;
@@ -7826,9 +7909,9 @@ public static class STAttrMap extends HashMap<String, Object> {
 
 							switch (alt60) {
 							case 1 :
-								// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:553:29: keyValuePairs+= arrayKeyValue
+								// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:557:29: keyValuePairs+= arrayKeyValue
 								{
-								pushFollow(FOLLOW_arrayKeyValue_in_atom3424);
+								pushFollow(FOLLOW_arrayKeyValue_in_atom3465);
 								keyValuePairs=arrayKeyValue();
 								state._fsp--;
 								if (state.failed) return retval;
@@ -7847,7 +7930,7 @@ public static class STAttrMap extends HashMap<String, Object> {
 
 					// TEMPLATE REWRITE
 					if ( state.backtracking==0 ) {
-					  // 553:47: -> array(content=$keyValuePairs)
+					  // 557:47: -> array(content=$keyValuePairs)
 					  {
 					  	retval.st = templateLib.getInstanceOf("array",new STAttrMap().put("content", list_keyValuePairs));
 					  }
@@ -7858,14 +7941,14 @@ public static class STAttrMap extends HashMap<String, Object> {
 					}
 					break;
 				case 3 :
-					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:554:4: VariableId
+					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:558:4: VariableId
 					{
-					VariableId104=(ITSPHPAst)match(input,VariableId,FOLLOW_VariableId_in_atom3441); if (state.failed) return retval;
+					VariableId107=(ITSPHPAst)match(input,VariableId,FOLLOW_VariableId_in_atom3482); if (state.failed) return retval;
 					// TEMPLATE REWRITE
 					if ( state.backtracking==0 ) {
-					  // 554:20: -> {%{$VariableId.text}}
+					  // 558:20: -> {%{$VariableId.text}}
 					  {
-					  	retval.st = new StringTemplate(templateLib,(VariableId104!=null?VariableId104.getText():null));
+					  	retval.st = new StringTemplate(templateLib,(VariableId107!=null?VariableId107.getText():null));
 					  }
 
 
@@ -7874,14 +7957,14 @@ public static class STAttrMap extends HashMap<String, Object> {
 					}
 					break;
 				case 4 :
-					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:555:4: This
+					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:559:4: This
 					{
-					This105=(ITSPHPAst)match(input,This,FOLLOW_This_in_atom3455); if (state.failed) return retval;
+					This108=(ITSPHPAst)match(input,This,FOLLOW_This_in_atom3496); if (state.failed) return retval;
 					// TEMPLATE REWRITE
 					if ( state.backtracking==0 ) {
-					  // 555:14: -> {%{$This.text}}
+					  // 559:14: -> {%{$This.text}}
 					  {
-					  	retval.st = new StringTemplate(templateLib,(This105!=null?This105.getText():null));
+					  	retval.st = new StringTemplate(templateLib,(This108!=null?This108.getText():null));
 					  }
 
 
@@ -7890,14 +7973,14 @@ public static class STAttrMap extends HashMap<String, Object> {
 					}
 					break;
 				case 5 :
-					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:556:4: CONSTANT
+					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:560:4: CONSTANT
 					{
-					CONSTANT106=(ITSPHPAst)match(input,CONSTANT,FOLLOW_CONSTANT_in_atom3469); if (state.failed) return retval;
+					CONSTANT109=(ITSPHPAst)match(input,CONSTANT,FOLLOW_CONSTANT_in_atom3510); if (state.failed) return retval;
 					// TEMPLATE REWRITE
 					if ( state.backtracking==0 ) {
-					  // 556:17: -> {%{$CONSTANT.text}}
+					  // 560:17: -> {%{$CONSTANT.text}}
 					  {
-					  	retval.st = new StringTemplate(templateLib,(CONSTANT106!=null?CONSTANT106.getText():null));
+					  	retval.st = new StringTemplate(templateLib,(CONSTANT109!=null?CONSTANT109.getText():null));
 					  }
 
 
@@ -7906,22 +7989,22 @@ public static class STAttrMap extends HashMap<String, Object> {
 					}
 					break;
 				case 6 :
-					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:557:4: ^( CLASS_STATIC_ACCESS staticAccess CONSTANT )
+					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:561:4: ^( CLASS_STATIC_ACCESS staticAccess CONSTANT )
 					{
-					match(input,CLASS_STATIC_ACCESS,FOLLOW_CLASS_STATIC_ACCESS_in_atom3483); if (state.failed) return retval;
+					match(input,CLASS_STATIC_ACCESS,FOLLOW_CLASS_STATIC_ACCESS_in_atom3524); if (state.failed) return retval;
 					match(input, Token.DOWN, null); if (state.failed) return retval;
-					pushFollow(FOLLOW_staticAccess_in_atom3485);
-					staticAccess107=staticAccess();
+					pushFollow(FOLLOW_staticAccess_in_atom3526);
+					staticAccess110=staticAccess();
 					state._fsp--;
 					if (state.failed) return retval;
-					CONSTANT108=(ITSPHPAst)match(input,CONSTANT,FOLLOW_CONSTANT_in_atom3487); if (state.failed) return retval;
+					CONSTANT111=(ITSPHPAst)match(input,CONSTANT,FOLLOW_CONSTANT_in_atom3528); if (state.failed) return retval;
 					match(input, Token.UP, null); if (state.failed) return retval;
 
 					// TEMPLATE REWRITE
 					if ( state.backtracking==0 ) {
-					  // 557:52: -> classConstant(accessor=$staticAccess.stconstant=$CONSTANT.text)
+					  // 561:52: -> classConstant(accessor=$staticAccess.stconstant=$CONSTANT.text)
 					  {
-					  	retval.st = templateLib.getInstanceOf("classConstant",new STAttrMap().put("accessor", (staticAccess107!=null?((StringTemplate)staticAccess107.getTemplate()):null)).put("constant", (CONSTANT108!=null?CONSTANT108.getText():null)));
+					  	retval.st = templateLib.getInstanceOf("classConstant",new STAttrMap().put("accessor", (staticAccess110!=null?((StringTemplate)staticAccess110.getTemplate()):null)).put("constant", (CONSTANT111!=null?CONSTANT111.getText():null)));
 					  }
 
 
@@ -7952,13 +8035,13 @@ public static class STAttrMap extends HashMap<String, Object> {
 
 
 	// $ANTLR start "primitiveAtom"
-	// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:560:1: primitiveAtom : ( Bool | Int | Float | String | Null );
+	// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:564:1: primitiveAtom : ( Bool | Int | Float | String | Null );
 	public final PHP54TranslatorWalker.primitiveAtom_return primitiveAtom() throws RecognitionException {
 		PHP54TranslatorWalker.primitiveAtom_return retval = new PHP54TranslatorWalker.primitiveAtom_return();
 		retval.start = input.LT(1);
 
 		try {
-			// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:562:2: ( Bool | Int | Float | String | Null )
+			// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:566:2: ( Bool | Int | Float | String | Null )
 			// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:
 			{
 			if ( input.LA(1)==Bool||input.LA(1)==Float||input.LA(1)==Int||input.LA(1)==Null||input.LA(1)==String ) {
@@ -7995,17 +8078,17 @@ public static class STAttrMap extends HashMap<String, Object> {
 
 
 	// $ANTLR start "arrayKeyValue"
-	// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:569:1: arrayKeyValue : ( ^( '=>' key= expression value= expression ) -> keyValue(key=$key.stvalue=$value.st)| expression -> {$expression.st});
+	// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:573:1: arrayKeyValue : ( ^( '=>' key= expression value= expression ) -> keyValue(key=$key.stvalue=$value.st)| expression -> {$expression.st});
 	public final PHP54TranslatorWalker.arrayKeyValue_return arrayKeyValue() throws RecognitionException {
 		PHP54TranslatorWalker.arrayKeyValue_return retval = new PHP54TranslatorWalker.arrayKeyValue_return();
 		retval.start = input.LT(1);
 
 		TreeRuleReturnScope key =null;
 		TreeRuleReturnScope value =null;
-		TreeRuleReturnScope expression109 =null;
+		TreeRuleReturnScope expression112 =null;
 
 		try {
-			// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:570:2: ( ^( '=>' key= expression value= expression ) -> keyValue(key=$key.stvalue=$value.st)| expression -> {$expression.st})
+			// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:574:2: ( ^( '=>' key= expression value= expression ) -> keyValue(key=$key.stvalue=$value.st)| expression -> {$expression.st})
 			int alt62=2;
 			int LA62_0 = input.LA(1);
 			if ( (LA62_0==Arrow) ) {
@@ -8022,15 +8105,15 @@ public static class STAttrMap extends HashMap<String, Object> {
 			}
 			switch (alt62) {
 				case 1 :
-					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:570:4: ^( '=>' key= expression value= expression )
+					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:574:4: ^( '=>' key= expression value= expression )
 					{
-					match(input,Arrow,FOLLOW_Arrow_in_arrayKeyValue3558); if (state.failed) return retval;
+					match(input,Arrow,FOLLOW_Arrow_in_arrayKeyValue3599); if (state.failed) return retval;
 					match(input, Token.DOWN, null); if (state.failed) return retval;
-					pushFollow(FOLLOW_expression_in_arrayKeyValue3562);
+					pushFollow(FOLLOW_expression_in_arrayKeyValue3603);
 					key=expression();
 					state._fsp--;
 					if (state.failed) return retval;
-					pushFollow(FOLLOW_expression_in_arrayKeyValue3566);
+					pushFollow(FOLLOW_expression_in_arrayKeyValue3607);
 					value=expression();
 					state._fsp--;
 					if (state.failed) return retval;
@@ -8038,7 +8121,7 @@ public static class STAttrMap extends HashMap<String, Object> {
 
 					// TEMPLATE REWRITE
 					if ( state.backtracking==0 ) {
-					  // 570:44: -> keyValue(key=$key.stvalue=$value.st)
+					  // 574:44: -> keyValue(key=$key.stvalue=$value.st)
 					  {
 					  	retval.st = templateLib.getInstanceOf("keyValue",new STAttrMap().put("key", (key!=null?((StringTemplate)key.getTemplate()):null)).put("value", (value!=null?((StringTemplate)value.getTemplate()):null)));
 					  }
@@ -8049,17 +8132,17 @@ public static class STAttrMap extends HashMap<String, Object> {
 					}
 					break;
 				case 2 :
-					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:571:4: expression
+					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:575:4: expression
 					{
-					pushFollow(FOLLOW_expression_in_arrayKeyValue3586);
-					expression109=expression();
+					pushFollow(FOLLOW_expression_in_arrayKeyValue3627);
+					expression112=expression();
 					state._fsp--;
 					if (state.failed) return retval;
 					// TEMPLATE REWRITE
 					if ( state.backtracking==0 ) {
-					  // 571:15: -> {$expression.st}
+					  // 575:15: -> {$expression.st}
 					  {
-					  	retval.st = (expression109!=null?((StringTemplate)expression109.getTemplate()):null);
+					  	retval.st = (expression112!=null?((StringTemplate)expression112.getTemplate()):null);
 					  }
 
 
@@ -8090,17 +8173,17 @@ public static class STAttrMap extends HashMap<String, Object> {
 
 
 	// $ANTLR start "staticAccess"
-	// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:574:1: staticAccess : ( TYPE_NAME -> {%{$TYPE_NAME.text}}| Self -> {%{$Self.text}}| Parent -> {%{$Parent.text}});
+	// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:578:1: staticAccess : ( TYPE_NAME -> {%{$TYPE_NAME.text}}| Self -> {%{$Self.text}}| Parent -> {%{$Parent.text}});
 	public final PHP54TranslatorWalker.staticAccess_return staticAccess() throws RecognitionException {
 		PHP54TranslatorWalker.staticAccess_return retval = new PHP54TranslatorWalker.staticAccess_return();
 		retval.start = input.LT(1);
 
-		ITSPHPAst TYPE_NAME110=null;
-		ITSPHPAst Self111=null;
-		ITSPHPAst Parent112=null;
+		ITSPHPAst TYPE_NAME113=null;
+		ITSPHPAst Self114=null;
+		ITSPHPAst Parent115=null;
 
 		try {
-			// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:575:3: ( TYPE_NAME -> {%{$TYPE_NAME.text}}| Self -> {%{$Self.text}}| Parent -> {%{$Parent.text}})
+			// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:579:3: ( TYPE_NAME -> {%{$TYPE_NAME.text}}| Self -> {%{$Self.text}}| Parent -> {%{$Parent.text}})
 			int alt63=3;
 			switch ( input.LA(1) ) {
 			case TYPE_NAME:
@@ -8126,14 +8209,14 @@ public static class STAttrMap extends HashMap<String, Object> {
 			}
 			switch (alt63) {
 				case 1 :
-					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:575:5: TYPE_NAME
+					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:579:5: TYPE_NAME
 					{
-					TYPE_NAME110=(ITSPHPAst)match(input,TYPE_NAME,FOLLOW_TYPE_NAME_in_staticAccess3603); if (state.failed) return retval;
+					TYPE_NAME113=(ITSPHPAst)match(input,TYPE_NAME,FOLLOW_TYPE_NAME_in_staticAccess3644); if (state.failed) return retval;
 					// TEMPLATE REWRITE
 					if ( state.backtracking==0 ) {
-					  // 575:15: -> {%{$TYPE_NAME.text}}
+					  // 579:15: -> {%{$TYPE_NAME.text}}
 					  {
-					  	retval.st = new StringTemplate(templateLib,(TYPE_NAME110!=null?TYPE_NAME110.getText():null));
+					  	retval.st = new StringTemplate(templateLib,(TYPE_NAME113!=null?TYPE_NAME113.getText():null));
 					  }
 
 
@@ -8142,14 +8225,14 @@ public static class STAttrMap extends HashMap<String, Object> {
 					}
 					break;
 				case 2 :
-					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:576:5: Self
+					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:580:5: Self
 					{
-					Self111=(ITSPHPAst)match(input,Self,FOLLOW_Self_in_staticAccess3613); if (state.failed) return retval;
+					Self114=(ITSPHPAst)match(input,Self,FOLLOW_Self_in_staticAccess3654); if (state.failed) return retval;
 					// TEMPLATE REWRITE
 					if ( state.backtracking==0 ) {
-					  // 576:10: -> {%{$Self.text}}
+					  // 580:10: -> {%{$Self.text}}
 					  {
-					  	retval.st = new StringTemplate(templateLib,(Self111!=null?Self111.getText():null));
+					  	retval.st = new StringTemplate(templateLib,(Self114!=null?Self114.getText():null));
 					  }
 
 
@@ -8158,14 +8241,14 @@ public static class STAttrMap extends HashMap<String, Object> {
 					}
 					break;
 				case 3 :
-					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:577:5: Parent
+					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:581:5: Parent
 					{
-					Parent112=(ITSPHPAst)match(input,Parent,FOLLOW_Parent_in_staticAccess3623); if (state.failed) return retval;
+					Parent115=(ITSPHPAst)match(input,Parent,FOLLOW_Parent_in_staticAccess3664); if (state.failed) return retval;
 					// TEMPLATE REWRITE
 					if ( state.backtracking==0 ) {
-					  // 577:12: -> {%{$Parent.text}}
+					  // 581:12: -> {%{$Parent.text}}
 					  {
-					  	retval.st = new StringTemplate(templateLib,(Parent112!=null?Parent112.getText():null));
+					  	retval.st = new StringTemplate(templateLib,(Parent115!=null?Parent115.getText():null));
 					  }
 
 
@@ -8196,28 +8279,28 @@ public static class STAttrMap extends HashMap<String, Object> {
 
 
 	// $ANTLR start "operator"
-	// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:580:1: operator : ( ^( unaryPreOperator expr= expression ) -> unaryPreOperator(operator=$unaryPreOperator.stexpression=$expr.st)| ^( unaryPostOperator expr= expression ) -> unaryPostOperator(operator=$unaryPostOperator.stexpression=$expr.st)| ^( binaryOperator left= expression right= expression ) -> binaryOperator(operator=$binaryOperator.stleft=$left.stright=$right.stneedParentheses=$binaryOperator.needParentheses)| ^( QuestionMark cond= expression ifCase= expression elseCase= expression ) -> ternaryOperator(cond=$cond.stifCase=$ifCase.stelseCase=$elseCase.stneedParentheses=precedenceHelper.needParentheses($QuestionMark))| castingOperator -> {$castingOperator.st}| ^( Instanceof expr= expression (type= TYPE_NAME |type= VariableId ) ) -> instanceof(expression=$expr.sttype=$type.textneedParentheses=precedenceHelper.needParentheses($Instanceof))| newOperator -> {$newOperator.st}| ^( 'clone' expr= expression ) -> clone(expression=$expr.st));
+	// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:584:1: operator : ( ^( unaryPreOperator expr= expression ) -> unaryPreOperator(operator=$unaryPreOperator.stexpression=$expr.st)| ^( unaryPostOperator expr= expression ) -> unaryPostOperator(operator=$unaryPostOperator.stexpression=$expr.st)| ^( binaryOperator left= expression right= expression ) -> binaryOperator(operator=$binaryOperator.stleft=$left.stright=$right.stneedParentheses=$binaryOperator.needParentheses)| ^( QuestionMark cond= expression ifCase= expression elseCase= expression ) -> ternaryOperator(cond=$cond.stifCase=$ifCase.stelseCase=$elseCase.stneedParentheses=precedenceHelper.needParentheses($QuestionMark))| castingOperator -> {$castingOperator.st}| ^( Instanceof expr= expression (type= TYPE_NAME |type= VariableId ) ) -> instanceof(expression=$expr.sttype=$type.textneedParentheses=precedenceHelper.needParentheses($Instanceof))| newOperator -> {$newOperator.st}| ^( 'clone' expr= expression ) -> clone(expression=$expr.st));
 	public final PHP54TranslatorWalker.operator_return operator() throws RecognitionException {
 		PHP54TranslatorWalker.operator_return retval = new PHP54TranslatorWalker.operator_return();
 		retval.start = input.LT(1);
 
 		ITSPHPAst type=null;
-		ITSPHPAst QuestionMark116=null;
-		ITSPHPAst Instanceof118=null;
+		ITSPHPAst QuestionMark119=null;
+		ITSPHPAst Instanceof121=null;
 		TreeRuleReturnScope expr =null;
 		TreeRuleReturnScope left =null;
 		TreeRuleReturnScope right =null;
 		TreeRuleReturnScope cond =null;
 		TreeRuleReturnScope ifCase =null;
 		TreeRuleReturnScope elseCase =null;
-		TreeRuleReturnScope unaryPreOperator113 =null;
-		TreeRuleReturnScope unaryPostOperator114 =null;
-		TreeRuleReturnScope binaryOperator115 =null;
-		TreeRuleReturnScope castingOperator117 =null;
-		TreeRuleReturnScope newOperator119 =null;
+		TreeRuleReturnScope unaryPreOperator116 =null;
+		TreeRuleReturnScope unaryPostOperator117 =null;
+		TreeRuleReturnScope binaryOperator118 =null;
+		TreeRuleReturnScope castingOperator120 =null;
+		TreeRuleReturnScope newOperator122 =null;
 
 		try {
-			// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:581:3: ( ^( unaryPreOperator expr= expression ) -> unaryPreOperator(operator=$unaryPreOperator.stexpression=$expr.st)| ^( unaryPostOperator expr= expression ) -> unaryPostOperator(operator=$unaryPostOperator.stexpression=$expr.st)| ^( binaryOperator left= expression right= expression ) -> binaryOperator(operator=$binaryOperator.stleft=$left.stright=$right.stneedParentheses=$binaryOperator.needParentheses)| ^( QuestionMark cond= expression ifCase= expression elseCase= expression ) -> ternaryOperator(cond=$cond.stifCase=$ifCase.stelseCase=$elseCase.stneedParentheses=precedenceHelper.needParentheses($QuestionMark))| castingOperator -> {$castingOperator.st}| ^( Instanceof expr= expression (type= TYPE_NAME |type= VariableId ) ) -> instanceof(expression=$expr.sttype=$type.textneedParentheses=precedenceHelper.needParentheses($Instanceof))| newOperator -> {$newOperator.st}| ^( 'clone' expr= expression ) -> clone(expression=$expr.st))
+			// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:585:3: ( ^( unaryPreOperator expr= expression ) -> unaryPreOperator(operator=$unaryPreOperator.stexpression=$expr.st)| ^( unaryPostOperator expr= expression ) -> unaryPostOperator(operator=$unaryPostOperator.stexpression=$expr.st)| ^( binaryOperator left= expression right= expression ) -> binaryOperator(operator=$binaryOperator.stleft=$left.stright=$right.stneedParentheses=$binaryOperator.needParentheses)| ^( QuestionMark cond= expression ifCase= expression elseCase= expression ) -> ternaryOperator(cond=$cond.stifCase=$ifCase.stelseCase=$elseCase.stneedParentheses=precedenceHelper.needParentheses($QuestionMark))| castingOperator -> {$castingOperator.st}| ^( Instanceof expr= expression (type= TYPE_NAME |type= VariableId ) ) -> instanceof(expression=$expr.sttype=$type.textneedParentheses=precedenceHelper.needParentheses($Instanceof))| newOperator -> {$newOperator.st}| ^( 'clone' expr= expression ) -> clone(expression=$expr.st))
 			int alt65=8;
 			switch ( input.LA(1) ) {
 			case At:
@@ -8310,14 +8393,14 @@ public static class STAttrMap extends HashMap<String, Object> {
 			}
 			switch (alt65) {
 				case 1 :
-					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:581:5: ^( unaryPreOperator expr= expression )
+					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:585:5: ^( unaryPreOperator expr= expression )
 					{
-					pushFollow(FOLLOW_unaryPreOperator_in_operator3642);
-					unaryPreOperator113=unaryPreOperator();
+					pushFollow(FOLLOW_unaryPreOperator_in_operator3683);
+					unaryPreOperator116=unaryPreOperator();
 					state._fsp--;
 					if (state.failed) return retval;
 					match(input, Token.DOWN, null); if (state.failed) return retval;
-					pushFollow(FOLLOW_expression_in_operator3646);
+					pushFollow(FOLLOW_expression_in_operator3687);
 					expr=expression();
 					state._fsp--;
 					if (state.failed) return retval;
@@ -8325,9 +8408,9 @@ public static class STAttrMap extends HashMap<String, Object> {
 
 					// TEMPLATE REWRITE
 					if ( state.backtracking==0 ) {
-					  // 581:46: -> unaryPreOperator(operator=$unaryPreOperator.stexpression=$expr.st)
+					  // 585:46: -> unaryPreOperator(operator=$unaryPreOperator.stexpression=$expr.st)
 					  {
-					  	retval.st = templateLib.getInstanceOf("unaryPreOperator",new STAttrMap().put("operator", (unaryPreOperator113!=null?((StringTemplate)unaryPreOperator113.getTemplate()):null)).put("expression", (expr!=null?((StringTemplate)expr.getTemplate()):null)));
+					  	retval.st = templateLib.getInstanceOf("unaryPreOperator",new STAttrMap().put("operator", (unaryPreOperator116!=null?((StringTemplate)unaryPreOperator116.getTemplate()):null)).put("expression", (expr!=null?((StringTemplate)expr.getTemplate()):null)));
 					  }
 
 
@@ -8336,14 +8419,14 @@ public static class STAttrMap extends HashMap<String, Object> {
 					}
 					break;
 				case 2 :
-					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:582:4: ^( unaryPostOperator expr= expression )
+					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:586:4: ^( unaryPostOperator expr= expression )
 					{
-					pushFollow(FOLLOW_unaryPostOperator_in_operator3675);
-					unaryPostOperator114=unaryPostOperator();
+					pushFollow(FOLLOW_unaryPostOperator_in_operator3716);
+					unaryPostOperator117=unaryPostOperator();
 					state._fsp--;
 					if (state.failed) return retval;
 					match(input, Token.DOWN, null); if (state.failed) return retval;
-					pushFollow(FOLLOW_expression_in_operator3679);
+					pushFollow(FOLLOW_expression_in_operator3720);
 					expr=expression();
 					state._fsp--;
 					if (state.failed) return retval;
@@ -8351,9 +8434,9 @@ public static class STAttrMap extends HashMap<String, Object> {
 
 					// TEMPLATE REWRITE
 					if ( state.backtracking==0 ) {
-					  // 582:45: -> unaryPostOperator(operator=$unaryPostOperator.stexpression=$expr.st)
+					  // 586:45: -> unaryPostOperator(operator=$unaryPostOperator.stexpression=$expr.st)
 					  {
-					  	retval.st = templateLib.getInstanceOf("unaryPostOperator",new STAttrMap().put("operator", (unaryPostOperator114!=null?((StringTemplate)unaryPostOperator114.getTemplate()):null)).put("expression", (expr!=null?((StringTemplate)expr.getTemplate()):null)));
+					  	retval.st = templateLib.getInstanceOf("unaryPostOperator",new STAttrMap().put("operator", (unaryPostOperator117!=null?((StringTemplate)unaryPostOperator117.getTemplate()):null)).put("expression", (expr!=null?((StringTemplate)expr.getTemplate()):null)));
 					  }
 
 
@@ -8362,18 +8445,18 @@ public static class STAttrMap extends HashMap<String, Object> {
 					}
 					break;
 				case 3 :
-					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:583:4: ^( binaryOperator left= expression right= expression )
+					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:587:4: ^( binaryOperator left= expression right= expression )
 					{
-					pushFollow(FOLLOW_binaryOperator_in_operator3708);
-					binaryOperator115=binaryOperator();
+					pushFollow(FOLLOW_binaryOperator_in_operator3749);
+					binaryOperator118=binaryOperator();
 					state._fsp--;
 					if (state.failed) return retval;
 					match(input, Token.DOWN, null); if (state.failed) return retval;
-					pushFollow(FOLLOW_expression_in_operator3712);
+					pushFollow(FOLLOW_expression_in_operator3753);
 					left=expression();
 					state._fsp--;
 					if (state.failed) return retval;
-					pushFollow(FOLLOW_expression_in_operator3716);
+					pushFollow(FOLLOW_expression_in_operator3757);
 					right=expression();
 					state._fsp--;
 					if (state.failed) return retval;
@@ -8381,9 +8464,9 @@ public static class STAttrMap extends HashMap<String, Object> {
 
 					// TEMPLATE REWRITE
 					if ( state.backtracking==0 ) {
-					  // 583:58: -> binaryOperator(operator=$binaryOperator.stleft=$left.stright=$right.stneedParentheses=$binaryOperator.needParentheses)
+					  // 587:58: -> binaryOperator(operator=$binaryOperator.stleft=$left.stright=$right.stneedParentheses=$binaryOperator.needParentheses)
 					  {
-					  	retval.st = templateLib.getInstanceOf("binaryOperator",new STAttrMap().put("operator", (binaryOperator115!=null?((StringTemplate)binaryOperator115.getTemplate()):null)).put("left", (left!=null?((StringTemplate)left.getTemplate()):null)).put("right", (right!=null?((StringTemplate)right.getTemplate()):null)).put("needParentheses", (binaryOperator115!=null?((PHP54TranslatorWalker.binaryOperator_return)binaryOperator115).needParentheses:false)));
+					  	retval.st = templateLib.getInstanceOf("binaryOperator",new STAttrMap().put("operator", (binaryOperator118!=null?((StringTemplate)binaryOperator118.getTemplate()):null)).put("left", (left!=null?((StringTemplate)left.getTemplate()):null)).put("right", (right!=null?((StringTemplate)right.getTemplate()):null)).put("needParentheses", (binaryOperator118!=null?((PHP54TranslatorWalker.binaryOperator_return)binaryOperator118).needParentheses:false)));
 					  }
 
 
@@ -8392,19 +8475,19 @@ public static class STAttrMap extends HashMap<String, Object> {
 					}
 					break;
 				case 4 :
-					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:584:4: ^( QuestionMark cond= expression ifCase= expression elseCase= expression )
+					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:588:4: ^( QuestionMark cond= expression ifCase= expression elseCase= expression )
 					{
-					QuestionMark116=(ITSPHPAst)match(input,QuestionMark,FOLLOW_QuestionMark_in_operator3750); if (state.failed) return retval;
+					QuestionMark119=(ITSPHPAst)match(input,QuestionMark,FOLLOW_QuestionMark_in_operator3791); if (state.failed) return retval;
 					match(input, Token.DOWN, null); if (state.failed) return retval;
-					pushFollow(FOLLOW_expression_in_operator3754);
+					pushFollow(FOLLOW_expression_in_operator3795);
 					cond=expression();
 					state._fsp--;
 					if (state.failed) return retval;
-					pushFollow(FOLLOW_expression_in_operator3758);
+					pushFollow(FOLLOW_expression_in_operator3799);
 					ifCase=expression();
 					state._fsp--;
 					if (state.failed) return retval;
-					pushFollow(FOLLOW_expression_in_operator3762);
+					pushFollow(FOLLOW_expression_in_operator3803);
 					elseCase=expression();
 					state._fsp--;
 					if (state.failed) return retval;
@@ -8412,9 +8495,9 @@ public static class STAttrMap extends HashMap<String, Object> {
 
 					// TEMPLATE REWRITE
 					if ( state.backtracking==0 ) {
-					  // 584:75: -> ternaryOperator(cond=$cond.stifCase=$ifCase.stelseCase=$elseCase.stneedParentheses=precedenceHelper.needParentheses($QuestionMark))
+					  // 588:75: -> ternaryOperator(cond=$cond.stifCase=$ifCase.stelseCase=$elseCase.stneedParentheses=precedenceHelper.needParentheses($QuestionMark))
 					  {
-					  	retval.st = templateLib.getInstanceOf("ternaryOperator",new STAttrMap().put("cond", (cond!=null?((StringTemplate)cond.getTemplate()):null)).put("ifCase", (ifCase!=null?((StringTemplate)ifCase.getTemplate()):null)).put("elseCase", (elseCase!=null?((StringTemplate)elseCase.getTemplate()):null)).put("needParentheses", precedenceHelper.needParentheses(QuestionMark116)));
+					  	retval.st = templateLib.getInstanceOf("ternaryOperator",new STAttrMap().put("cond", (cond!=null?((StringTemplate)cond.getTemplate()):null)).put("ifCase", (ifCase!=null?((StringTemplate)ifCase.getTemplate()):null)).put("elseCase", (elseCase!=null?((StringTemplate)elseCase.getTemplate()):null)).put("needParentheses", precedenceHelper.needParentheses(QuestionMark119)));
 					  }
 
 
@@ -8423,17 +8506,17 @@ public static class STAttrMap extends HashMap<String, Object> {
 					}
 					break;
 				case 5 :
-					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:585:4: castingOperator
+					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:589:4: castingOperator
 					{
-					pushFollow(FOLLOW_castingOperator_in_operator3793);
-					castingOperator117=castingOperator();
+					pushFollow(FOLLOW_castingOperator_in_operator3834);
+					castingOperator120=castingOperator();
 					state._fsp--;
 					if (state.failed) return retval;
 					// TEMPLATE REWRITE
 					if ( state.backtracking==0 ) {
-					  // 585:27: -> {$castingOperator.st}
+					  // 589:27: -> {$castingOperator.st}
 					  {
-					  	retval.st = (castingOperator117!=null?((StringTemplate)castingOperator117.getTemplate()):null);
+					  	retval.st = (castingOperator120!=null?((StringTemplate)castingOperator120.getTemplate()):null);
 					  }
 
 
@@ -8442,15 +8525,15 @@ public static class STAttrMap extends HashMap<String, Object> {
 					}
 					break;
 				case 6 :
-					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:586:4: ^( Instanceof expr= expression (type= TYPE_NAME |type= VariableId ) )
+					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:590:4: ^( Instanceof expr= expression (type= TYPE_NAME |type= VariableId ) )
 					{
-					Instanceof118=(ITSPHPAst)match(input,Instanceof,FOLLOW_Instanceof_in_operator3810); if (state.failed) return retval;
+					Instanceof121=(ITSPHPAst)match(input,Instanceof,FOLLOW_Instanceof_in_operator3851); if (state.failed) return retval;
 					match(input, Token.DOWN, null); if (state.failed) return retval;
-					pushFollow(FOLLOW_expression_in_operator3814);
+					pushFollow(FOLLOW_expression_in_operator3855);
 					expr=expression();
 					state._fsp--;
 					if (state.failed) return retval;
-					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:586:33: (type= TYPE_NAME |type= VariableId )
+					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:590:33: (type= TYPE_NAME |type= VariableId )
 					int alt64=2;
 					int LA64_0 = input.LA(1);
 					if ( (LA64_0==TYPE_NAME) ) {
@@ -8467,15 +8550,15 @@ public static class STAttrMap extends HashMap<String, Object> {
 					}
 					switch (alt64) {
 						case 1 :
-							// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:586:34: type= TYPE_NAME
+							// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:590:34: type= TYPE_NAME
 							{
-							type=(ITSPHPAst)match(input,TYPE_NAME,FOLLOW_TYPE_NAME_in_operator3819); if (state.failed) return retval;
+							type=(ITSPHPAst)match(input,TYPE_NAME,FOLLOW_TYPE_NAME_in_operator3860); if (state.failed) return retval;
 							}
 							break;
 						case 2 :
-							// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:586:49: type= VariableId
+							// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:590:49: type= VariableId
 							{
-							type=(ITSPHPAst)match(input,VariableId,FOLLOW_VariableId_in_operator3823); if (state.failed) return retval;
+							type=(ITSPHPAst)match(input,VariableId,FOLLOW_VariableId_in_operator3864); if (state.failed) return retval;
 							}
 							break;
 
@@ -8485,9 +8568,9 @@ public static class STAttrMap extends HashMap<String, Object> {
 
 					// TEMPLATE REWRITE
 					if ( state.backtracking==0 ) {
-					  // 586:69: -> instanceof(expression=$expr.sttype=$type.textneedParentheses=precedenceHelper.needParentheses($Instanceof))
+					  // 590:69: -> instanceof(expression=$expr.sttype=$type.textneedParentheses=precedenceHelper.needParentheses($Instanceof))
 					  {
-					  	retval.st = templateLib.getInstanceOf("instanceof",new STAttrMap().put("expression", (expr!=null?((StringTemplate)expr.getTemplate()):null)).put("type", (type!=null?type.getText():null)).put("needParentheses", precedenceHelper.needParentheses(Instanceof118)));
+					  	retval.st = templateLib.getInstanceOf("instanceof",new STAttrMap().put("expression", (expr!=null?((StringTemplate)expr.getTemplate()):null)).put("type", (type!=null?type.getText():null)).put("needParentheses", precedenceHelper.needParentheses(Instanceof121)));
 					  }
 
 
@@ -8496,17 +8579,17 @@ public static class STAttrMap extends HashMap<String, Object> {
 					}
 					break;
 				case 7 :
-					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:587:4: newOperator
+					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:591:4: newOperator
 					{
-					pushFollow(FOLLOW_newOperator_in_operator3851);
-					newOperator119=newOperator();
+					pushFollow(FOLLOW_newOperator_in_operator3892);
+					newOperator122=newOperator();
 					state._fsp--;
 					if (state.failed) return retval;
 					// TEMPLATE REWRITE
 					if ( state.backtracking==0 ) {
-					  // 587:23: -> {$newOperator.st}
+					  // 591:23: -> {$newOperator.st}
 					  {
-					  	retval.st = (newOperator119!=null?((StringTemplate)newOperator119.getTemplate()):null);
+					  	retval.st = (newOperator122!=null?((StringTemplate)newOperator122.getTemplate()):null);
 					  }
 
 
@@ -8515,11 +8598,11 @@ public static class STAttrMap extends HashMap<String, Object> {
 					}
 					break;
 				case 8 :
-					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:588:8: ^( 'clone' expr= expression )
+					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:592:8: ^( 'clone' expr= expression )
 					{
-					match(input,Clone,FOLLOW_Clone_in_operator3872); if (state.failed) return retval;
+					match(input,Clone,FOLLOW_Clone_in_operator3913); if (state.failed) return retval;
 					match(input, Token.DOWN, null); if (state.failed) return retval;
-					pushFollow(FOLLOW_expression_in_operator3876);
+					pushFollow(FOLLOW_expression_in_operator3917);
 					expr=expression();
 					state._fsp--;
 					if (state.failed) return retval;
@@ -8527,7 +8610,7 @@ public static class STAttrMap extends HashMap<String, Object> {
 
 					// TEMPLATE REWRITE
 					if ( state.backtracking==0 ) {
-					  // 588:40: -> clone(expression=$expr.st)
+					  // 592:40: -> clone(expression=$expr.st)
 					  {
 					  	retval.st = templateLib.getInstanceOf("clone",new STAttrMap().put("expression", (expr!=null?((StringTemplate)expr.getTemplate()):null)));
 					  }
@@ -8560,13 +8643,13 @@ public static class STAttrMap extends HashMap<String, Object> {
 
 
 	// $ANTLR start "unaryPreOperator"
-	// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:591:1: unaryPreOperator : ( PRE_INCREMENT -> {%{\"++\"}}| PRE_DECREMENT -> {%{\"--\"}}| '@' -> {%{\"@\"}}| '~' -> {%{\"~\"}}| '!' -> {%{\"!\"}}| UNARY_MINUS -> {%{\"-\"}});
+	// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:595:1: unaryPreOperator : ( PRE_INCREMENT -> {%{\"++\"}}| PRE_DECREMENT -> {%{\"--\"}}| '@' -> {%{\"@\"}}| '~' -> {%{\"~\"}}| '!' -> {%{\"!\"}}| UNARY_MINUS -> {%{\"-\"}});
 	public final PHP54TranslatorWalker.unaryPreOperator_return unaryPreOperator() throws RecognitionException {
 		PHP54TranslatorWalker.unaryPreOperator_return retval = new PHP54TranslatorWalker.unaryPreOperator_return();
 		retval.start = input.LT(1);
 
 		try {
-			// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:592:2: ( PRE_INCREMENT -> {%{\"++\"}}| PRE_DECREMENT -> {%{\"--\"}}| '@' -> {%{\"@\"}}| '~' -> {%{\"~\"}}| '!' -> {%{\"!\"}}| UNARY_MINUS -> {%{\"-\"}})
+			// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:596:2: ( PRE_INCREMENT -> {%{\"++\"}}| PRE_DECREMENT -> {%{\"--\"}}| '@' -> {%{\"@\"}}| '~' -> {%{\"~\"}}| '!' -> {%{\"!\"}}| UNARY_MINUS -> {%{\"-\"}})
 			int alt66=6;
 			switch ( input.LA(1) ) {
 			case PRE_INCREMENT:
@@ -8607,12 +8690,12 @@ public static class STAttrMap extends HashMap<String, Object> {
 			}
 			switch (alt66) {
 				case 1 :
-					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:592:4: PRE_INCREMENT
+					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:596:4: PRE_INCREMENT
 					{
-					match(input,PRE_INCREMENT,FOLLOW_PRE_INCREMENT_in_unaryPreOperator3907); if (state.failed) return retval;
+					match(input,PRE_INCREMENT,FOLLOW_PRE_INCREMENT_in_unaryPreOperator3948); if (state.failed) return retval;
 					// TEMPLATE REWRITE
 					if ( state.backtracking==0 ) {
-					  // 592:18: -> {%{\"++\"}}
+					  // 596:18: -> {%{\"++\"}}
 					  {
 					  	retval.st = new StringTemplate(templateLib,"++");
 					  }
@@ -8623,12 +8706,12 @@ public static class STAttrMap extends HashMap<String, Object> {
 					}
 					break;
 				case 2 :
-					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:593:8: PRE_DECREMENT
+					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:597:8: PRE_DECREMENT
 					{
-					match(input,PRE_DECREMENT,FOLLOW_PRE_DECREMENT_in_unaryPreOperator3920); if (state.failed) return retval;
+					match(input,PRE_DECREMENT,FOLLOW_PRE_DECREMENT_in_unaryPreOperator3961); if (state.failed) return retval;
 					// TEMPLATE REWRITE
 					if ( state.backtracking==0 ) {
-					  // 593:23: -> {%{\"--\"}}
+					  // 597:23: -> {%{\"--\"}}
 					  {
 					  	retval.st = new StringTemplate(templateLib,"--");
 					  }
@@ -8639,12 +8722,12 @@ public static class STAttrMap extends HashMap<String, Object> {
 					}
 					break;
 				case 3 :
-					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:594:8: '@'
+					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:598:8: '@'
 					{
-					match(input,At,FOLLOW_At_in_unaryPreOperator3934); if (state.failed) return retval;
+					match(input,At,FOLLOW_At_in_unaryPreOperator3975); if (state.failed) return retval;
 					// TEMPLATE REWRITE
 					if ( state.backtracking==0 ) {
-					  // 594:14: -> {%{\"@\"}}
+					  // 598:14: -> {%{\"@\"}}
 					  {
 					  	retval.st = new StringTemplate(templateLib,"@");
 					  }
@@ -8655,12 +8738,12 @@ public static class STAttrMap extends HashMap<String, Object> {
 					}
 					break;
 				case 4 :
-					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:595:8: '~'
+					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:599:8: '~'
 					{
-					match(input,BitwiseNot,FOLLOW_BitwiseNot_in_unaryPreOperator3949); if (state.failed) return retval;
+					match(input,BitwiseNot,FOLLOW_BitwiseNot_in_unaryPreOperator3990); if (state.failed) return retval;
 					// TEMPLATE REWRITE
 					if ( state.backtracking==0 ) {
-					  // 595:14: -> {%{\"~\"}}
+					  // 599:14: -> {%{\"~\"}}
 					  {
 					  	retval.st = new StringTemplate(templateLib,"~");
 					  }
@@ -8671,12 +8754,12 @@ public static class STAttrMap extends HashMap<String, Object> {
 					}
 					break;
 				case 5 :
-					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:596:8: '!'
+					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:600:8: '!'
 					{
-					match(input,LogicNot,FOLLOW_LogicNot_in_unaryPreOperator3964); if (state.failed) return retval;
+					match(input,LogicNot,FOLLOW_LogicNot_in_unaryPreOperator4005); if (state.failed) return retval;
 					// TEMPLATE REWRITE
 					if ( state.backtracking==0 ) {
-					  // 596:14: -> {%{\"!\"}}
+					  // 600:14: -> {%{\"!\"}}
 					  {
 					  	retval.st = new StringTemplate(templateLib,"!");
 					  }
@@ -8687,12 +8770,12 @@ public static class STAttrMap extends HashMap<String, Object> {
 					}
 					break;
 				case 6 :
-					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:597:8: UNARY_MINUS
+					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:601:8: UNARY_MINUS
 					{
-					match(input,UNARY_MINUS,FOLLOW_UNARY_MINUS_in_unaryPreOperator3979); if (state.failed) return retval;
+					match(input,UNARY_MINUS,FOLLOW_UNARY_MINUS_in_unaryPreOperator4020); if (state.failed) return retval;
 					// TEMPLATE REWRITE
 					if ( state.backtracking==0 ) {
-					  // 597:20: -> {%{\"-\"}}
+					  // 601:20: -> {%{\"-\"}}
 					  {
 					  	retval.st = new StringTemplate(templateLib,"-");
 					  }
@@ -8725,13 +8808,13 @@ public static class STAttrMap extends HashMap<String, Object> {
 
 
 	// $ANTLR start "unaryPostOperator"
-	// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:600:1: unaryPostOperator : ( POST_INCREMENT -> {%{\"++\"}}| POST_DECREMENT -> {%{\"--\"}});
+	// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:604:1: unaryPostOperator : ( POST_INCREMENT -> {%{\"++\"}}| POST_DECREMENT -> {%{\"--\"}});
 	public final PHP54TranslatorWalker.unaryPostOperator_return unaryPostOperator() throws RecognitionException {
 		PHP54TranslatorWalker.unaryPostOperator_return retval = new PHP54TranslatorWalker.unaryPostOperator_return();
 		retval.start = input.LT(1);
 
 		try {
-			// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:601:2: ( POST_INCREMENT -> {%{\"++\"}}| POST_DECREMENT -> {%{\"--\"}})
+			// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:605:2: ( POST_INCREMENT -> {%{\"++\"}}| POST_DECREMENT -> {%{\"--\"}})
 			int alt67=2;
 			int LA67_0 = input.LA(1);
 			if ( (LA67_0==POST_INCREMENT) ) {
@@ -8748,12 +8831,12 @@ public static class STAttrMap extends HashMap<String, Object> {
 			}
 			switch (alt67) {
 				case 1 :
-					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:601:4: POST_INCREMENT
+					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:605:4: POST_INCREMENT
 					{
-					match(input,POST_INCREMENT,FOLLOW_POST_INCREMENT_in_unaryPostOperator4003); if (state.failed) return retval;
+					match(input,POST_INCREMENT,FOLLOW_POST_INCREMENT_in_unaryPostOperator4044); if (state.failed) return retval;
 					// TEMPLATE REWRITE
 					if ( state.backtracking==0 ) {
-					  // 601:19: -> {%{\"++\"}}
+					  // 605:19: -> {%{\"++\"}}
 					  {
 					  	retval.st = new StringTemplate(templateLib,"++");
 					  }
@@ -8764,12 +8847,12 @@ public static class STAttrMap extends HashMap<String, Object> {
 					}
 					break;
 				case 2 :
-					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:602:8: POST_DECREMENT
+					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:606:8: POST_DECREMENT
 					{
-					match(input,POST_DECREMENT,FOLLOW_POST_DECREMENT_in_unaryPostOperator4016); if (state.failed) return retval;
+					match(input,POST_DECREMENT,FOLLOW_POST_DECREMENT_in_unaryPostOperator4057); if (state.failed) return retval;
 					// TEMPLATE REWRITE
 					if ( state.backtracking==0 ) {
-					  // 602:23: -> {%{\"--\"}}
+					  // 606:23: -> {%{\"--\"}}
 					  {
 					  	retval.st = new StringTemplate(templateLib,"--");
 					  }
@@ -8803,13 +8886,13 @@ public static class STAttrMap extends HashMap<String, Object> {
 
 
 	// $ANTLR start "binaryOperator"
-	// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:605:1: binaryOperator returns [boolean needParentheses] : ( 'or' | 'xor' | 'and' | '=' | '+=' | '-=' | '*=' | '/=' | '&=' | '|=' | '^=' | '%=' | '.=' | '<<=' | '>>=' | '||' | '&&' | '|' | '^' | '&' | '==' | '!=' | '<>' | '===' | '!==' | '<' | '<=' | '>' | '>=' | '<<' | '>>' | '+' | '-' | '.' | '*' | '/' | '%' );
+	// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:609:1: binaryOperator returns [boolean needParentheses] : ( 'or' | 'xor' | 'and' | '=' | '+=' | '-=' | '*=' | '/=' | '&=' | '|=' | '^=' | '%=' | '.=' | '<<=' | '>>=' | '||' | '&&' | '|' | '^' | '&' | '==' | '!=' | '<>' | '===' | '!==' | '<' | '<=' | '>' | '>=' | '<<' | '>>' | '+' | '-' | '.' | '*' | '/' | '%' );
 	public final PHP54TranslatorWalker.binaryOperator_return binaryOperator() throws RecognitionException {
 		PHP54TranslatorWalker.binaryOperator_return retval = new PHP54TranslatorWalker.binaryOperator_return();
 		retval.start = input.LT(1);
 
 		try {
-			// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:610:2: ( 'or' | 'xor' | 'and' | '=' | '+=' | '-=' | '*=' | '/=' | '&=' | '|=' | '^=' | '%=' | '.=' | '<<=' | '>>=' | '||' | '&&' | '|' | '^' | '&' | '==' | '!=' | '<>' | '===' | '!==' | '<' | '<=' | '>' | '>=' | '<<' | '>>' | '+' | '-' | '.' | '*' | '/' | '%' )
+			// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:614:2: ( 'or' | 'xor' | 'and' | '=' | '+=' | '-=' | '*=' | '/=' | '&=' | '|=' | '^=' | '%=' | '.=' | '<<=' | '>>=' | '||' | '&&' | '|' | '^' | '&' | '==' | '!=' | '<>' | '===' | '!==' | '<' | '<=' | '>' | '>=' | '<<' | '>>' | '+' | '-' | '.' | '*' | '/' | '%' )
 			// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:
 			{
 			if ( input.LA(1)==Assign||(input.LA(1) >= BitwiseAnd && input.LA(1) <= BitwiseAndAssign)||(input.LA(1) >= BitwiseOr && input.LA(1) <= BitwiseXorAssign)||(input.LA(1) >= Divide && input.LA(1) <= DivideAssign)||(input.LA(1) >= Dot && input.LA(1) <= DotAssign)||input.LA(1)==Equal||(input.LA(1) >= GreaterEqualThan && input.LA(1) <= GreaterThan)||input.LA(1)==Identical||(input.LA(1) >= LessEqualThan && input.LA(1) <= LogicAndWeak)||(input.LA(1) >= LogicOr && input.LA(1) <= LogicXorWeak)||(input.LA(1) >= Minus && input.LA(1) <= MinusAssign)||(input.LA(1) >= Modulo && input.LA(1) <= MultiplyAssign)||(input.LA(1) >= NotEqual && input.LA(1) <= NotIdentical)||(input.LA(1) >= Plus && input.LA(1) <= PlusAssign)||(input.LA(1) >= ShiftLeft && input.LA(1) <= ShiftRightAssign) ) {
@@ -8849,19 +8932,19 @@ public static class STAttrMap extends HashMap<String, Object> {
 
 
 	// $ANTLR start "castingOperator"
-	// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:657:1: castingOperator : ( ^( CASTING ^( TYPE ( ^( TYPE_MODIFIER ( Cast )? (isNullable= '?' )? ) | TYPE_MODIFIER ) (type= scalarTypes |type= arrayType ) ) expression ) -> primitiveCast(isNotNullable=$isNullable!=nulltype=$type.stexpression=$expression.st)| ^( CASTING ^( TYPE ( ^( TYPE_MODIFIER ( Cast )? ( '?' )? ) | TYPE_MODIFIER ) TYPE_NAME ) expression ) -> cast(type=$TYPE_NAME.textexpression=$expression.st));
+	// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:661:1: castingOperator : ( ^( CASTING ^( TYPE ( ^( TYPE_MODIFIER ( Cast )? (isNullable= '?' )? ) | TYPE_MODIFIER ) (type= scalarTypes |type= arrayType ) ) expression ) -> primitiveCast(isNotNullable=$isNullable!=nulltype=$type.stexpression=$expression.st)| ^( CASTING ^( TYPE ( ^( TYPE_MODIFIER ( Cast )? ( '?' )? ) | TYPE_MODIFIER ) TYPE_NAME ) expression ) -> cast(type=$TYPE_NAME.textexpression=$expression.st));
 	public final PHP54TranslatorWalker.castingOperator_return castingOperator() throws RecognitionException {
 		PHP54TranslatorWalker.castingOperator_return retval = new PHP54TranslatorWalker.castingOperator_return();
 		retval.start = input.LT(1);
 
 		ITSPHPAst isNullable=null;
-		ITSPHPAst TYPE_NAME121=null;
+		ITSPHPAst TYPE_NAME124=null;
 		TreeRuleReturnScope type =null;
-		TreeRuleReturnScope expression120 =null;
-		TreeRuleReturnScope expression122 =null;
+		TreeRuleReturnScope expression123 =null;
+		TreeRuleReturnScope expression125 =null;
 
 		try {
-			// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:658:2: ( ^( CASTING ^( TYPE ( ^( TYPE_MODIFIER ( Cast )? (isNullable= '?' )? ) | TYPE_MODIFIER ) (type= scalarTypes |type= arrayType ) ) expression ) -> primitiveCast(isNotNullable=$isNullable!=nulltype=$type.stexpression=$expression.st)| ^( CASTING ^( TYPE ( ^( TYPE_MODIFIER ( Cast )? ( '?' )? ) | TYPE_MODIFIER ) TYPE_NAME ) expression ) -> cast(type=$TYPE_NAME.textexpression=$expression.st))
+			// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:662:2: ( ^( CASTING ^( TYPE ( ^( TYPE_MODIFIER ( Cast )? (isNullable= '?' )? ) | TYPE_MODIFIER ) (type= scalarTypes |type= arrayType ) ) expression ) -> primitiveCast(isNotNullable=$isNullable!=nulltype=$type.stexpression=$expression.st)| ^( CASTING ^( TYPE ( ^( TYPE_MODIFIER ( Cast )? ( '?' )? ) | TYPE_MODIFIER ) TYPE_NAME ) expression ) -> cast(type=$TYPE_NAME.textexpression=$expression.st))
 			int alt75=2;
 			int LA75_0 = input.LA(1);
 			if ( (LA75_0==CASTING) ) {
@@ -9125,13 +9208,13 @@ public static class STAttrMap extends HashMap<String, Object> {
 			}
 			switch (alt75) {
 				case 1 :
-					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:658:4: ^( CASTING ^( TYPE ( ^( TYPE_MODIFIER ( Cast )? (isNullable= '?' )? ) | TYPE_MODIFIER ) (type= scalarTypes |type= arrayType ) ) expression )
+					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:662:4: ^( CASTING ^( TYPE ( ^( TYPE_MODIFIER ( Cast )? (isNullable= '?' )? ) | TYPE_MODIFIER ) (type= scalarTypes |type= arrayType ) ) expression )
 					{
-					match(input,CASTING,FOLLOW_CASTING_in_castingOperator4280); if (state.failed) return retval;
+					match(input,CASTING,FOLLOW_CASTING_in_castingOperator4321); if (state.failed) return retval;
 					match(input, Token.DOWN, null); if (state.failed) return retval;
-					match(input,TYPE,FOLLOW_TYPE_in_castingOperator4286); if (state.failed) return retval;
+					match(input,TYPE,FOLLOW_TYPE_in_castingOperator4327); if (state.failed) return retval;
 					match(input, Token.DOWN, null); if (state.failed) return retval;
-					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:660:5: ( ^( TYPE_MODIFIER ( Cast )? (isNullable= '?' )? ) | TYPE_MODIFIER )
+					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:664:5: ( ^( TYPE_MODIFIER ( Cast )? (isNullable= '?' )? ) | TYPE_MODIFIER )
 					int alt70=2;
 					int LA70_0 = input.LA(1);
 					if ( (LA70_0==TYPE_MODIFIER) ) {
@@ -9163,12 +9246,12 @@ public static class STAttrMap extends HashMap<String, Object> {
 					}
 					switch (alt70) {
 						case 1 :
-							// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:660:7: ^( TYPE_MODIFIER ( Cast )? (isNullable= '?' )? )
+							// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:664:7: ^( TYPE_MODIFIER ( Cast )? (isNullable= '?' )? )
 							{
-							match(input,TYPE_MODIFIER,FOLLOW_TYPE_MODIFIER_in_castingOperator4296); if (state.failed) return retval;
+							match(input,TYPE_MODIFIER,FOLLOW_TYPE_MODIFIER_in_castingOperator4337); if (state.failed) return retval;
 							if ( input.LA(1)==Token.DOWN ) {
 								match(input, Token.DOWN, null); if (state.failed) return retval;
-								// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:660:23: ( Cast )?
+								// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:664:23: ( Cast )?
 								int alt68=2;
 								int LA68_0 = input.LA(1);
 								if ( (LA68_0==Cast) ) {
@@ -9176,15 +9259,15 @@ public static class STAttrMap extends HashMap<String, Object> {
 								}
 								switch (alt68) {
 									case 1 :
-										// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:660:23: Cast
+										// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:664:23: Cast
 										{
-										match(input,Cast,FOLLOW_Cast_in_castingOperator4298); if (state.failed) return retval;
+										match(input,Cast,FOLLOW_Cast_in_castingOperator4339); if (state.failed) return retval;
 										}
 										break;
 
 								}
 
-								// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:660:29: (isNullable= '?' )?
+								// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:664:29: (isNullable= '?' )?
 								int alt69=2;
 								int LA69_0 = input.LA(1);
 								if ( (LA69_0==QuestionMark) ) {
@@ -9192,9 +9275,9 @@ public static class STAttrMap extends HashMap<String, Object> {
 								}
 								switch (alt69) {
 									case 1 :
-										// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:660:30: isNullable= '?'
+										// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:664:30: isNullable= '?'
 										{
-										isNullable=(ITSPHPAst)match(input,QuestionMark,FOLLOW_QuestionMark_in_castingOperator4304); if (state.failed) return retval;
+										isNullable=(ITSPHPAst)match(input,QuestionMark,FOLLOW_QuestionMark_in_castingOperator4345); if (state.failed) return retval;
 										}
 										break;
 
@@ -9206,15 +9289,15 @@ public static class STAttrMap extends HashMap<String, Object> {
 							}
 							break;
 						case 2 :
-							// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:661:7: TYPE_MODIFIER
+							// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:665:7: TYPE_MODIFIER
 							{
-							match(input,TYPE_MODIFIER,FOLLOW_TYPE_MODIFIER_in_castingOperator4315); if (state.failed) return retval;
+							match(input,TYPE_MODIFIER,FOLLOW_TYPE_MODIFIER_in_castingOperator4356); if (state.failed) return retval;
 							}
 							break;
 
 					}
 
-					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:663:5: (type= scalarTypes |type= arrayType )
+					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:667:5: (type= scalarTypes |type= arrayType )
 					int alt71=2;
 					int LA71_0 = input.LA(1);
 					if ( ((LA71_0 >= TypeBool && LA71_0 <= TypeInt)||LA71_0==TypeString) ) {
@@ -9231,18 +9314,18 @@ public static class STAttrMap extends HashMap<String, Object> {
 					}
 					switch (alt71) {
 						case 1 :
-							// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:663:6: type= scalarTypes
+							// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:667:6: type= scalarTypes
 							{
-							pushFollow(FOLLOW_scalarTypes_in_castingOperator4330);
+							pushFollow(FOLLOW_scalarTypes_in_castingOperator4371);
 							type=scalarTypes();
 							state._fsp--;
 							if (state.failed) return retval;
 							}
 							break;
 						case 2 :
-							// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:663:23: type= arrayType
+							// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:667:23: type= arrayType
 							{
-							pushFollow(FOLLOW_arrayType_in_castingOperator4334);
+							pushFollow(FOLLOW_arrayType_in_castingOperator4375);
 							type=arrayType();
 							state._fsp--;
 							if (state.failed) return retval;
@@ -9253,17 +9336,17 @@ public static class STAttrMap extends HashMap<String, Object> {
 
 					match(input, Token.UP, null); if (state.failed) return retval;
 
-					pushFollow(FOLLOW_expression_in_castingOperator4345);
-					expression120=expression();
+					pushFollow(FOLLOW_expression_in_castingOperator4386);
+					expression123=expression();
 					state._fsp--;
 					if (state.failed) return retval;
 					match(input, Token.UP, null); if (state.failed) return retval;
 
 					// TEMPLATE REWRITE
 					if ( state.backtracking==0 ) {
-					  // 667:3: -> primitiveCast(isNotNullable=$isNullable!=nulltype=$type.stexpression=$expression.st)
+					  // 671:3: -> primitiveCast(isNotNullable=$isNullable!=nulltype=$type.stexpression=$expression.st)
 					  {
-					  	retval.st = templateLib.getInstanceOf("primitiveCast",new STAttrMap().put("isNotNullable", isNullable!=null).put("type", (type!=null?((StringTemplate)type.getTemplate()):null)).put("expression", (expression120!=null?((StringTemplate)expression120.getTemplate()):null)));
+					  	retval.st = templateLib.getInstanceOf("primitiveCast",new STAttrMap().put("isNotNullable", isNullable!=null).put("type", (type!=null?((StringTemplate)type.getTemplate()):null)).put("expression", (expression123!=null?((StringTemplate)expression123.getTemplate()):null)));
 					  }
 
 
@@ -9272,13 +9355,13 @@ public static class STAttrMap extends HashMap<String, Object> {
 					}
 					break;
 				case 2 :
-					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:669:4: ^( CASTING ^( TYPE ( ^( TYPE_MODIFIER ( Cast )? ( '?' )? ) | TYPE_MODIFIER ) TYPE_NAME ) expression )
+					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:673:4: ^( CASTING ^( TYPE ( ^( TYPE_MODIFIER ( Cast )? ( '?' )? ) | TYPE_MODIFIER ) TYPE_NAME ) expression )
 					{
-					match(input,CASTING,FOLLOW_CASTING_in_castingOperator4381); if (state.failed) return retval;
+					match(input,CASTING,FOLLOW_CASTING_in_castingOperator4422); if (state.failed) return retval;
 					match(input, Token.DOWN, null); if (state.failed) return retval;
-					match(input,TYPE,FOLLOW_TYPE_in_castingOperator4387); if (state.failed) return retval;
+					match(input,TYPE,FOLLOW_TYPE_in_castingOperator4428); if (state.failed) return retval;
 					match(input, Token.DOWN, null); if (state.failed) return retval;
-					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:671:5: ( ^( TYPE_MODIFIER ( Cast )? ( '?' )? ) | TYPE_MODIFIER )
+					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:675:5: ( ^( TYPE_MODIFIER ( Cast )? ( '?' )? ) | TYPE_MODIFIER )
 					int alt74=2;
 					int LA74_0 = input.LA(1);
 					if ( (LA74_0==TYPE_MODIFIER) ) {
@@ -9310,12 +9393,12 @@ public static class STAttrMap extends HashMap<String, Object> {
 					}
 					switch (alt74) {
 						case 1 :
-							// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:671:7: ^( TYPE_MODIFIER ( Cast )? ( '?' )? )
+							// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:675:7: ^( TYPE_MODIFIER ( Cast )? ( '?' )? )
 							{
-							match(input,TYPE_MODIFIER,FOLLOW_TYPE_MODIFIER_in_castingOperator4397); if (state.failed) return retval;
+							match(input,TYPE_MODIFIER,FOLLOW_TYPE_MODIFIER_in_castingOperator4438); if (state.failed) return retval;
 							if ( input.LA(1)==Token.DOWN ) {
 								match(input, Token.DOWN, null); if (state.failed) return retval;
-								// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:671:23: ( Cast )?
+								// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:675:23: ( Cast )?
 								int alt72=2;
 								int LA72_0 = input.LA(1);
 								if ( (LA72_0==Cast) ) {
@@ -9323,15 +9406,15 @@ public static class STAttrMap extends HashMap<String, Object> {
 								}
 								switch (alt72) {
 									case 1 :
-										// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:671:23: Cast
+										// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:675:23: Cast
 										{
-										match(input,Cast,FOLLOW_Cast_in_castingOperator4399); if (state.failed) return retval;
+										match(input,Cast,FOLLOW_Cast_in_castingOperator4440); if (state.failed) return retval;
 										}
 										break;
 
 								}
 
-								// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:671:29: ( '?' )?
+								// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:675:29: ( '?' )?
 								int alt73=2;
 								int LA73_0 = input.LA(1);
 								if ( (LA73_0==QuestionMark) ) {
@@ -9339,9 +9422,9 @@ public static class STAttrMap extends HashMap<String, Object> {
 								}
 								switch (alt73) {
 									case 1 :
-										// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:671:29: '?'
+										// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:675:29: '?'
 										{
-										match(input,QuestionMark,FOLLOW_QuestionMark_in_castingOperator4402); if (state.failed) return retval;
+										match(input,QuestionMark,FOLLOW_QuestionMark_in_castingOperator4443); if (state.failed) return retval;
 										}
 										break;
 
@@ -9353,28 +9436,28 @@ public static class STAttrMap extends HashMap<String, Object> {
 							}
 							break;
 						case 2 :
-							// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:672:7: TYPE_MODIFIER
+							// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:676:7: TYPE_MODIFIER
 							{
-							match(input,TYPE_MODIFIER,FOLLOW_TYPE_MODIFIER_in_castingOperator4412); if (state.failed) return retval;
+							match(input,TYPE_MODIFIER,FOLLOW_TYPE_MODIFIER_in_castingOperator4453); if (state.failed) return retval;
 							}
 							break;
 
 					}
 
-					TYPE_NAME121=(ITSPHPAst)match(input,TYPE_NAME,FOLLOW_TYPE_NAME_in_castingOperator4424); if (state.failed) return retval;
+					TYPE_NAME124=(ITSPHPAst)match(input,TYPE_NAME,FOLLOW_TYPE_NAME_in_castingOperator4465); if (state.failed) return retval;
 					match(input, Token.UP, null); if (state.failed) return retval;
 
-					pushFollow(FOLLOW_expression_in_castingOperator4434);
-					expression122=expression();
+					pushFollow(FOLLOW_expression_in_castingOperator4475);
+					expression125=expression();
 					state._fsp--;
 					if (state.failed) return retval;
 					match(input, Token.UP, null); if (state.failed) return retval;
 
 					// TEMPLATE REWRITE
 					if ( state.backtracking==0 ) {
-					  // 678:3: -> cast(type=$TYPE_NAME.textexpression=$expression.st)
+					  // 682:3: -> cast(type=$TYPE_NAME.textexpression=$expression.st)
 					  {
-					  	retval.st = templateLib.getInstanceOf("cast",new STAttrMap().put("type", (TYPE_NAME121!=null?TYPE_NAME121.getText():null)).put("expression", (expression122!=null?((StringTemplate)expression122.getTemplate()):null)));
+					  	retval.st = templateLib.getInstanceOf("cast",new STAttrMap().put("type", (TYPE_NAME124!=null?TYPE_NAME124.getText():null)).put("expression", (expression125!=null?((StringTemplate)expression125.getTemplate()):null)));
 					  }
 
 
@@ -9405,32 +9488,32 @@ public static class STAttrMap extends HashMap<String, Object> {
 
 
 	// $ANTLR start "newOperator"
-	// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:681:1: newOperator : ^( 'new' type= TYPE_NAME actualParameters ) -> new(type=$type.textparameters=$actualParameters.parameters);
+	// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:685:1: newOperator : ^( 'new' type= TYPE_NAME actualParameters ) -> new(type=$type.textparameters=$actualParameters.parameters);
 	public final PHP54TranslatorWalker.newOperator_return newOperator() throws RecognitionException {
 		PHP54TranslatorWalker.newOperator_return retval = new PHP54TranslatorWalker.newOperator_return();
 		retval.start = input.LT(1);
 
 		ITSPHPAst type=null;
-		TreeRuleReturnScope actualParameters123 =null;
+		TreeRuleReturnScope actualParameters126 =null;
 
 		try {
-			// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:682:2: ( ^( 'new' type= TYPE_NAME actualParameters ) -> new(type=$type.textparameters=$actualParameters.parameters))
-			// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:682:4: ^( 'new' type= TYPE_NAME actualParameters )
+			// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:686:2: ( ^( 'new' type= TYPE_NAME actualParameters ) -> new(type=$type.textparameters=$actualParameters.parameters))
+			// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:686:4: ^( 'new' type= TYPE_NAME actualParameters )
 			{
-			match(input,New,FOLLOW_New_in_newOperator4467); if (state.failed) return retval;
+			match(input,New,FOLLOW_New_in_newOperator4508); if (state.failed) return retval;
 			match(input, Token.DOWN, null); if (state.failed) return retval;
-			type=(ITSPHPAst)match(input,TYPE_NAME,FOLLOW_TYPE_NAME_in_newOperator4475); if (state.failed) return retval;
-			pushFollow(FOLLOW_actualParameters_in_newOperator4481);
-			actualParameters123=actualParameters();
+			type=(ITSPHPAst)match(input,TYPE_NAME,FOLLOW_TYPE_NAME_in_newOperator4516); if (state.failed) return retval;
+			pushFollow(FOLLOW_actualParameters_in_newOperator4522);
+			actualParameters126=actualParameters();
 			state._fsp--;
 			if (state.failed) return retval;
 			match(input, Token.UP, null); if (state.failed) return retval;
 
 			// TEMPLATE REWRITE
 			if ( state.backtracking==0 ) {
-			  // 686:3: -> new(type=$type.textparameters=$actualParameters.parameters)
+			  // 690:3: -> new(type=$type.textparameters=$actualParameters.parameters)
 			  {
-			  	retval.st = templateLib.getInstanceOf("new",new STAttrMap().put("type", (type!=null?type.getText():null)).put("parameters", (actualParameters123!=null?((PHP54TranslatorWalker.actualParameters_return)actualParameters123).parameters:null)));
+			  	retval.st = templateLib.getInstanceOf("new",new STAttrMap().put("type", (type!=null?type.getText():null)).put("parameters", (actualParameters126!=null?((PHP54TranslatorWalker.actualParameters_return)actualParameters126).parameters:null)));
 			  }
 
 
@@ -9460,7 +9543,7 @@ public static class STAttrMap extends HashMap<String, Object> {
 
 
 	// $ANTLR start "actualParameters"
-	// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:689:1: actualParameters returns [List<Object> parameters] : ( ^( ACTUAL_PARAMETERS (params+= expression )+ ) | ACTUAL_PARAMETERS ) ;
+	// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:693:1: actualParameters returns [List<Object> parameters] : ( ^( ACTUAL_PARAMETERS (params+= expression )+ ) | ACTUAL_PARAMETERS ) ;
 	public final PHP54TranslatorWalker.actualParameters_return actualParameters() throws RecognitionException {
 		PHP54TranslatorWalker.actualParameters_return retval = new PHP54TranslatorWalker.actualParameters_return();
 		retval.start = input.LT(1);
@@ -9468,10 +9551,10 @@ public static class STAttrMap extends HashMap<String, Object> {
 		List<Object> list_params=null;
 		RuleReturnScope params = null;
 		try {
-			// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:690:2: ( ( ^( ACTUAL_PARAMETERS (params+= expression )+ ) | ACTUAL_PARAMETERS ) )
-			// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:690:4: ( ^( ACTUAL_PARAMETERS (params+= expression )+ ) | ACTUAL_PARAMETERS )
+			// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:694:2: ( ( ^( ACTUAL_PARAMETERS (params+= expression )+ ) | ACTUAL_PARAMETERS ) )
+			// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:694:4: ( ^( ACTUAL_PARAMETERS (params+= expression )+ ) | ACTUAL_PARAMETERS )
 			{
-			// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:690:4: ( ^( ACTUAL_PARAMETERS (params+= expression )+ ) | ACTUAL_PARAMETERS )
+			// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:694:4: ( ^( ACTUAL_PARAMETERS (params+= expression )+ ) | ACTUAL_PARAMETERS )
 			int alt77=2;
 			int LA77_0 = input.LA(1);
 			if ( (LA77_0==ACTUAL_PARAMETERS) ) {
@@ -9503,11 +9586,11 @@ public static class STAttrMap extends HashMap<String, Object> {
 			}
 			switch (alt77) {
 				case 1 :
-					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:690:6: ^( ACTUAL_PARAMETERS (params+= expression )+ )
+					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:694:6: ^( ACTUAL_PARAMETERS (params+= expression )+ )
 					{
-					match(input,ACTUAL_PARAMETERS,FOLLOW_ACTUAL_PARAMETERS_in_actualParameters4519); if (state.failed) return retval;
+					match(input,ACTUAL_PARAMETERS,FOLLOW_ACTUAL_PARAMETERS_in_actualParameters4560); if (state.failed) return retval;
 					match(input, Token.DOWN, null); if (state.failed) return retval;
-					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:690:32: (params+= expression )+
+					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:694:32: (params+= expression )+
 					int cnt76=0;
 					loop76:
 					do {
@@ -9519,9 +9602,9 @@ public static class STAttrMap extends HashMap<String, Object> {
 
 						switch (alt76) {
 						case 1 :
-							// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:690:32: params+= expression
+							// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:694:32: params+= expression
 							{
-							pushFollow(FOLLOW_expression_in_actualParameters4523);
+							pushFollow(FOLLOW_expression_in_actualParameters4564);
 							params=expression();
 							state._fsp--;
 							if (state.failed) return retval;
@@ -9546,9 +9629,9 @@ public static class STAttrMap extends HashMap<String, Object> {
 					}
 					break;
 				case 2 :
-					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:691:5: ACTUAL_PARAMETERS
+					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:695:5: ACTUAL_PARAMETERS
 					{
-					match(input,ACTUAL_PARAMETERS,FOLLOW_ACTUAL_PARAMETERS_in_actualParameters4533); if (state.failed) return retval;
+					match(input,ACTUAL_PARAMETERS,FOLLOW_ACTUAL_PARAMETERS_in_actualParameters4574); if (state.failed) return retval;
 					}
 					break;
 
@@ -9577,32 +9660,32 @@ public static class STAttrMap extends HashMap<String, Object> {
 
 
 	// $ANTLR start "functionCall"
-	// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:695:1: functionCall : ^( FUNCTION_CALL identifier= TYPE_NAME actualParameters ) -> functionCall(identifier=$identifier.textparameters=$actualParameters.parameters);
+	// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:699:1: functionCall : ^( FUNCTION_CALL identifier= TYPE_NAME actualParameters ) -> functionCall(identifier=$identifier.textparameters=$actualParameters.parameters);
 	public final PHP54TranslatorWalker.functionCall_return functionCall() throws RecognitionException {
 		PHP54TranslatorWalker.functionCall_return retval = new PHP54TranslatorWalker.functionCall_return();
 		retval.start = input.LT(1);
 
 		ITSPHPAst identifier=null;
-		TreeRuleReturnScope actualParameters124 =null;
+		TreeRuleReturnScope actualParameters127 =null;
 
 		try {
-			// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:696:2: ( ^( FUNCTION_CALL identifier= TYPE_NAME actualParameters ) -> functionCall(identifier=$identifier.textparameters=$actualParameters.parameters))
-			// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:696:4: ^( FUNCTION_CALL identifier= TYPE_NAME actualParameters )
+			// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:700:2: ( ^( FUNCTION_CALL identifier= TYPE_NAME actualParameters ) -> functionCall(identifier=$identifier.textparameters=$actualParameters.parameters))
+			// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:700:4: ^( FUNCTION_CALL identifier= TYPE_NAME actualParameters )
 			{
-			match(input,FUNCTION_CALL,FOLLOW_FUNCTION_CALL_in_functionCall4550); if (state.failed) return retval;
+			match(input,FUNCTION_CALL,FOLLOW_FUNCTION_CALL_in_functionCall4591); if (state.failed) return retval;
 			match(input, Token.DOWN, null); if (state.failed) return retval;
-			identifier=(ITSPHPAst)match(input,TYPE_NAME,FOLLOW_TYPE_NAME_in_functionCall4554); if (state.failed) return retval;
-			pushFollow(FOLLOW_actualParameters_in_functionCall4556);
-			actualParameters124=actualParameters();
+			identifier=(ITSPHPAst)match(input,TYPE_NAME,FOLLOW_TYPE_NAME_in_functionCall4595); if (state.failed) return retval;
+			pushFollow(FOLLOW_actualParameters_in_functionCall4597);
+			actualParameters127=actualParameters();
 			state._fsp--;
 			if (state.failed) return retval;
 			match(input, Token.UP, null); if (state.failed) return retval;
 
 			// TEMPLATE REWRITE
 			if ( state.backtracking==0 ) {
-			  // 697:3: -> functionCall(identifier=$identifier.textparameters=$actualParameters.parameters)
+			  // 701:3: -> functionCall(identifier=$identifier.textparameters=$actualParameters.parameters)
 			  {
-			  	retval.st = templateLib.getInstanceOf("functionCall",new STAttrMap().put("identifier", (identifier!=null?identifier.getText():null)).put("parameters", (actualParameters124!=null?((PHP54TranslatorWalker.actualParameters_return)actualParameters124).parameters:null)));
+			  	retval.st = templateLib.getInstanceOf("functionCall",new STAttrMap().put("identifier", (identifier!=null?identifier.getText():null)).put("parameters", (actualParameters127!=null?((PHP54TranslatorWalker.actualParameters_return)actualParameters127).parameters:null)));
 			  }
 
 
@@ -9631,22 +9714,22 @@ public static class STAttrMap extends HashMap<String, Object> {
 
 
 	// $ANTLR start "methodCall"
-	// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:700:1: methodCall : ^( METHOD_CALL (callee= This |callee= VariableId ) identifier= Identifier actualParameters ) -> methodCall(callee=$callee.textidentifier=$identifier.textparameters=$actualParameters.parameters);
+	// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:704:1: methodCall : ^( METHOD_CALL (callee= This |callee= VariableId ) identifier= Identifier actualParameters ) -> methodCall(callee=$callee.textidentifier=$identifier.textparameters=$actualParameters.parameters);
 	public final PHP54TranslatorWalker.methodCall_return methodCall() throws RecognitionException {
 		PHP54TranslatorWalker.methodCall_return retval = new PHP54TranslatorWalker.methodCall_return();
 		retval.start = input.LT(1);
 
 		ITSPHPAst callee=null;
 		ITSPHPAst identifier=null;
-		TreeRuleReturnScope actualParameters125 =null;
+		TreeRuleReturnScope actualParameters128 =null;
 
 		try {
-			// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:701:2: ( ^( METHOD_CALL (callee= This |callee= VariableId ) identifier= Identifier actualParameters ) -> methodCall(callee=$callee.textidentifier=$identifier.textparameters=$actualParameters.parameters))
-			// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:701:4: ^( METHOD_CALL (callee= This |callee= VariableId ) identifier= Identifier actualParameters )
+			// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:705:2: ( ^( METHOD_CALL (callee= This |callee= VariableId ) identifier= Identifier actualParameters ) -> methodCall(callee=$callee.textidentifier=$identifier.textparameters=$actualParameters.parameters))
+			// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:705:4: ^( METHOD_CALL (callee= This |callee= VariableId ) identifier= Identifier actualParameters )
 			{
-			match(input,METHOD_CALL,FOLLOW_METHOD_CALL_in_methodCall4586); if (state.failed) return retval;
+			match(input,METHOD_CALL,FOLLOW_METHOD_CALL_in_methodCall4627); if (state.failed) return retval;
 			match(input, Token.DOWN, null); if (state.failed) return retval;
-			// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:701:18: (callee= This |callee= VariableId )
+			// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:705:18: (callee= This |callee= VariableId )
 			int alt78=2;
 			int LA78_0 = input.LA(1);
 			if ( (LA78_0==This) ) {
@@ -9663,32 +9746,32 @@ public static class STAttrMap extends HashMap<String, Object> {
 			}
 			switch (alt78) {
 				case 1 :
-					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:701:19: callee= This
+					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:705:19: callee= This
 					{
-					callee=(ITSPHPAst)match(input,This,FOLLOW_This_in_methodCall4591); if (state.failed) return retval;
+					callee=(ITSPHPAst)match(input,This,FOLLOW_This_in_methodCall4632); if (state.failed) return retval;
 					}
 					break;
 				case 2 :
-					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:701:31: callee= VariableId
+					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:705:31: callee= VariableId
 					{
-					callee=(ITSPHPAst)match(input,VariableId,FOLLOW_VariableId_in_methodCall4595); if (state.failed) return retval;
+					callee=(ITSPHPAst)match(input,VariableId,FOLLOW_VariableId_in_methodCall4636); if (state.failed) return retval;
 					}
 					break;
 
 			}
 
-			identifier=(ITSPHPAst)match(input,Identifier,FOLLOW_Identifier_in_methodCall4600); if (state.failed) return retval;
-			pushFollow(FOLLOW_actualParameters_in_methodCall4602);
-			actualParameters125=actualParameters();
+			identifier=(ITSPHPAst)match(input,Identifier,FOLLOW_Identifier_in_methodCall4641); if (state.failed) return retval;
+			pushFollow(FOLLOW_actualParameters_in_methodCall4643);
+			actualParameters128=actualParameters();
 			state._fsp--;
 			if (state.failed) return retval;
 			match(input, Token.UP, null); if (state.failed) return retval;
 
 			// TEMPLATE REWRITE
 			if ( state.backtracking==0 ) {
-			  // 702:3: -> methodCall(callee=$callee.textidentifier=$identifier.textparameters=$actualParameters.parameters)
+			  // 706:3: -> methodCall(callee=$callee.textidentifier=$identifier.textparameters=$actualParameters.parameters)
 			  {
-			  	retval.st = templateLib.getInstanceOf("methodCall",new STAttrMap().put("callee", (callee!=null?callee.getText():null)).put("identifier", (identifier!=null?identifier.getText():null)).put("parameters", (actualParameters125!=null?((PHP54TranslatorWalker.actualParameters_return)actualParameters125).parameters:null)));
+			  	retval.st = templateLib.getInstanceOf("methodCall",new STAttrMap().put("callee", (callee!=null?callee.getText():null)).put("identifier", (identifier!=null?identifier.getText():null)).put("parameters", (actualParameters128!=null?((PHP54TranslatorWalker.actualParameters_return)actualParameters128).parameters:null)));
 			  }
 
 
@@ -9717,22 +9800,22 @@ public static class STAttrMap extends HashMap<String, Object> {
 
 
 	// $ANTLR start "methodCallSelfOrParent"
-	// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:705:1: methodCallSelfOrParent : ^( METHOD_CALL (callee= Self |callee= Parent ) identifier= Identifier actualParameters ) -> methodCallStatic(callee=$callee.textidentifier=$identifier.textparameters=$actualParameters.parameters);
+	// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:709:1: methodCallSelfOrParent : ^( METHOD_CALL (callee= Self |callee= Parent ) identifier= Identifier actualParameters ) -> methodCallStatic(callee=$callee.textidentifier=$identifier.textparameters=$actualParameters.parameters);
 	public final PHP54TranslatorWalker.methodCallSelfOrParent_return methodCallSelfOrParent() throws RecognitionException {
 		PHP54TranslatorWalker.methodCallSelfOrParent_return retval = new PHP54TranslatorWalker.methodCallSelfOrParent_return();
 		retval.start = input.LT(1);
 
 		ITSPHPAst callee=null;
 		ITSPHPAst identifier=null;
-		TreeRuleReturnScope actualParameters126 =null;
+		TreeRuleReturnScope actualParameters129 =null;
 
 		try {
-			// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:706:2: ( ^( METHOD_CALL (callee= Self |callee= Parent ) identifier= Identifier actualParameters ) -> methodCallStatic(callee=$callee.textidentifier=$identifier.textparameters=$actualParameters.parameters))
-			// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:706:4: ^( METHOD_CALL (callee= Self |callee= Parent ) identifier= Identifier actualParameters )
+			// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:710:2: ( ^( METHOD_CALL (callee= Self |callee= Parent ) identifier= Identifier actualParameters ) -> methodCallStatic(callee=$callee.textidentifier=$identifier.textparameters=$actualParameters.parameters))
+			// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:710:4: ^( METHOD_CALL (callee= Self |callee= Parent ) identifier= Identifier actualParameters )
 			{
-			match(input,METHOD_CALL,FOLLOW_METHOD_CALL_in_methodCallSelfOrParent4636); if (state.failed) return retval;
+			match(input,METHOD_CALL,FOLLOW_METHOD_CALL_in_methodCallSelfOrParent4677); if (state.failed) return retval;
 			match(input, Token.DOWN, null); if (state.failed) return retval;
-			// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:706:18: (callee= Self |callee= Parent )
+			// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:710:18: (callee= Self |callee= Parent )
 			int alt79=2;
 			int LA79_0 = input.LA(1);
 			if ( (LA79_0==Self) ) {
@@ -9749,32 +9832,32 @@ public static class STAttrMap extends HashMap<String, Object> {
 			}
 			switch (alt79) {
 				case 1 :
-					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:706:19: callee= Self
+					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:710:19: callee= Self
 					{
-					callee=(ITSPHPAst)match(input,Self,FOLLOW_Self_in_methodCallSelfOrParent4641); if (state.failed) return retval;
+					callee=(ITSPHPAst)match(input,Self,FOLLOW_Self_in_methodCallSelfOrParent4682); if (state.failed) return retval;
 					}
 					break;
 				case 2 :
-					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:706:31: callee= Parent
+					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:710:31: callee= Parent
 					{
-					callee=(ITSPHPAst)match(input,Parent,FOLLOW_Parent_in_methodCallSelfOrParent4645); if (state.failed) return retval;
+					callee=(ITSPHPAst)match(input,Parent,FOLLOW_Parent_in_methodCallSelfOrParent4686); if (state.failed) return retval;
 					}
 					break;
 
 			}
 
-			identifier=(ITSPHPAst)match(input,Identifier,FOLLOW_Identifier_in_methodCallSelfOrParent4650); if (state.failed) return retval;
-			pushFollow(FOLLOW_actualParameters_in_methodCallSelfOrParent4652);
-			actualParameters126=actualParameters();
+			identifier=(ITSPHPAst)match(input,Identifier,FOLLOW_Identifier_in_methodCallSelfOrParent4691); if (state.failed) return retval;
+			pushFollow(FOLLOW_actualParameters_in_methodCallSelfOrParent4693);
+			actualParameters129=actualParameters();
 			state._fsp--;
 			if (state.failed) return retval;
 			match(input, Token.UP, null); if (state.failed) return retval;
 
 			// TEMPLATE REWRITE
 			if ( state.backtracking==0 ) {
-			  // 707:3: -> methodCallStatic(callee=$callee.textidentifier=$identifier.textparameters=$actualParameters.parameters)
+			  // 711:3: -> methodCallStatic(callee=$callee.textidentifier=$identifier.textparameters=$actualParameters.parameters)
 			  {
-			  	retval.st = templateLib.getInstanceOf("methodCallStatic",new STAttrMap().put("callee", (callee!=null?callee.getText():null)).put("identifier", (identifier!=null?identifier.getText():null)).put("parameters", (actualParameters126!=null?((PHP54TranslatorWalker.actualParameters_return)actualParameters126).parameters:null)));
+			  	retval.st = templateLib.getInstanceOf("methodCallStatic",new STAttrMap().put("callee", (callee!=null?callee.getText():null)).put("identifier", (identifier!=null?identifier.getText():null)).put("parameters", (actualParameters129!=null?((PHP54TranslatorWalker.actualParameters_return)actualParameters129).parameters:null)));
 			  }
 
 
@@ -9803,34 +9886,34 @@ public static class STAttrMap extends HashMap<String, Object> {
 
 
 	// $ANTLR start "methodCallStatic"
-	// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:710:1: methodCallStatic : ^( METHOD_CALL_STATIC TYPE_NAME identifier= Identifier actualParameters ) -> methodCallStatic(callee=$TYPE_NAME.textidentifier=$identifier.textparameters=$actualParameters.parameters);
+	// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:714:1: methodCallStatic : ^( METHOD_CALL_STATIC TYPE_NAME identifier= Identifier actualParameters ) -> methodCallStatic(callee=$TYPE_NAME.textidentifier=$identifier.textparameters=$actualParameters.parameters);
 	public final PHP54TranslatorWalker.methodCallStatic_return methodCallStatic() throws RecognitionException {
 		PHP54TranslatorWalker.methodCallStatic_return retval = new PHP54TranslatorWalker.methodCallStatic_return();
 		retval.start = input.LT(1);
 
 		ITSPHPAst identifier=null;
-		ITSPHPAst TYPE_NAME127=null;
-		TreeRuleReturnScope actualParameters128 =null;
+		ITSPHPAst TYPE_NAME130=null;
+		TreeRuleReturnScope actualParameters131 =null;
 
 		try {
-			// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:711:2: ( ^( METHOD_CALL_STATIC TYPE_NAME identifier= Identifier actualParameters ) -> methodCallStatic(callee=$TYPE_NAME.textidentifier=$identifier.textparameters=$actualParameters.parameters))
-			// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:711:4: ^( METHOD_CALL_STATIC TYPE_NAME identifier= Identifier actualParameters )
+			// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:715:2: ( ^( METHOD_CALL_STATIC TYPE_NAME identifier= Identifier actualParameters ) -> methodCallStatic(callee=$TYPE_NAME.textidentifier=$identifier.textparameters=$actualParameters.parameters))
+			// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:715:4: ^( METHOD_CALL_STATIC TYPE_NAME identifier= Identifier actualParameters )
 			{
-			match(input,METHOD_CALL_STATIC,FOLLOW_METHOD_CALL_STATIC_in_methodCallStatic4686); if (state.failed) return retval;
+			match(input,METHOD_CALL_STATIC,FOLLOW_METHOD_CALL_STATIC_in_methodCallStatic4727); if (state.failed) return retval;
 			match(input, Token.DOWN, null); if (state.failed) return retval;
-			TYPE_NAME127=(ITSPHPAst)match(input,TYPE_NAME,FOLLOW_TYPE_NAME_in_methodCallStatic4688); if (state.failed) return retval;
-			identifier=(ITSPHPAst)match(input,Identifier,FOLLOW_Identifier_in_methodCallStatic4692); if (state.failed) return retval;
-			pushFollow(FOLLOW_actualParameters_in_methodCallStatic4694);
-			actualParameters128=actualParameters();
+			TYPE_NAME130=(ITSPHPAst)match(input,TYPE_NAME,FOLLOW_TYPE_NAME_in_methodCallStatic4729); if (state.failed) return retval;
+			identifier=(ITSPHPAst)match(input,Identifier,FOLLOW_Identifier_in_methodCallStatic4733); if (state.failed) return retval;
+			pushFollow(FOLLOW_actualParameters_in_methodCallStatic4735);
+			actualParameters131=actualParameters();
 			state._fsp--;
 			if (state.failed) return retval;
 			match(input, Token.UP, null); if (state.failed) return retval;
 
 			// TEMPLATE REWRITE
 			if ( state.backtracking==0 ) {
-			  // 712:3: -> methodCallStatic(callee=$TYPE_NAME.textidentifier=$identifier.textparameters=$actualParameters.parameters)
+			  // 716:3: -> methodCallStatic(callee=$TYPE_NAME.textidentifier=$identifier.textparameters=$actualParameters.parameters)
 			  {
-			  	retval.st = templateLib.getInstanceOf("methodCallStatic",new STAttrMap().put("callee", (TYPE_NAME127!=null?TYPE_NAME127.getText():null)).put("identifier", (identifier!=null?identifier.getText():null)).put("parameters", (actualParameters128!=null?((PHP54TranslatorWalker.actualParameters_return)actualParameters128).parameters:null)));
+			  	retval.st = templateLib.getInstanceOf("methodCallStatic",new STAttrMap().put("callee", (TYPE_NAME130!=null?TYPE_NAME130.getText():null)).put("identifier", (identifier!=null?identifier.getText():null)).put("parameters", (actualParameters131!=null?((PHP54TranslatorWalker.actualParameters_return)actualParameters131).parameters:null)));
 			  }
 
 
@@ -9859,25 +9942,25 @@ public static class STAttrMap extends HashMap<String, Object> {
 
 
 	// $ANTLR start "classStaticAccess"
-	// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:715:1: classStaticAccess : ^( CLASS_STATIC_ACCESS staticAccess (identifier= CLASS_STATIC_ACCESS_VARIABLE_ID |identifier= CONSTANT ) ) -> classMemberAccessStatic(accessor=$staticAccess.stidentifier=$identifier.text);
+	// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:719:1: classStaticAccess : ^( CLASS_STATIC_ACCESS staticAccess (identifier= CLASS_STATIC_ACCESS_VARIABLE_ID |identifier= CONSTANT ) ) -> classMemberAccessStatic(accessor=$staticAccess.stidentifier=$identifier.text);
 	public final PHP54TranslatorWalker.classStaticAccess_return classStaticAccess() throws RecognitionException {
 		PHP54TranslatorWalker.classStaticAccess_return retval = new PHP54TranslatorWalker.classStaticAccess_return();
 		retval.start = input.LT(1);
 
 		ITSPHPAst identifier=null;
-		TreeRuleReturnScope staticAccess129 =null;
+		TreeRuleReturnScope staticAccess132 =null;
 
 		try {
-			// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:716:2: ( ^( CLASS_STATIC_ACCESS staticAccess (identifier= CLASS_STATIC_ACCESS_VARIABLE_ID |identifier= CONSTANT ) ) -> classMemberAccessStatic(accessor=$staticAccess.stidentifier=$identifier.text))
-			// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:716:4: ^( CLASS_STATIC_ACCESS staticAccess (identifier= CLASS_STATIC_ACCESS_VARIABLE_ID |identifier= CONSTANT ) )
+			// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:720:2: ( ^( CLASS_STATIC_ACCESS staticAccess (identifier= CLASS_STATIC_ACCESS_VARIABLE_ID |identifier= CONSTANT ) ) -> classMemberAccessStatic(accessor=$staticAccess.stidentifier=$identifier.text))
+			// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:720:4: ^( CLASS_STATIC_ACCESS staticAccess (identifier= CLASS_STATIC_ACCESS_VARIABLE_ID |identifier= CONSTANT ) )
 			{
-			match(input,CLASS_STATIC_ACCESS,FOLLOW_CLASS_STATIC_ACCESS_in_classStaticAccess4729); if (state.failed) return retval;
+			match(input,CLASS_STATIC_ACCESS,FOLLOW_CLASS_STATIC_ACCESS_in_classStaticAccess4770); if (state.failed) return retval;
 			match(input, Token.DOWN, null); if (state.failed) return retval;
-			pushFollow(FOLLOW_staticAccess_in_classStaticAccess4731);
-			staticAccess129=staticAccess();
+			pushFollow(FOLLOW_staticAccess_in_classStaticAccess4772);
+			staticAccess132=staticAccess();
 			state._fsp--;
 			if (state.failed) return retval;
-			// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:716:39: (identifier= CLASS_STATIC_ACCESS_VARIABLE_ID |identifier= CONSTANT )
+			// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:720:39: (identifier= CLASS_STATIC_ACCESS_VARIABLE_ID |identifier= CONSTANT )
 			int alt80=2;
 			int LA80_0 = input.LA(1);
 			if ( (LA80_0==CLASS_STATIC_ACCESS_VARIABLE_ID) ) {
@@ -9894,15 +9977,15 @@ public static class STAttrMap extends HashMap<String, Object> {
 			}
 			switch (alt80) {
 				case 1 :
-					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:716:40: identifier= CLASS_STATIC_ACCESS_VARIABLE_ID
+					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:720:40: identifier= CLASS_STATIC_ACCESS_VARIABLE_ID
 					{
-					identifier=(ITSPHPAst)match(input,CLASS_STATIC_ACCESS_VARIABLE_ID,FOLLOW_CLASS_STATIC_ACCESS_VARIABLE_ID_in_classStaticAccess4736); if (state.failed) return retval;
+					identifier=(ITSPHPAst)match(input,CLASS_STATIC_ACCESS_VARIABLE_ID,FOLLOW_CLASS_STATIC_ACCESS_VARIABLE_ID_in_classStaticAccess4777); if (state.failed) return retval;
 					}
 					break;
 				case 2 :
-					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:716:83: identifier= CONSTANT
+					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:720:83: identifier= CONSTANT
 					{
-					identifier=(ITSPHPAst)match(input,CONSTANT,FOLLOW_CONSTANT_in_classStaticAccess4740); if (state.failed) return retval;
+					identifier=(ITSPHPAst)match(input,CONSTANT,FOLLOW_CONSTANT_in_classStaticAccess4781); if (state.failed) return retval;
 					}
 					break;
 
@@ -9912,9 +9995,9 @@ public static class STAttrMap extends HashMap<String, Object> {
 
 			// TEMPLATE REWRITE
 			if ( state.backtracking==0 ) {
-			  // 717:3: -> classMemberAccessStatic(accessor=$staticAccess.stidentifier=$identifier.text)
+			  // 721:3: -> classMemberAccessStatic(accessor=$staticAccess.stidentifier=$identifier.text)
 			  {
-			  	retval.st = templateLib.getInstanceOf("classMemberAccessStatic",new STAttrMap().put("accessor", (staticAccess129!=null?((StringTemplate)staticAccess129.getTemplate()):null)).put("identifier", (identifier!=null?identifier.getText():null)));
+			  	retval.st = templateLib.getInstanceOf("classMemberAccessStatic",new STAttrMap().put("accessor", (staticAccess132!=null?((StringTemplate)staticAccess132.getTemplate()):null)).put("identifier", (identifier!=null?identifier.getText():null)));
 			  }
 
 
@@ -9943,21 +10026,21 @@ public static class STAttrMap extends HashMap<String, Object> {
 
 
 	// $ANTLR start "postFixExpression"
-	// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:720:1: postFixExpression : ( ^( CLASS_MEMBER_ACCESS expression Identifier ) -> classMemberAccess(expression=$expression.stidentifier=$Identifier.text)| ^( ARRAY_ACCESS expr= expression index= expression ) -> arrayAccess(expression=$expr.stindex=$index.st)| ^( METHOD_CALL_POSTFIX expression Identifier actualParameters ) -> postFixCall(expression=$expression.stidentifier=$Identifier.textparameters=$actualParameters.parameters));
+	// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:724:1: postFixExpression : ( ^( CLASS_MEMBER_ACCESS expression Identifier ) -> classMemberAccess(expression=$expression.stidentifier=$Identifier.text)| ^( ARRAY_ACCESS expr= expression index= expression ) -> arrayAccess(expression=$expr.stindex=$index.st)| ^( METHOD_CALL_POSTFIX expression Identifier actualParameters ) -> postFixCall(expression=$expression.stidentifier=$Identifier.textparameters=$actualParameters.parameters));
 	public final PHP54TranslatorWalker.postFixExpression_return postFixExpression() throws RecognitionException {
 		PHP54TranslatorWalker.postFixExpression_return retval = new PHP54TranslatorWalker.postFixExpression_return();
 		retval.start = input.LT(1);
 
-		ITSPHPAst Identifier131=null;
-		ITSPHPAst Identifier133=null;
+		ITSPHPAst Identifier134=null;
+		ITSPHPAst Identifier136=null;
 		TreeRuleReturnScope expr =null;
 		TreeRuleReturnScope index =null;
-		TreeRuleReturnScope expression130 =null;
-		TreeRuleReturnScope expression132 =null;
-		TreeRuleReturnScope actualParameters134 =null;
+		TreeRuleReturnScope expression133 =null;
+		TreeRuleReturnScope expression135 =null;
+		TreeRuleReturnScope actualParameters137 =null;
 
 		try {
-			// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:721:2: ( ^( CLASS_MEMBER_ACCESS expression Identifier ) -> classMemberAccess(expression=$expression.stidentifier=$Identifier.text)| ^( ARRAY_ACCESS expr= expression index= expression ) -> arrayAccess(expression=$expr.stindex=$index.st)| ^( METHOD_CALL_POSTFIX expression Identifier actualParameters ) -> postFixCall(expression=$expression.stidentifier=$Identifier.textparameters=$actualParameters.parameters))
+			// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:725:2: ( ^( CLASS_MEMBER_ACCESS expression Identifier ) -> classMemberAccess(expression=$expression.stidentifier=$Identifier.text)| ^( ARRAY_ACCESS expr= expression index= expression ) -> arrayAccess(expression=$expr.stindex=$index.st)| ^( METHOD_CALL_POSTFIX expression Identifier actualParameters ) -> postFixCall(expression=$expression.stidentifier=$Identifier.textparameters=$actualParameters.parameters))
 			int alt81=3;
 			switch ( input.LA(1) ) {
 			case CLASS_MEMBER_ACCESS:
@@ -9983,22 +10066,22 @@ public static class STAttrMap extends HashMap<String, Object> {
 			}
 			switch (alt81) {
 				case 1 :
-					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:721:4: ^( CLASS_MEMBER_ACCESS expression Identifier )
+					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:725:4: ^( CLASS_MEMBER_ACCESS expression Identifier )
 					{
-					match(input,CLASS_MEMBER_ACCESS,FOLLOW_CLASS_MEMBER_ACCESS_in_postFixExpression4771); if (state.failed) return retval;
+					match(input,CLASS_MEMBER_ACCESS,FOLLOW_CLASS_MEMBER_ACCESS_in_postFixExpression4812); if (state.failed) return retval;
 					match(input, Token.DOWN, null); if (state.failed) return retval;
-					pushFollow(FOLLOW_expression_in_postFixExpression4773);
-					expression130=expression();
+					pushFollow(FOLLOW_expression_in_postFixExpression4814);
+					expression133=expression();
 					state._fsp--;
 					if (state.failed) return retval;
-					Identifier131=(ITSPHPAst)match(input,Identifier,FOLLOW_Identifier_in_postFixExpression4775); if (state.failed) return retval;
+					Identifier134=(ITSPHPAst)match(input,Identifier,FOLLOW_Identifier_in_postFixExpression4816); if (state.failed) return retval;
 					match(input, Token.UP, null); if (state.failed) return retval;
 
 					// TEMPLATE REWRITE
 					if ( state.backtracking==0 ) {
-					  // 721:52: -> classMemberAccess(expression=$expression.stidentifier=$Identifier.text)
+					  // 725:52: -> classMemberAccess(expression=$expression.stidentifier=$Identifier.text)
 					  {
-					  	retval.st = templateLib.getInstanceOf("classMemberAccess",new STAttrMap().put("expression", (expression130!=null?((StringTemplate)expression130.getTemplate()):null)).put("identifier", (Identifier131!=null?Identifier131.getText():null)));
+					  	retval.st = templateLib.getInstanceOf("classMemberAccess",new STAttrMap().put("expression", (expression133!=null?((StringTemplate)expression133.getTemplate()):null)).put("identifier", (Identifier134!=null?Identifier134.getText():null)));
 					  }
 
 
@@ -10007,15 +10090,15 @@ public static class STAttrMap extends HashMap<String, Object> {
 					}
 					break;
 				case 2 :
-					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:722:4: ^( ARRAY_ACCESS expr= expression index= expression )
+					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:726:4: ^( ARRAY_ACCESS expr= expression index= expression )
 					{
-					match(input,ARRAY_ACCESS,FOLLOW_ARRAY_ACCESS_in_postFixExpression4799); if (state.failed) return retval;
+					match(input,ARRAY_ACCESS,FOLLOW_ARRAY_ACCESS_in_postFixExpression4840); if (state.failed) return retval;
 					match(input, Token.DOWN, null); if (state.failed) return retval;
-					pushFollow(FOLLOW_expression_in_postFixExpression4803);
+					pushFollow(FOLLOW_expression_in_postFixExpression4844);
 					expr=expression();
 					state._fsp--;
 					if (state.failed) return retval;
-					pushFollow(FOLLOW_expression_in_postFixExpression4807);
+					pushFollow(FOLLOW_expression_in_postFixExpression4848);
 					index=expression();
 					state._fsp--;
 					if (state.failed) return retval;
@@ -10023,7 +10106,7 @@ public static class STAttrMap extends HashMap<String, Object> {
 
 					// TEMPLATE REWRITE
 					if ( state.backtracking==0 ) {
-					  // 722:54: -> arrayAccess(expression=$expr.stindex=$index.st)
+					  // 726:54: -> arrayAccess(expression=$expr.stindex=$index.st)
 					  {
 					  	retval.st = templateLib.getInstanceOf("arrayAccess",new STAttrMap().put("expression", (expr!=null?((StringTemplate)expr.getTemplate()):null)).put("index", (index!=null?((StringTemplate)index.getTemplate()):null)));
 					  }
@@ -10034,26 +10117,26 @@ public static class STAttrMap extends HashMap<String, Object> {
 					}
 					break;
 				case 3 :
-					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:723:4: ^( METHOD_CALL_POSTFIX expression Identifier actualParameters )
+					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:727:4: ^( METHOD_CALL_POSTFIX expression Identifier actualParameters )
 					{
-					match(input,METHOD_CALL_POSTFIX,FOLLOW_METHOD_CALL_POSTFIX_in_postFixExpression4829); if (state.failed) return retval;
+					match(input,METHOD_CALL_POSTFIX,FOLLOW_METHOD_CALL_POSTFIX_in_postFixExpression4870); if (state.failed) return retval;
 					match(input, Token.DOWN, null); if (state.failed) return retval;
-					pushFollow(FOLLOW_expression_in_postFixExpression4831);
-					expression132=expression();
+					pushFollow(FOLLOW_expression_in_postFixExpression4872);
+					expression135=expression();
 					state._fsp--;
 					if (state.failed) return retval;
-					Identifier133=(ITSPHPAst)match(input,Identifier,FOLLOW_Identifier_in_postFixExpression4833); if (state.failed) return retval;
-					pushFollow(FOLLOW_actualParameters_in_postFixExpression4835);
-					actualParameters134=actualParameters();
+					Identifier136=(ITSPHPAst)match(input,Identifier,FOLLOW_Identifier_in_postFixExpression4874); if (state.failed) return retval;
+					pushFollow(FOLLOW_actualParameters_in_postFixExpression4876);
+					actualParameters137=actualParameters();
 					state._fsp--;
 					if (state.failed) return retval;
 					match(input, Token.UP, null); if (state.failed) return retval;
 
 					// TEMPLATE REWRITE
 					if ( state.backtracking==0 ) {
-					  // 723:66: -> postFixCall(expression=$expression.stidentifier=$Identifier.textparameters=$actualParameters.parameters)
+					  // 727:66: -> postFixCall(expression=$expression.stidentifier=$Identifier.textparameters=$actualParameters.parameters)
 					  {
-					  	retval.st = templateLib.getInstanceOf("postFixCall",new STAttrMap().put("expression", (expression132!=null?((StringTemplate)expression132.getTemplate()):null)).put("identifier", (Identifier133!=null?Identifier133.getText():null)).put("parameters", (actualParameters134!=null?((PHP54TranslatorWalker.actualParameters_return)actualParameters134).parameters:null)));
+					  	retval.st = templateLib.getInstanceOf("postFixCall",new STAttrMap().put("expression", (expression135!=null?((StringTemplate)expression135.getTemplate()):null)).put("identifier", (Identifier136!=null?Identifier136.getText():null)).put("parameters", (actualParameters137!=null?((PHP54TranslatorWalker.actualParameters_return)actualParameters137).parameters:null)));
 					  }
 
 
@@ -10084,15 +10167,15 @@ public static class STAttrMap extends HashMap<String, Object> {
 
 
 	// $ANTLR start "exit"
-	// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:726:1: exit : ( ^( 'exit' ( expression )? ) -> exit(expression=$expression.st)| Exit -> exit(expression=null));
+	// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:730:1: exit : ( ^( 'exit' ( expression )? ) -> exit(expression=$expression.st)| Exit -> exit(expression=null));
 	public final PHP54TranslatorWalker.exit_return exit() throws RecognitionException {
 		PHP54TranslatorWalker.exit_return retval = new PHP54TranslatorWalker.exit_return();
 		retval.start = input.LT(1);
 
-		TreeRuleReturnScope expression135 =null;
+		TreeRuleReturnScope expression138 =null;
 
 		try {
-			// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:727:2: ( ^( 'exit' ( expression )? ) -> exit(expression=$expression.st)| Exit -> exit(expression=null))
+			// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:731:2: ( ^( 'exit' ( expression )? ) -> exit(expression=$expression.st)| Exit -> exit(expression=null))
 			int alt83=2;
 			int LA83_0 = input.LA(1);
 			if ( (LA83_0==Exit) ) {
@@ -10124,12 +10207,12 @@ public static class STAttrMap extends HashMap<String, Object> {
 			}
 			switch (alt83) {
 				case 1 :
-					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:727:4: ^( 'exit' ( expression )? )
+					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:731:4: ^( 'exit' ( expression )? )
 					{
-					match(input,Exit,FOLLOW_Exit_in_exit4867); if (state.failed) return retval;
+					match(input,Exit,FOLLOW_Exit_in_exit4908); if (state.failed) return retval;
 					if ( input.LA(1)==Token.DOWN ) {
 						match(input, Token.DOWN, null); if (state.failed) return retval;
-						// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:727:13: ( expression )?
+						// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:731:13: ( expression )?
 						int alt82=2;
 						int LA82_0 = input.LA(1);
 						if ( (LA82_0==ARRAY_ACCESS||(LA82_0 >= Assign && LA82_0 <= At)||(LA82_0 >= BitwiseAnd && LA82_0 <= Bool)||LA82_0==CASTING||LA82_0==CLASS_MEMBER_ACCESS||LA82_0==CLASS_STATIC_ACCESS||LA82_0==CONSTANT||LA82_0==Clone||(LA82_0 >= Divide && LA82_0 <= DivideAssign)||(LA82_0 >= Dot && LA82_0 <= DotAssign)||(LA82_0 >= Equal && LA82_0 <= Exit)||LA82_0==FUNCTION_CALL||LA82_0==Float||(LA82_0 >= GreaterEqualThan && LA82_0 <= GreaterThan)||LA82_0==Identical||(LA82_0 >= Instanceof && LA82_0 <= Int)||(LA82_0 >= LessEqualThan && LA82_0 <= METHOD_CALL_STATIC)||(LA82_0 >= Minus && LA82_0 <= MinusAssign)||(LA82_0 >= Modulo && LA82_0 <= MultiplyAssign)||(LA82_0 >= New && LA82_0 <= Null)||(LA82_0 >= POST_DECREMENT && LA82_0 <= PRE_INCREMENT)||(LA82_0 >= Plus && LA82_0 <= PlusAssign)||LA82_0==QuestionMark||(LA82_0 >= ShiftLeft && LA82_0 <= ShiftRightAssign)||LA82_0==String||LA82_0==This||LA82_0==TypeArray||LA82_0==UNARY_MINUS||LA82_0==VariableId) ) {
@@ -10137,10 +10220,10 @@ public static class STAttrMap extends HashMap<String, Object> {
 						}
 						switch (alt82) {
 							case 1 :
-								// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:727:13: expression
+								// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:731:13: expression
 								{
-								pushFollow(FOLLOW_expression_in_exit4869);
-								expression135=expression();
+								pushFollow(FOLLOW_expression_in_exit4910);
+								expression138=expression();
 								state._fsp--;
 								if (state.failed) return retval;
 								}
@@ -10153,9 +10236,9 @@ public static class STAttrMap extends HashMap<String, Object> {
 
 					// TEMPLATE REWRITE
 					if ( state.backtracking==0 ) {
-					  // 727:26: -> exit(expression=$expression.st)
+					  // 731:26: -> exit(expression=$expression.st)
 					  {
-					  	retval.st = templateLib.getInstanceOf("exit",new STAttrMap().put("expression", (expression135!=null?((StringTemplate)expression135.getTemplate()):null)));
+					  	retval.st = templateLib.getInstanceOf("exit",new STAttrMap().put("expression", (expression138!=null?((StringTemplate)expression138.getTemplate()):null)));
 					  }
 
 
@@ -10164,12 +10247,12 @@ public static class STAttrMap extends HashMap<String, Object> {
 					}
 					break;
 				case 2 :
-					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:728:4: Exit
+					// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:732:4: Exit
 					{
-					match(input,Exit,FOLLOW_Exit_in_exit4885); if (state.failed) return retval;
+					match(input,Exit,FOLLOW_Exit_in_exit4926); if (state.failed) return retval;
 					// TEMPLATE REWRITE
 					if ( state.backtracking==0 ) {
-					  // 728:12: -> exit(expression=null)
+					  // 732:12: -> exit(expression=null)
 					  {
 					  	retval.st = templateLib.getInstanceOf("exit",new STAttrMap().put("expression", null));
 					  }
@@ -10195,10 +10278,10 @@ public static class STAttrMap extends HashMap<String, Object> {
 
 	// $ANTLR start synpred1_PHP54TranslatorWalker
 	public final void synpred1_PHP54TranslatorWalker_fragment() throws RecognitionException {
-		// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:540:7: ( atom )
-		// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:540:7: atom
+		// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:544:7: ( atom )
+		// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:544:7: atom
 		{
-		pushFollow(FOLLOW_atom_in_synpred1_PHP54TranslatorWalker3296);
+		pushFollow(FOLLOW_atom_in_synpred1_PHP54TranslatorWalker3337);
 		atom();
 		state._fsp--;
 		if (state.failed) return ;
@@ -10209,10 +10292,10 @@ public static class STAttrMap extends HashMap<String, Object> {
 
 	// $ANTLR start synpred7_PHP54TranslatorWalker
 	public final void synpred7_PHP54TranslatorWalker_fragment() throws RecognitionException {
-		// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:546:4: ( classStaticAccess )
-		// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:546:4: classStaticAccess
+		// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:550:4: ( classStaticAccess )
+		// D:\\TSPHP-translators-php54\\src\\main\\antlr\\PHP54TranslatorWalker.g:550:4: classStaticAccess
 		{
-		pushFollow(FOLLOW_classStaticAccess_in_synpred7_PHP54TranslatorWalker3364);
+		pushFollow(FOLLOW_classStaticAccess_in_synpred7_PHP54TranslatorWalker3405);
 		classStaticAccess();
 		state._fsp--;
 		if (state.failed) return ;
@@ -10260,7 +10343,7 @@ public static class STAttrMap extends HashMap<String, Object> {
 	public static final BitSet FOLLOW_DEFAULT_NAMESPACE_in_namespace92 = new BitSet(new long[]{0x0000000000000000L,0x0000080000000000L});
 	public static final BitSet FOLLOW_namespaceBody_in_namespace95 = new BitSet(new long[]{0x0000000000000008L});
 	public static final BitSet FOLLOW_NAMESPACE_BODY_in_namespaceBody130 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_statement_in_namespaceBody134 = new BitSet(new long[]{0x2800408800800008L,0x00000000000881C0L,0x0000250004200020L});
+	public static final BitSet FOLLOW_statement_in_namespaceBody134 = new BitSet(new long[]{0x2820408800800008L,0x00000000000881C0L,0x0000250004200020L});
 	public static final BitSet FOLLOW_NAMESPACE_BODY_in_namespaceBody150 = new BitSet(new long[]{0x0000000000000002L});
 	public static final BitSet FOLLOW_useDeclarationList_in_statement170 = new BitSet(new long[]{0x0000000000000002L});
 	public static final BitSet FOLLOW_definition_in_statement179 = new BitSet(new long[]{0x0000000000000002L});
@@ -10439,7 +10522,7 @@ public static class STAttrMap extends HashMap<String, Object> {
 	public static final BitSet FOLLOW_Int_in_parameterNormalOrOptional2087 = new BitSet(new long[]{0x0000000000000008L});
 	public static final BitSet FOLLOW_VariableId_in_parameterNormalOrOptional2096 = new BitSet(new long[]{0x0000000000000002L});
 	public static final BitSet FOLLOW_BLOCK_in_block2113 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_instruction_in_block2117 = new BitSet(new long[]{0x2800400000800008L,0x00000000000080C0L,0x0000240004200020L});
+	public static final BitSet FOLLOW_instruction_in_block2117 = new BitSet(new long[]{0x2820400000800008L,0x00000000000080C0L,0x0000240004200020L});
 	public static final BitSet FOLLOW_BLOCK_in_block2126 = new BitSet(new long[]{0x0000000000000002L});
 	public static final BitSet FOLLOW_Interface_in_interfaceDeclaration2140 = new BitSet(new long[]{0x0000000000000004L});
 	public static final BitSet FOLLOW_CLASS_MODIFIER_in_interfaceDeclaration2147 = new BitSet(new long[]{0x0000000000000004L});
@@ -10484,168 +10567,172 @@ public static class STAttrMap extends HashMap<String, Object> {
 	public static final BitSet FOLLOW_forLoop_in_instruction2595 = new BitSet(new long[]{0x0000000000000002L});
 	public static final BitSet FOLLOW_foreachLoop_in_instruction2607 = new BitSet(new long[]{0x0000000000000002L});
 	public static final BitSet FOLLOW_whileLoop_in_instruction2619 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_EXPRESSION_in_instruction2636 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_expression_in_instruction2638 = new BitSet(new long[]{0x0000000000000008L});
-	public static final BitSet FOLLOW_Return_in_instruction2655 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_expression_in_instruction2657 = new BitSet(new long[]{0x0000000000000008L});
-	public static final BitSet FOLLOW_Throw_in_instruction2677 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_expression_in_instruction2679 = new BitSet(new long[]{0x0000000000000008L});
-	public static final BitSet FOLLOW_Echo_in_instruction2698 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_expression_in_instruction2702 = new BitSet(new long[]{0x81980102917F8628L,0x6783E7B3FF862625L,0x0000084082178010L});
-	public static final BitSet FOLLOW_Break_in_instruction2721 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_Int_in_instruction2726 = new BitSet(new long[]{0x0000000000000008L});
-	public static final BitSet FOLLOW_Break_in_instruction2744 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_Continue_in_instruction2762 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_Int_in_instruction2767 = new BitSet(new long[]{0x0000000000000008L});
-	public static final BitSet FOLLOW_Continue_in_instruction2784 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_If_in_ifCondition2807 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_expression_in_ifCondition2813 = new BitSet(new long[]{0x0000000000002000L});
-	public static final BitSet FOLLOW_blockConditional_in_ifCondition2821 = new BitSet(new long[]{0x0000000000002008L});
-	public static final BitSet FOLLOW_blockConditional_in_ifCondition2828 = new BitSet(new long[]{0x0000000000000008L});
-	public static final BitSet FOLLOW_BLOCK_CONDITIONAL_in_blockConditional2869 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_instruction_in_blockConditional2873 = new BitSet(new long[]{0x2800400000800008L,0x00000000000080C0L,0x0000240004200020L});
-	public static final BitSet FOLLOW_Switch_in_switchCondition2889 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_expression_in_switchCondition2891 = new BitSet(new long[]{0x0000000000000008L,0x0000000000000000L,0x0000000000000800L});
-	public static final BitSet FOLLOW_switchContent_in_switchCondition2895 = new BitSet(new long[]{0x0000000000000008L,0x0000000000000000L,0x0000000000000800L});
-	public static final BitSet FOLLOW_SWITCH_CASES_in_switchContent2923 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_caseLabel_in_switchContent2927 = new BitSet(new long[]{0x819A0102917F8628L,0x6783E7B3FF862625L,0x0000084082178010L});
-	public static final BitSet FOLLOW_blockConditional_in_switchContent2931 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_expression_in_caseLabel2959 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_Default_in_caseLabel2974 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_For_in_forLoop2991 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_variableDeclarationList_in_forLoop3000 = new BitSet(new long[]{0x1000000000000000L});
-	public static final BitSet FOLLOW_expressionList_in_forLoop3004 = new BitSet(new long[]{0x1000000000000000L});
-	public static final BitSet FOLLOW_expressionList_in_forLoop3013 = new BitSet(new long[]{0x1000000000000000L});
-	public static final BitSet FOLLOW_expressionList_in_forLoop3021 = new BitSet(new long[]{0x0000000000002000L});
-	public static final BitSet FOLLOW_blockConditional_in_forLoop3027 = new BitSet(new long[]{0x0000000000000008L});
-	public static final BitSet FOLLOW_EXPRESSION_LIST_in_expressionList3071 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_expression_in_expressionList3075 = new BitSet(new long[]{0x81980102917F8628L,0x6783E7B3FF862625L,0x0000084082178010L});
-	public static final BitSet FOLLOW_EXPRESSION_LIST_in_expressionList3096 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_Foreach_in_foreachLoop3123 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_expression_in_foreachLoop3129 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000040000000000L});
-	public static final BitSet FOLLOW_VARIABLE_DECLARATION_LIST_in_foreachLoop3149 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_TYPE_in_foreachLoop3157 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_TYPE_MODIFIER_in_foreachLoop3159 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000002700000000L});
-	public static final BitSet FOLLOW_scalarTypes_in_foreachLoop3161 = new BitSet(new long[]{0x0000000000000008L});
-	public static final BitSet FOLLOW_VariableId_in_foreachLoop3172 = new BitSet(new long[]{0x0000000000000008L});
-	public static final BitSet FOLLOW_VARIABLE_DECLARATION_LIST_in_foreachLoop3195 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_TYPE_in_foreachLoop3198 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_TYPE_MODIFIER_in_foreachLoop3200 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000003F81000000L});
-	public static final BitSet FOLLOW_allTypes_in_foreachLoop3202 = new BitSet(new long[]{0x0000000000000008L});
-	public static final BitSet FOLLOW_VariableId_in_foreachLoop3207 = new BitSet(new long[]{0x0000000000000008L});
-	public static final BitSet FOLLOW_blockConditional_in_foreachLoop3214 = new BitSet(new long[]{0x0000000000000008L});
-	public static final BitSet FOLLOW_While_in_whileLoop3256 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_expression_in_whileLoop3258 = new BitSet(new long[]{0x0000000000002000L});
-	public static final BitSet FOLLOW_blockConditional_in_whileLoop3260 = new BitSet(new long[]{0x0000000000000008L});
-	public static final BitSet FOLLOW_atom_in_expression3296 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_operator_in_expression3308 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_functionCall_in_expression3322 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_methodCall_in_expression3333 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_methodCallSelfOrParent_in_expression3344 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_methodCallStatic_in_expression3354 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_classStaticAccess_in_expression3364 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_postFixExpression_in_expression3373 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_exit_in_expression3382 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_primitiveAtom_in_atom3405 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_TypeArray_in_atom3420 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_arrayKeyValue_in_atom3424 = new BitSet(new long[]{0x81980102917F86A8L,0x6783E7B3FF862625L,0x0000084082178010L});
-	public static final BitSet FOLLOW_VariableId_in_atom3441 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_This_in_atom3455 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_CONSTANT_in_atom3469 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_CLASS_STATIC_ACCESS_in_atom3483 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_staticAccess_in_atom3485 = new BitSet(new long[]{0x0000000200000000L});
-	public static final BitSet FOLLOW_CONSTANT_in_atom3487 = new BitSet(new long[]{0x0000000000000008L});
-	public static final BitSet FOLLOW_Arrow_in_arrayKeyValue3558 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_expression_in_arrayKeyValue3562 = new BitSet(new long[]{0x81980102917F8620L,0x6783E7B3FF862625L,0x0000084082178010L});
-	public static final BitSet FOLLOW_expression_in_arrayKeyValue3566 = new BitSet(new long[]{0x0000000000000008L});
-	public static final BitSet FOLLOW_expression_in_arrayKeyValue3586 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_TYPE_NAME_in_staticAccess3603 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_Self_in_staticAccess3613 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_Parent_in_staticAccess3623 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_unaryPreOperator_in_operator3642 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_expression_in_operator3646 = new BitSet(new long[]{0x0000000000000008L});
-	public static final BitSet FOLLOW_unaryPostOperator_in_operator3675 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_expression_in_operator3679 = new BitSet(new long[]{0x0000000000000008L});
-	public static final BitSet FOLLOW_binaryOperator_in_operator3708 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_expression_in_operator3712 = new BitSet(new long[]{0x81980102917F8620L,0x6783E7B3FF862625L,0x0000084082178010L});
-	public static final BitSet FOLLOW_expression_in_operator3716 = new BitSet(new long[]{0x0000000000000008L});
-	public static final BitSet FOLLOW_QuestionMark_in_operator3750 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_expression_in_operator3754 = new BitSet(new long[]{0x81980102917F8620L,0x6783E7B3FF862625L,0x0000084082178010L});
-	public static final BitSet FOLLOW_expression_in_operator3758 = new BitSet(new long[]{0x81980102917F8620L,0x6783E7B3FF862625L,0x0000084082178010L});
-	public static final BitSet FOLLOW_expression_in_operator3762 = new BitSet(new long[]{0x0000000000000008L});
-	public static final BitSet FOLLOW_castingOperator_in_operator3793 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_Instanceof_in_operator3810 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_expression_in_operator3814 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000080001000000L});
-	public static final BitSet FOLLOW_TYPE_NAME_in_operator3819 = new BitSet(new long[]{0x0000000000000008L});
-	public static final BitSet FOLLOW_VariableId_in_operator3823 = new BitSet(new long[]{0x0000000000000008L});
-	public static final BitSet FOLLOW_newOperator_in_operator3851 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_Clone_in_operator3872 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_expression_in_operator3876 = new BitSet(new long[]{0x0000000000000008L});
-	public static final BitSet FOLLOW_PRE_INCREMENT_in_unaryPreOperator3907 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_PRE_DECREMENT_in_unaryPreOperator3920 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_At_in_unaryPreOperator3934 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_BitwiseNot_in_unaryPreOperator3949 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_LogicNot_in_unaryPreOperator3964 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_UNARY_MINUS_in_unaryPreOperator3979 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_POST_INCREMENT_in_unaryPostOperator4003 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_POST_DECREMENT_in_unaryPostOperator4016 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_CASTING_in_castingOperator4280 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_TYPE_in_castingOperator4286 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_TYPE_MODIFIER_in_castingOperator4296 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_Cast_in_castingOperator4298 = new BitSet(new long[]{0x0000000000000008L,0x0000000000000000L,0x0000000000000010L});
-	public static final BitSet FOLLOW_QuestionMark_in_castingOperator4304 = new BitSet(new long[]{0x0000000000000008L});
-	public static final BitSet FOLLOW_TYPE_MODIFIER_in_castingOperator4315 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000002780000000L});
-	public static final BitSet FOLLOW_scalarTypes_in_castingOperator4330 = new BitSet(new long[]{0x0000000000000008L});
-	public static final BitSet FOLLOW_arrayType_in_castingOperator4334 = new BitSet(new long[]{0x0000000000000008L});
-	public static final BitSet FOLLOW_expression_in_castingOperator4345 = new BitSet(new long[]{0x0000000000000008L});
-	public static final BitSet FOLLOW_CASTING_in_castingOperator4381 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_TYPE_in_castingOperator4387 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_TYPE_MODIFIER_in_castingOperator4397 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_Cast_in_castingOperator4399 = new BitSet(new long[]{0x0000000000000008L,0x0000000000000000L,0x0000000000000010L});
-	public static final BitSet FOLLOW_QuestionMark_in_castingOperator4402 = new BitSet(new long[]{0x0000000000000008L});
-	public static final BitSet FOLLOW_TYPE_MODIFIER_in_castingOperator4412 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000001000000L});
-	public static final BitSet FOLLOW_TYPE_NAME_in_castingOperator4424 = new BitSet(new long[]{0x0000000000000008L});
-	public static final BitSet FOLLOW_expression_in_castingOperator4434 = new BitSet(new long[]{0x0000000000000008L});
-	public static final BitSet FOLLOW_New_in_newOperator4467 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_TYPE_NAME_in_newOperator4475 = new BitSet(new long[]{0x0000000000000010L});
-	public static final BitSet FOLLOW_actualParameters_in_newOperator4481 = new BitSet(new long[]{0x0000000000000008L});
-	public static final BitSet FOLLOW_ACTUAL_PARAMETERS_in_actualParameters4519 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_expression_in_actualParameters4523 = new BitSet(new long[]{0x81980102917F8628L,0x6783E7B3FF862625L,0x0000084082178010L});
-	public static final BitSet FOLLOW_ACTUAL_PARAMETERS_in_actualParameters4533 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_FUNCTION_CALL_in_functionCall4550 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_TYPE_NAME_in_functionCall4554 = new BitSet(new long[]{0x0000000000000010L});
-	public static final BitSet FOLLOW_actualParameters_in_functionCall4556 = new BitSet(new long[]{0x0000000000000008L});
-	public static final BitSet FOLLOW_METHOD_CALL_in_methodCall4586 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_This_in_methodCall4591 = new BitSet(new long[]{0x0000000000000000L,0x0000000000004000L});
-	public static final BitSet FOLLOW_VariableId_in_methodCall4595 = new BitSet(new long[]{0x0000000000000000L,0x0000000000004000L});
-	public static final BitSet FOLLOW_Identifier_in_methodCall4600 = new BitSet(new long[]{0x0000000000000010L});
-	public static final BitSet FOLLOW_actualParameters_in_methodCall4602 = new BitSet(new long[]{0x0000000000000008L});
-	public static final BitSet FOLLOW_METHOD_CALL_in_methodCallSelfOrParent4636 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_Self_in_methodCallSelfOrParent4641 = new BitSet(new long[]{0x0000000000000000L,0x0000000000004000L});
-	public static final BitSet FOLLOW_Parent_in_methodCallSelfOrParent4645 = new BitSet(new long[]{0x0000000000000000L,0x0000000000004000L});
-	public static final BitSet FOLLOW_Identifier_in_methodCallSelfOrParent4650 = new BitSet(new long[]{0x0000000000000010L});
-	public static final BitSet FOLLOW_actualParameters_in_methodCallSelfOrParent4652 = new BitSet(new long[]{0x0000000000000008L});
-	public static final BitSet FOLLOW_METHOD_CALL_STATIC_in_methodCallStatic4686 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_TYPE_NAME_in_methodCallStatic4688 = new BitSet(new long[]{0x0000000000000000L,0x0000000000004000L});
-	public static final BitSet FOLLOW_Identifier_in_methodCallStatic4692 = new BitSet(new long[]{0x0000000000000010L});
-	public static final BitSet FOLLOW_actualParameters_in_methodCallStatic4694 = new BitSet(new long[]{0x0000000000000008L});
-	public static final BitSet FOLLOW_CLASS_STATIC_ACCESS_in_classStaticAccess4729 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_staticAccess_in_classStaticAccess4731 = new BitSet(new long[]{0x0000000300000000L});
-	public static final BitSet FOLLOW_CLASS_STATIC_ACCESS_VARIABLE_ID_in_classStaticAccess4736 = new BitSet(new long[]{0x0000000000000008L});
-	public static final BitSet FOLLOW_CONSTANT_in_classStaticAccess4740 = new BitSet(new long[]{0x0000000000000008L});
-	public static final BitSet FOLLOW_CLASS_MEMBER_ACCESS_in_postFixExpression4771 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_expression_in_postFixExpression4773 = new BitSet(new long[]{0x0000000000000000L,0x0000000000004000L});
-	public static final BitSet FOLLOW_Identifier_in_postFixExpression4775 = new BitSet(new long[]{0x0000000000000008L});
-	public static final BitSet FOLLOW_ARRAY_ACCESS_in_postFixExpression4799 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_expression_in_postFixExpression4803 = new BitSet(new long[]{0x81980102917F8620L,0x6783E7B3FF862625L,0x0000084082178010L});
-	public static final BitSet FOLLOW_expression_in_postFixExpression4807 = new BitSet(new long[]{0x0000000000000008L});
-	public static final BitSet FOLLOW_METHOD_CALL_POSTFIX_in_postFixExpression4829 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_expression_in_postFixExpression4831 = new BitSet(new long[]{0x0000000000000000L,0x0000000000004000L});
-	public static final BitSet FOLLOW_Identifier_in_postFixExpression4833 = new BitSet(new long[]{0x0000000000000010L});
-	public static final BitSet FOLLOW_actualParameters_in_postFixExpression4835 = new BitSet(new long[]{0x0000000000000008L});
-	public static final BitSet FOLLOW_Exit_in_exit4867 = new BitSet(new long[]{0x0000000000000004L});
-	public static final BitSet FOLLOW_expression_in_exit4869 = new BitSet(new long[]{0x0000000000000008L});
-	public static final BitSet FOLLOW_Exit_in_exit4885 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_atom_in_synpred1_PHP54TranslatorWalker3296 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_classStaticAccess_in_synpred7_PHP54TranslatorWalker3364 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_doWhileLoop_in_instruction2631 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_EXPRESSION_in_instruction2646 = new BitSet(new long[]{0x0000000000000004L});
+	public static final BitSet FOLLOW_expression_in_instruction2648 = new BitSet(new long[]{0x0000000000000008L});
+	public static final BitSet FOLLOW_Return_in_instruction2665 = new BitSet(new long[]{0x0000000000000004L});
+	public static final BitSet FOLLOW_expression_in_instruction2667 = new BitSet(new long[]{0x0000000000000008L});
+	public static final BitSet FOLLOW_Throw_in_instruction2687 = new BitSet(new long[]{0x0000000000000004L});
+	public static final BitSet FOLLOW_expression_in_instruction2689 = new BitSet(new long[]{0x0000000000000008L});
+	public static final BitSet FOLLOW_Echo_in_instruction2708 = new BitSet(new long[]{0x0000000000000004L});
+	public static final BitSet FOLLOW_expression_in_instruction2712 = new BitSet(new long[]{0x81980102917F8628L,0x6783E7B3FF862625L,0x0000084082178010L});
+	public static final BitSet FOLLOW_Break_in_instruction2731 = new BitSet(new long[]{0x0000000000000004L});
+	public static final BitSet FOLLOW_Int_in_instruction2736 = new BitSet(new long[]{0x0000000000000008L});
+	public static final BitSet FOLLOW_Break_in_instruction2754 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_Continue_in_instruction2772 = new BitSet(new long[]{0x0000000000000004L});
+	public static final BitSet FOLLOW_Int_in_instruction2777 = new BitSet(new long[]{0x0000000000000008L});
+	public static final BitSet FOLLOW_Continue_in_instruction2794 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_If_in_ifCondition2817 = new BitSet(new long[]{0x0000000000000004L});
+	public static final BitSet FOLLOW_expression_in_ifCondition2823 = new BitSet(new long[]{0x0000000000002000L});
+	public static final BitSet FOLLOW_blockConditional_in_ifCondition2831 = new BitSet(new long[]{0x0000000000002008L});
+	public static final BitSet FOLLOW_blockConditional_in_ifCondition2838 = new BitSet(new long[]{0x0000000000000008L});
+	public static final BitSet FOLLOW_BLOCK_CONDITIONAL_in_blockConditional2879 = new BitSet(new long[]{0x0000000000000004L});
+	public static final BitSet FOLLOW_instruction_in_blockConditional2883 = new BitSet(new long[]{0x2820400000800008L,0x00000000000080C0L,0x0000240004200020L});
+	public static final BitSet FOLLOW_Switch_in_switchCondition2899 = new BitSet(new long[]{0x0000000000000004L});
+	public static final BitSet FOLLOW_expression_in_switchCondition2901 = new BitSet(new long[]{0x0000000000000008L,0x0000000000000000L,0x0000000000000800L});
+	public static final BitSet FOLLOW_switchContent_in_switchCondition2905 = new BitSet(new long[]{0x0000000000000008L,0x0000000000000000L,0x0000000000000800L});
+	public static final BitSet FOLLOW_SWITCH_CASES_in_switchContent2933 = new BitSet(new long[]{0x0000000000000004L});
+	public static final BitSet FOLLOW_caseLabel_in_switchContent2937 = new BitSet(new long[]{0x819A0102917F8628L,0x6783E7B3FF862625L,0x0000084082178010L});
+	public static final BitSet FOLLOW_blockConditional_in_switchContent2941 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_expression_in_caseLabel2969 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_Default_in_caseLabel2984 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_For_in_forLoop3001 = new BitSet(new long[]{0x0000000000000004L});
+	public static final BitSet FOLLOW_variableDeclarationList_in_forLoop3010 = new BitSet(new long[]{0x1000000000000000L});
+	public static final BitSet FOLLOW_expressionList_in_forLoop3014 = new BitSet(new long[]{0x1000000000000000L});
+	public static final BitSet FOLLOW_expressionList_in_forLoop3023 = new BitSet(new long[]{0x1000000000000000L});
+	public static final BitSet FOLLOW_expressionList_in_forLoop3031 = new BitSet(new long[]{0x0000000000002000L});
+	public static final BitSet FOLLOW_blockConditional_in_forLoop3037 = new BitSet(new long[]{0x0000000000000008L});
+	public static final BitSet FOLLOW_EXPRESSION_LIST_in_expressionList3081 = new BitSet(new long[]{0x0000000000000004L});
+	public static final BitSet FOLLOW_expression_in_expressionList3085 = new BitSet(new long[]{0x81980102917F8628L,0x6783E7B3FF862625L,0x0000084082178010L});
+	public static final BitSet FOLLOW_EXPRESSION_LIST_in_expressionList3106 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_Foreach_in_foreachLoop3133 = new BitSet(new long[]{0x0000000000000004L});
+	public static final BitSet FOLLOW_expression_in_foreachLoop3139 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000040000000000L});
+	public static final BitSet FOLLOW_VARIABLE_DECLARATION_LIST_in_foreachLoop3159 = new BitSet(new long[]{0x0000000000000004L});
+	public static final BitSet FOLLOW_TYPE_in_foreachLoop3167 = new BitSet(new long[]{0x0000000000000004L});
+	public static final BitSet FOLLOW_TYPE_MODIFIER_in_foreachLoop3169 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000002700000000L});
+	public static final BitSet FOLLOW_scalarTypes_in_foreachLoop3171 = new BitSet(new long[]{0x0000000000000008L});
+	public static final BitSet FOLLOW_VariableId_in_foreachLoop3182 = new BitSet(new long[]{0x0000000000000008L});
+	public static final BitSet FOLLOW_VARIABLE_DECLARATION_LIST_in_foreachLoop3205 = new BitSet(new long[]{0x0000000000000004L});
+	public static final BitSet FOLLOW_TYPE_in_foreachLoop3208 = new BitSet(new long[]{0x0000000000000004L});
+	public static final BitSet FOLLOW_TYPE_MODIFIER_in_foreachLoop3210 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000003F81000000L});
+	public static final BitSet FOLLOW_allTypes_in_foreachLoop3212 = new BitSet(new long[]{0x0000000000000008L});
+	public static final BitSet FOLLOW_VariableId_in_foreachLoop3217 = new BitSet(new long[]{0x0000000000000008L});
+	public static final BitSet FOLLOW_blockConditional_in_foreachLoop3224 = new BitSet(new long[]{0x0000000000000008L});
+	public static final BitSet FOLLOW_While_in_whileLoop3266 = new BitSet(new long[]{0x0000000000000004L});
+	public static final BitSet FOLLOW_expression_in_whileLoop3268 = new BitSet(new long[]{0x0000000000002000L});
+	public static final BitSet FOLLOW_blockConditional_in_whileLoop3270 = new BitSet(new long[]{0x0000000000000008L});
+	public static final BitSet FOLLOW_Do_in_doWhileLoop3297 = new BitSet(new long[]{0x0000000000000004L});
+	public static final BitSet FOLLOW_blockConditional_in_doWhileLoop3299 = new BitSet(new long[]{0x81980102917F8620L,0x6783E7B3FF862625L,0x0000084082178010L});
+	public static final BitSet FOLLOW_expression_in_doWhileLoop3301 = new BitSet(new long[]{0x0000000000000008L});
+	public static final BitSet FOLLOW_atom_in_expression3337 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_operator_in_expression3349 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_functionCall_in_expression3363 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_methodCall_in_expression3374 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_methodCallSelfOrParent_in_expression3385 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_methodCallStatic_in_expression3395 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_classStaticAccess_in_expression3405 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_postFixExpression_in_expression3414 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_exit_in_expression3423 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_primitiveAtom_in_atom3446 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_TypeArray_in_atom3461 = new BitSet(new long[]{0x0000000000000004L});
+	public static final BitSet FOLLOW_arrayKeyValue_in_atom3465 = new BitSet(new long[]{0x81980102917F86A8L,0x6783E7B3FF862625L,0x0000084082178010L});
+	public static final BitSet FOLLOW_VariableId_in_atom3482 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_This_in_atom3496 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_CONSTANT_in_atom3510 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_CLASS_STATIC_ACCESS_in_atom3524 = new BitSet(new long[]{0x0000000000000004L});
+	public static final BitSet FOLLOW_staticAccess_in_atom3526 = new BitSet(new long[]{0x0000000200000000L});
+	public static final BitSet FOLLOW_CONSTANT_in_atom3528 = new BitSet(new long[]{0x0000000000000008L});
+	public static final BitSet FOLLOW_Arrow_in_arrayKeyValue3599 = new BitSet(new long[]{0x0000000000000004L});
+	public static final BitSet FOLLOW_expression_in_arrayKeyValue3603 = new BitSet(new long[]{0x81980102917F8620L,0x6783E7B3FF862625L,0x0000084082178010L});
+	public static final BitSet FOLLOW_expression_in_arrayKeyValue3607 = new BitSet(new long[]{0x0000000000000008L});
+	public static final BitSet FOLLOW_expression_in_arrayKeyValue3627 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_TYPE_NAME_in_staticAccess3644 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_Self_in_staticAccess3654 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_Parent_in_staticAccess3664 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_unaryPreOperator_in_operator3683 = new BitSet(new long[]{0x0000000000000004L});
+	public static final BitSet FOLLOW_expression_in_operator3687 = new BitSet(new long[]{0x0000000000000008L});
+	public static final BitSet FOLLOW_unaryPostOperator_in_operator3716 = new BitSet(new long[]{0x0000000000000004L});
+	public static final BitSet FOLLOW_expression_in_operator3720 = new BitSet(new long[]{0x0000000000000008L});
+	public static final BitSet FOLLOW_binaryOperator_in_operator3749 = new BitSet(new long[]{0x0000000000000004L});
+	public static final BitSet FOLLOW_expression_in_operator3753 = new BitSet(new long[]{0x81980102917F8620L,0x6783E7B3FF862625L,0x0000084082178010L});
+	public static final BitSet FOLLOW_expression_in_operator3757 = new BitSet(new long[]{0x0000000000000008L});
+	public static final BitSet FOLLOW_QuestionMark_in_operator3791 = new BitSet(new long[]{0x0000000000000004L});
+	public static final BitSet FOLLOW_expression_in_operator3795 = new BitSet(new long[]{0x81980102917F8620L,0x6783E7B3FF862625L,0x0000084082178010L});
+	public static final BitSet FOLLOW_expression_in_operator3799 = new BitSet(new long[]{0x81980102917F8620L,0x6783E7B3FF862625L,0x0000084082178010L});
+	public static final BitSet FOLLOW_expression_in_operator3803 = new BitSet(new long[]{0x0000000000000008L});
+	public static final BitSet FOLLOW_castingOperator_in_operator3834 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_Instanceof_in_operator3851 = new BitSet(new long[]{0x0000000000000004L});
+	public static final BitSet FOLLOW_expression_in_operator3855 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000080001000000L});
+	public static final BitSet FOLLOW_TYPE_NAME_in_operator3860 = new BitSet(new long[]{0x0000000000000008L});
+	public static final BitSet FOLLOW_VariableId_in_operator3864 = new BitSet(new long[]{0x0000000000000008L});
+	public static final BitSet FOLLOW_newOperator_in_operator3892 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_Clone_in_operator3913 = new BitSet(new long[]{0x0000000000000004L});
+	public static final BitSet FOLLOW_expression_in_operator3917 = new BitSet(new long[]{0x0000000000000008L});
+	public static final BitSet FOLLOW_PRE_INCREMENT_in_unaryPreOperator3948 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_PRE_DECREMENT_in_unaryPreOperator3961 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_At_in_unaryPreOperator3975 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_BitwiseNot_in_unaryPreOperator3990 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_LogicNot_in_unaryPreOperator4005 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_UNARY_MINUS_in_unaryPreOperator4020 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_POST_INCREMENT_in_unaryPostOperator4044 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_POST_DECREMENT_in_unaryPostOperator4057 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_CASTING_in_castingOperator4321 = new BitSet(new long[]{0x0000000000000004L});
+	public static final BitSet FOLLOW_TYPE_in_castingOperator4327 = new BitSet(new long[]{0x0000000000000004L});
+	public static final BitSet FOLLOW_TYPE_MODIFIER_in_castingOperator4337 = new BitSet(new long[]{0x0000000000000004L});
+	public static final BitSet FOLLOW_Cast_in_castingOperator4339 = new BitSet(new long[]{0x0000000000000008L,0x0000000000000000L,0x0000000000000010L});
+	public static final BitSet FOLLOW_QuestionMark_in_castingOperator4345 = new BitSet(new long[]{0x0000000000000008L});
+	public static final BitSet FOLLOW_TYPE_MODIFIER_in_castingOperator4356 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000002780000000L});
+	public static final BitSet FOLLOW_scalarTypes_in_castingOperator4371 = new BitSet(new long[]{0x0000000000000008L});
+	public static final BitSet FOLLOW_arrayType_in_castingOperator4375 = new BitSet(new long[]{0x0000000000000008L});
+	public static final BitSet FOLLOW_expression_in_castingOperator4386 = new BitSet(new long[]{0x0000000000000008L});
+	public static final BitSet FOLLOW_CASTING_in_castingOperator4422 = new BitSet(new long[]{0x0000000000000004L});
+	public static final BitSet FOLLOW_TYPE_in_castingOperator4428 = new BitSet(new long[]{0x0000000000000004L});
+	public static final BitSet FOLLOW_TYPE_MODIFIER_in_castingOperator4438 = new BitSet(new long[]{0x0000000000000004L});
+	public static final BitSet FOLLOW_Cast_in_castingOperator4440 = new BitSet(new long[]{0x0000000000000008L,0x0000000000000000L,0x0000000000000010L});
+	public static final BitSet FOLLOW_QuestionMark_in_castingOperator4443 = new BitSet(new long[]{0x0000000000000008L});
+	public static final BitSet FOLLOW_TYPE_MODIFIER_in_castingOperator4453 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000000L,0x0000000001000000L});
+	public static final BitSet FOLLOW_TYPE_NAME_in_castingOperator4465 = new BitSet(new long[]{0x0000000000000008L});
+	public static final BitSet FOLLOW_expression_in_castingOperator4475 = new BitSet(new long[]{0x0000000000000008L});
+	public static final BitSet FOLLOW_New_in_newOperator4508 = new BitSet(new long[]{0x0000000000000004L});
+	public static final BitSet FOLLOW_TYPE_NAME_in_newOperator4516 = new BitSet(new long[]{0x0000000000000010L});
+	public static final BitSet FOLLOW_actualParameters_in_newOperator4522 = new BitSet(new long[]{0x0000000000000008L});
+	public static final BitSet FOLLOW_ACTUAL_PARAMETERS_in_actualParameters4560 = new BitSet(new long[]{0x0000000000000004L});
+	public static final BitSet FOLLOW_expression_in_actualParameters4564 = new BitSet(new long[]{0x81980102917F8628L,0x6783E7B3FF862625L,0x0000084082178010L});
+	public static final BitSet FOLLOW_ACTUAL_PARAMETERS_in_actualParameters4574 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_FUNCTION_CALL_in_functionCall4591 = new BitSet(new long[]{0x0000000000000004L});
+	public static final BitSet FOLLOW_TYPE_NAME_in_functionCall4595 = new BitSet(new long[]{0x0000000000000010L});
+	public static final BitSet FOLLOW_actualParameters_in_functionCall4597 = new BitSet(new long[]{0x0000000000000008L});
+	public static final BitSet FOLLOW_METHOD_CALL_in_methodCall4627 = new BitSet(new long[]{0x0000000000000004L});
+	public static final BitSet FOLLOW_This_in_methodCall4632 = new BitSet(new long[]{0x0000000000000000L,0x0000000000004000L});
+	public static final BitSet FOLLOW_VariableId_in_methodCall4636 = new BitSet(new long[]{0x0000000000000000L,0x0000000000004000L});
+	public static final BitSet FOLLOW_Identifier_in_methodCall4641 = new BitSet(new long[]{0x0000000000000010L});
+	public static final BitSet FOLLOW_actualParameters_in_methodCall4643 = new BitSet(new long[]{0x0000000000000008L});
+	public static final BitSet FOLLOW_METHOD_CALL_in_methodCallSelfOrParent4677 = new BitSet(new long[]{0x0000000000000004L});
+	public static final BitSet FOLLOW_Self_in_methodCallSelfOrParent4682 = new BitSet(new long[]{0x0000000000000000L,0x0000000000004000L});
+	public static final BitSet FOLLOW_Parent_in_methodCallSelfOrParent4686 = new BitSet(new long[]{0x0000000000000000L,0x0000000000004000L});
+	public static final BitSet FOLLOW_Identifier_in_methodCallSelfOrParent4691 = new BitSet(new long[]{0x0000000000000010L});
+	public static final BitSet FOLLOW_actualParameters_in_methodCallSelfOrParent4693 = new BitSet(new long[]{0x0000000000000008L});
+	public static final BitSet FOLLOW_METHOD_CALL_STATIC_in_methodCallStatic4727 = new BitSet(new long[]{0x0000000000000004L});
+	public static final BitSet FOLLOW_TYPE_NAME_in_methodCallStatic4729 = new BitSet(new long[]{0x0000000000000000L,0x0000000000004000L});
+	public static final BitSet FOLLOW_Identifier_in_methodCallStatic4733 = new BitSet(new long[]{0x0000000000000010L});
+	public static final BitSet FOLLOW_actualParameters_in_methodCallStatic4735 = new BitSet(new long[]{0x0000000000000008L});
+	public static final BitSet FOLLOW_CLASS_STATIC_ACCESS_in_classStaticAccess4770 = new BitSet(new long[]{0x0000000000000004L});
+	public static final BitSet FOLLOW_staticAccess_in_classStaticAccess4772 = new BitSet(new long[]{0x0000000300000000L});
+	public static final BitSet FOLLOW_CLASS_STATIC_ACCESS_VARIABLE_ID_in_classStaticAccess4777 = new BitSet(new long[]{0x0000000000000008L});
+	public static final BitSet FOLLOW_CONSTANT_in_classStaticAccess4781 = new BitSet(new long[]{0x0000000000000008L});
+	public static final BitSet FOLLOW_CLASS_MEMBER_ACCESS_in_postFixExpression4812 = new BitSet(new long[]{0x0000000000000004L});
+	public static final BitSet FOLLOW_expression_in_postFixExpression4814 = new BitSet(new long[]{0x0000000000000000L,0x0000000000004000L});
+	public static final BitSet FOLLOW_Identifier_in_postFixExpression4816 = new BitSet(new long[]{0x0000000000000008L});
+	public static final BitSet FOLLOW_ARRAY_ACCESS_in_postFixExpression4840 = new BitSet(new long[]{0x0000000000000004L});
+	public static final BitSet FOLLOW_expression_in_postFixExpression4844 = new BitSet(new long[]{0x81980102917F8620L,0x6783E7B3FF862625L,0x0000084082178010L});
+	public static final BitSet FOLLOW_expression_in_postFixExpression4848 = new BitSet(new long[]{0x0000000000000008L});
+	public static final BitSet FOLLOW_METHOD_CALL_POSTFIX_in_postFixExpression4870 = new BitSet(new long[]{0x0000000000000004L});
+	public static final BitSet FOLLOW_expression_in_postFixExpression4872 = new BitSet(new long[]{0x0000000000000000L,0x0000000000004000L});
+	public static final BitSet FOLLOW_Identifier_in_postFixExpression4874 = new BitSet(new long[]{0x0000000000000010L});
+	public static final BitSet FOLLOW_actualParameters_in_postFixExpression4876 = new BitSet(new long[]{0x0000000000000008L});
+	public static final BitSet FOLLOW_Exit_in_exit4908 = new BitSet(new long[]{0x0000000000000004L});
+	public static final BitSet FOLLOW_expression_in_exit4910 = new BitSet(new long[]{0x0000000000000008L});
+	public static final BitSet FOLLOW_Exit_in_exit4926 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_atom_in_synpred1_PHP54TranslatorWalker3337 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_classStaticAccess_in_synpred7_PHP54TranslatorWalker3405 = new BitSet(new long[]{0x0000000000000002L});
 }

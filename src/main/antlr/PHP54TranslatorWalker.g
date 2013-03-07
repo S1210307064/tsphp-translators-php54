@@ -459,7 +459,7 @@ instruction
 	|	forLoop 			-> {$forLoop.st}
 	|	foreachLoop 			-> {$foreachLoop.st}
 	|	whileLoop 			-> {$whileLoop.st}
-	//|	doWhileLoop 			-> {$doWhileLoop.st}
+	|	doWhileLoop 			-> {$doWhileLoop.st}
 	//|	tryCatch 			-> {$tryCatch.st}
 	|	^(EXPRESSION expression?)	-> expression(expression={$expression.st})
 	|	^('return' expression?) 	-> return(expression = {$expression.st})
@@ -533,6 +533,10 @@ foreachLoop
 
 whileLoop
 	:	^('while' expression blockConditional) -> while(condition={$expression.st}, block={$blockConditional.instructions})
+	;
+
+doWhileLoop
+	:	^('do' blockConditional expression) -> doWhile(block={$blockConditional.instructions}, condition={$expression.st})
 	;
 
 expression

@@ -132,6 +132,12 @@ while (<condition>) {
 }
 >>
 
+doWhile(block, condition) ::= <<
+do {
+    <block; separator="\n">
+} while(<condition>);
+>>
+
 expression(expression) ::= <<
 <if(expression)><expression>;<endif>
 >>
