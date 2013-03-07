@@ -457,7 +457,7 @@ instruction
 	|	ifCondition 			-> {$ifCondition.st}
 	|	switchCondition 		-> {$switchCondition.st}
 	|	forLoop 			-> {$forLoop.st}
-	//|	foreachLoop 			-> {$foreachLoop.st}
+	|	foreachLoop 			-> {$foreachLoop.st}
 	//|	whileLoop 			-> {$whileLoop.st}
 	//|	doWhileLoop 			-> {$doWhileLoop.st}
 	//|	tryCatch 			-> {$tryCatch.st}
@@ -511,6 +511,24 @@ forLoop
 expressionList[boolean semicolonAtTheEnd]
 	:	^(EXPRESSION_LIST expr+=expression*) -> expressionList(expressions={$expr}, semicolonAtTheEnd={semicolonAtTheEnd})
 	|	EXPRESSION_LIST -> expressionList(expressions={null}, semicolonAtTheEnd={semicolonAtTheEnd})
+	;
+	
+foreachLoop
+	:	^('foreach' 
+			expression
+			
+			
+			//key 
+			(	^(VARIABLE_DECLARATION_LIST
+					^(TYPE TYPE_MODIFIER scalarTypes) 
+					keyVariableId=VariableId
+				)
+			)?
+				
+			^(VARIABLE_DECLARATION_LIST ^(TYPE TYPE_MODIFIER allTypes) valueVariableId=VariableId) 
+			blockConditional
+		)
+		-> foreach(array={$expression.st}, keyVariableId={$keyVariableId.text}, valueVariableId={$valueVariableId.text}, block={$blockConditional.instructions})
 	;
 
 expression

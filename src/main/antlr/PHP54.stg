@@ -120,6 +120,11 @@ expressionList(expressions,semicolonAtTheEnd) ::= <<
 <expressions; separator=", "><if(semicolonAtTheEnd)>;<endif>
 >>
 
+foreach(array, keyVariableId, valueVariableId, block) ::= <<
+foreach (<array> as <if(keyVariableId)><keyVariableId> => <endif><valueVariableId>) {
+    <block; separator="\n">
+}
+>>
 
 expression(expression) ::= <<
 <if(expression)><expression>;<endif>
