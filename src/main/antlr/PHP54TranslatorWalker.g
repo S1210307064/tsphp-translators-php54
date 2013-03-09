@@ -689,7 +689,7 @@ castingOperator
 			)
 			expression
 		)
-		-> primitiveCast(isNotNullable = {$isNullable!=null}, type={$type.st}, expression={$expression.st})
+		-> primitiveCast(isNullable = {$isNullable!=null}, type={$type.st}, expression={$expression.st})
 		
 	|	^(CASTING
 			^(TYPE 

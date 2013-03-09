@@ -248,8 +248,8 @@ continue(index) ::= <<
 continue<if(index)> <index><endif>;
 >>
 
-primitiveCast(type, expression)::=<<
-(<type>) <expression>
+primitiveCast(isNullable, type, expression)::=<<
+<if(isNullable)>(<expression> !== null ? <endif>(<type>) <expression><if(isNullable)> : null)<endif>
 >>
 
 cast(type, expression)::=<<

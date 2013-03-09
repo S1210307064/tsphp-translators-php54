@@ -122,6 +122,7 @@ public class ExpressionHelper
                     {"$a instanceof $b", "$a instanceof $b"},
                     {"(Type) $a", "($a instanceof Type ? $a : \\trigger_error('Cast failed, the evaluation type of $a must be Type', \\E_RECOVERABLE_ERROR))"},
                     {"(int) $a", "(int) $a"},
+                    {"(int?) $a","($a !== null ? (int) $a : null)"},
                     {"~$a", "~$a"},
                     {"@$a", "@$a"},
                     {"(Type) (MyClass) $a", "(($a instanceof MyClass ? $a : \\trigger_error('Cast failed, the evaluation type of $a must be MyClass', \\E_RECOVERABLE_ERROR)) instanceof Type ? ($a instanceof MyClass ? $a : \\trigger_error('Cast failed, the evaluation type of $a must be MyClass', \\E_RECOVERABLE_ERROR)) : \\trigger_error('Cast failed, the evaluation type of ($a instanceof MyClass ? $a : \\trigger_error('Cast failed, the evaluation type of $a must be MyClass', \\E_RECOVERABLE_ERROR)) must be Type', \\E_RECOVERABLE_ERROR))"},
