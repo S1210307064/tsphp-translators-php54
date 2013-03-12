@@ -53,8 +53,8 @@ public class IfTest extends ATranslatorTest
         List<String[]> expressions = ExpressionHelper.getExpressions();
         for (Object[] expression : expressions) {
             collection.add(new Object[]{
-                        "if(" + expression[0] + ") $a=1; else $a+=1;",
-                        "if (" + expression[1] + ") {\n    $a = 1;\n} else {\n    $a += 1;\n}"
+                        "if(" + expression[0] + ") $a=1; else $a=1;",
+                        "if (" + expression[1] + ") {\n    $a = 1;\n} else {\n    $a = 1;\n}"
                     });
         }
         collection.addAll(Arrays.asList(new Object[][]{
@@ -69,11 +69,11 @@ public class IfTest extends ATranslatorTest
                         + "\n}"
                     },
                     {
-                        "if(true) $a=1; else if(false) $b=1; else if($a<1) $c=2; else $d*=1;",
+                        "if(true) $a=1; else if(false) $b=1; else if($a<1) $c=2; else $d=1;",
                         "if (true) {\n    $a = 1;\n} else {\n    "
                         + "if (false) {\n        $b = 1;\n    } else {\n        "
                         + "if ($a < 1) {\n            $c = 2;\n        } "
-                        + "else {\n            $d *= 1;\n        }"
+                        + "else {\n            $d = 1;\n        }"
                         + "\n    }"
                         + "\n}"
                     },}));

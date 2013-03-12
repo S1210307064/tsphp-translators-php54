@@ -253,7 +253,7 @@ primitiveCast(isNullable, type, expression)::=<<
 >>
 
 cast(type, expression)::=<<
-(<expression> instanceof <type> ? <expression> : \trigger_error('Cast failed, the evaluation type of <expression> must be <type>', \E_RECOVERABLE_ERROR))
+(<expression> !== null ? (<expression> instanceof <type> ? <expression> : \trigger_error('Cast failed, the evaluation type of <expression> must be <type>', \E_RECOVERABLE_ERROR)) : null)
 >>
 
 

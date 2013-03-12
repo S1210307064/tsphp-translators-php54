@@ -60,7 +60,7 @@ public class ForTest extends ATranslatorTest
                     },
                     {
                         "for(         ;      ; $i+=1 ) $a=1;",
-                        "for (; ; $i += 1) {\n    $a = 1;\n}"
+                        "for (; ; $i = $i + 1) {\n    $a = 1;\n}"
                     },
                     {
                         "for(         ; true ;       ) $a=1;",
@@ -90,7 +90,7 @@ public class ForTest extends ATranslatorTest
                         + ") $a^=1;",
                         "for (" + expression[1] + ", " + expression[1] + "; "
                         + expression[1] + ", " + expression[1] + "; "
-                        + expression[1] + ", " + expression[1] + ") {\n    $a ^= 1;\n}"
+                        + expression[1] + ", " + expression[1] + ") {\n    $a = $a ^ 1;\n}"
                     });
         }
 

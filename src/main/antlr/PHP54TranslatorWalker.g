@@ -620,6 +620,7 @@ unaryPreOperator
     	|	'~' 		-> {%{"~"}}
     	|	'!' 		-> {%{"!"}}
     	|	UNARY_MINUS	-> {%{"-"}}
+    	|	UNARY_PLUS	-> {%{"+"}}
    	;
    	
 unaryPostOperator  
