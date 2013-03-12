@@ -4,3 +4,5 @@ nbproject/*
 
 /src/main/java/ch/tutteli/tsphp/translators/php54/antlr/PHP54Translator.tokens
 /src/main/java/ch/tutteli/tsphp/translators/php54/antlr/PHP54Translator.java
+/src/main/java/ch/tutteli/tsphp/translators/php54/antlr/PHP54TranslatorWalker.tokens
+/src/main/java/ch/tutteli/tsphp/translators/php54/antlr/PHP54TranslatorWalker.java
