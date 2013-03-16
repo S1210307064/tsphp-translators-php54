@@ -16,12 +16,16 @@
  */
 package ch.tutteli.tsphp.translators.php54;
 
+import ch.tutteli.tsphp.common.IErrorLogger;
 import ch.tutteli.tsphp.common.ITranslator;
+import ch.tutteli.tsphp.common.exceptions.TSPHPException;
 import ch.tutteli.tsphp.translators.php54.antlr.ErrorReportingPHP54TranslatorWalker;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import org.antlr.runtime.RecognitionException;
 import org.antlr.runtime.tree.TreeNodeStream;
@@ -31,12 +35,13 @@ import org.antlr.stringtemplate.StringTemplateGroup;
  *
  * @author Robert Stoll <rstoll@tutteli.ch>
  */
-public class PHP54Translator implements ITranslator
+public class PHP54Translator implements ITranslator, IErrorLogger
 {
 
     StringTemplateGroup templateGroup;
     List<Exception> exceptions = new ArrayList<>();
     IPrecedenceHelper precedenceHelper;
+    private Collection<IErrorLogger> errorLoggers = new ArrayDeque<>();
 
     public PHP54Translator() {
         this(new PrecedenceHelper());
@@ -66,7 +71,7 @@ public class PHP54Translator implements ITranslator
     public String translate(TreeNodeStream stream) {
         ErrorReportingPHP54TranslatorWalker translator =
                 new ErrorReportingPHP54TranslatorWalker(stream, precedenceHelper);
-        
+
         translator.setTemplateLib(templateGroup);
 
         String translation = null;
@@ -89,5 +94,17 @@ public class PHP54Translator implements ITranslator
     @Override
     public List<Exception> getExceptions() {
         return exceptions;
+    }
+
+    @Override
+    public void addErrorLogger(IErrorLogger errorLogger) {
+        errorLoggers.add(errorLogger);
+    }
+
+    @Override
+    public void log(TSPHPException exception) {
+        for (IErrorLogger logger : errorLoggers) {
+            logger.log(exception);
+        }
     }
 }

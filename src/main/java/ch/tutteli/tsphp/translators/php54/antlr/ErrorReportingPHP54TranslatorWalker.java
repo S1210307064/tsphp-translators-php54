@@ -16,12 +16,15 @@
  */
 package ch.tutteli.tsphp.translators.php54.antlr;
 
+import ch.tutteli.tsphp.common.IErrorLogger;
 import ch.tutteli.tsphp.common.IErrorReporter;
+import ch.tutteli.tsphp.common.exceptions.TSPHPException;
 import ch.tutteli.tsphp.translators.php54.IPrecedenceHelper;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import org.antlr.runtime.RecognitionException;
-import org.antlr.runtime.RecognizerSharedState;
 import org.antlr.runtime.tree.TreeNodeStream;
 
 /**
@@ -32,6 +35,7 @@ public class ErrorReportingPHP54TranslatorWalker extends PHP54TranslatorWalker i
 {
 
     protected List<Exception> exceptions = new ArrayList<>();
+    private Collection<IErrorLogger> errorLoggers = new ArrayDeque<>();
 
     public ErrorReportingPHP54TranslatorWalker(TreeNodeStream input, IPrecedenceHelper precedenceHelper) {
         super(input, precedenceHelper);
@@ -47,9 +51,17 @@ public class ErrorReportingPHP54TranslatorWalker extends PHP54TranslatorWalker i
         return exceptions;
     }
 
+  
     @Override
-    public void reportError(RecognitionException e) {
-        super.reportError(e);
-        exceptions.add(e);
+    public void reportError(RecognitionException exception) {
+        exceptions.add(exception);
+        for (IErrorLogger logger : errorLoggers) {
+            logger.log(new TSPHPException(exception));
+        }
+    }
+
+    @Override
+    public void addErrorLogger(IErrorLogger errorLogger) {
+        errorLoggers.add(errorLogger);
     }
 }
