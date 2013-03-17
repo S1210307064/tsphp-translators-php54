@@ -20,13 +20,8 @@ import ch.tutteli.tsphp.common.IErrorLogger;
 import ch.tutteli.tsphp.common.ITranslator;
 import ch.tutteli.tsphp.common.exceptions.TSPHPException;
 import ch.tutteli.tsphp.translators.php54.antlr.ErrorReportingPHP54TranslatorWalker;
-import java.io.FileReader;
-import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayDeque;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 import org.antlr.runtime.RecognitionException;
 import org.antlr.runtime.tree.TreeNodeStream;
 import org.antlr.stringtemplate.StringTemplateGroup;
@@ -39,61 +34,48 @@ public class PHP54Translator implements ITranslator, IErrorLogger
 {
 
     StringTemplateGroup templateGroup;
-    List<Exception> exceptions = new ArrayList<>();
     IPrecedenceHelper precedenceHelper;
     private Collection<IErrorLogger> errorLoggers = new ArrayDeque<>();
+    private boolean hasFoundError;
+    private Exception loadingTemplateException;
 
-    public PHP54Translator() {
-        this(new PrecedenceHelper());
-    }
-
-    public PHP54Translator(IPrecedenceHelper thePrecedenceHelper) {
-        FileReader fileReader = null;
-        try {
-            // LOAD TEMPLATES (via classpath)
-            URL url = ClassLoader.getSystemResource("PHP54.stg");
-            fileReader = new FileReader(url.getFile());
-            templateGroup = new StringTemplateGroup(fileReader);
-            fileReader.close();
-        } catch (IOException ex) {
-            exceptions.add(ex);
-        } finally {
-            try {
-                fileReader.close();
-            } catch (IOException ex) {
-                //no furhter exceptio handling needed
-            }
-        }
+    public PHP54Translator(StringTemplateGroup theTemplateGroup, IPrecedenceHelper thePrecedenceHelper,
+            Exception exception) {
+        templateGroup = theTemplateGroup;
         precedenceHelper = thePrecedenceHelper;
+        loadingTemplateException = exception;
     }
 
     @Override
     public String translate(TreeNodeStream stream) {
-        ErrorReportingPHP54TranslatorWalker translator =
-                new ErrorReportingPHP54TranslatorWalker(stream, precedenceHelper);
-
-        translator.setTemplateLib(templateGroup);
-
         String translation = null;
-        try {
-            translation = translator.compilationUnit().getTemplate().toString();
-        } catch (RecognitionException ex) {
-            exceptions.add(ex);
+        if (loadingTemplateException == null) {
+            ErrorReportingPHP54TranslatorWalker translator =
+                    new ErrorReportingPHP54TranslatorWalker(stream, precedenceHelper);
+
+            for (IErrorLogger logger : errorLoggers) {
+                translator.addErrorLogger(logger);
+            }
+            translator.addErrorLogger(this);
+
+            translator.setTemplateLib(templateGroup);
+
+            try {
+                translation = translator.compilationUnit().getTemplate().toString();
+            } catch (RecognitionException ex) {
+                informErrorLogger(ex);
+            }
+        } else {
+            informErrorLogger(loadingTemplateException);
         }
-        if (translator.hasFoundError()) {
-            exceptions.addAll(translator.getExceptions());
-        }
+
         return translation;
+
     }
 
     @Override
     public boolean hasFoundError() {
-        return !exceptions.isEmpty();
-    }
-
-    @Override
-    public List<Exception> getExceptions() {
-        return exceptions;
+        return hasFoundError;
     }
 
     @Override
@@ -101,10 +83,20 @@ public class PHP54Translator implements ITranslator, IErrorLogger
         errorLoggers.add(errorLogger);
     }
 
-    @Override
-    public void log(TSPHPException exception) {
+    private void informErrorLogger(Exception ex) {
+        hasFoundError = true;
         for (IErrorLogger logger : errorLoggers) {
-            logger.log(exception);
+            logger.log(new TSPHPException(ex));
         }
+    }
+
+    @Override
+    public void reset() {
+        hasFoundError = false;
+    }
+
+    @Override
+    public void log(TSPHPException tsphpe) {
+        hasFoundError = true;
     }
 }

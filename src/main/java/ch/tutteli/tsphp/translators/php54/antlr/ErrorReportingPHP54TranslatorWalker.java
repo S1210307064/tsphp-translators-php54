@@ -21,9 +21,7 @@ import ch.tutteli.tsphp.common.IErrorReporter;
 import ch.tutteli.tsphp.common.exceptions.TSPHPException;
 import ch.tutteli.tsphp.translators.php54.IPrecedenceHelper;
 import java.util.ArrayDeque;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 import org.antlr.runtime.RecognitionException;
 import org.antlr.runtime.tree.TreeNodeStream;
 
@@ -34,8 +32,8 @@ import org.antlr.runtime.tree.TreeNodeStream;
 public class ErrorReportingPHP54TranslatorWalker extends PHP54TranslatorWalker implements IErrorReporter
 {
 
-    protected List<Exception> exceptions = new ArrayList<>();
     private Collection<IErrorLogger> errorLoggers = new ArrayDeque<>();
+    private boolean hasFoundError;
 
     public ErrorReportingPHP54TranslatorWalker(TreeNodeStream input, IPrecedenceHelper precedenceHelper) {
         super(input, precedenceHelper);
@@ -43,18 +41,12 @@ public class ErrorReportingPHP54TranslatorWalker extends PHP54TranslatorWalker i
 
     @Override
     public boolean hasFoundError() {
-        return !exceptions.isEmpty();
+        return hasFoundError;
     }
 
-    @Override
-    public List<Exception> getExceptions() {
-        return exceptions;
-    }
-
-  
     @Override
     public void reportError(RecognitionException exception) {
-        exceptions.add(exception);
+        hasFoundError = true;
         for (IErrorLogger logger : errorLoggers) {
             logger.log(new TSPHPException(exception));
         }

@@ -55,9 +55,17 @@ public class VariableDeclarationTest extends ATranslatorTest
         List<String[]> expressions = ExpressionHelper.getExpressions();
         for (String[] expression : expressions) {
             collection.add(new Object[]{
-                        "int $a=" + expression[0] + ";",
-                        "$a = " + expression[1] + ";"
-                    });
+                "int $a=" + expression[0] + ";",
+                "$a = " + expression[1] + ";"
+            });
+            collection.add(new Object[]{
+                "cast int $a=" + expression[0] + ";",
+                "$a = " + expression[1] + ";"
+            });
+            collection.add(new Object[]{
+                "cast int $a=()" + expression[0] + ";",
+                "$a = (int) " + expression[1] + ";"
+            });
         }
         return collection;
     }
