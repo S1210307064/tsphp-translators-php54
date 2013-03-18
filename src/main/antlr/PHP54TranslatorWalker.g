@@ -54,6 +54,10 @@ public PHP54TranslatorWalker(TreeNodeStream input, IPrecedenceHelper thePreceden
     precedenceHelper = thePrecedenceHelper;
 }
 
+private String getMethodName(String name) {
+   return name.substring(0, name.length() - 2);
+}
+
 }
 
 compilationUnit	
@@ -250,7 +254,7 @@ abstractConstructDeclaration
 		)	
 		-> abstractMethod(
 			modifier={$abstractMethodModifier.st},
-			identifier={$identifier},
+			identifier={getMethodName($identifier.text)},
 			params={$formalParameters.st},
 			body={$block.instructions}
 		)
@@ -265,7 +269,7 @@ constructDeclaration
 		)	
 		-> method(
 			modifier={$methodModifier.st},
-			identifier={$identifier},
+			identifier={getMethodName($identifier.text)},
 			params={$formalParameters.st},
 			body={$block.instructions}
 		)
@@ -281,7 +285,7 @@ abstractMethodDeclaration
 		)
 		-> abstractMethod(
 			modifier={$abstractMethodModifier.st},
-			identifier={$identfier},
+			identifier={getMethodName($identfier.text)},
 			params={$formalParameters.st}
 		)
 	;
@@ -301,13 +305,13 @@ methodDeclaration
 	:	^(METHOD_DECLARATION
 			^(METHOD_MODIFIER methodModifier)
 			^(TYPE typeModifier returnType)
-			(identfier=Identifier|identfier=Destruct)
+			(identifier=Identifier|identifier=Destruct)
 			formalParameters
 			block
 		)
 		-> method(
 			modifier={$methodModifier.st},
-			identifier={$identfier},
+			identifier={getMethodName($identifier.text)},
 			params={$formalParameters.st},
 			body={$block.instructions}
 		)
@@ -420,7 +424,7 @@ interfaceConstructDeclaration
 		)	
 		-> abstractMethod(
 			modifier={"public"},
-			identifier={$identifier},
+			identifier={getMethodName($identifier.text)},
 			params={$formalParameters.st},
 			body={$block.instructions}
 		)
@@ -436,7 +440,7 @@ interfaceMethodDeclaration
 		)
 		-> abstractMethod(
 			modifier={"public"},
-			identifier={$Identifier},
+			identifier={getMethodName($Identifier.text)},
 			params={$formalParameters.st}
 		)
 	;
@@ -451,7 +455,7 @@ functionDeclaration
 		)	
 		-> method(
 			modifier={null},
-			identifier={$Identifier},
+			identifier={getMethodName($Identifier.text)},
 			params={$formalParameters.st},
 			body={$block.instructions}
 		)
@@ -587,8 +591,8 @@ primitiveAtomWithConstant
 	|	Float						-> {%{$Float.text}}
 	|	String						-> {%{$String.text}}
 	|	Null						-> {%{$Null.text}}
-	|	CONSTANT					-> {%{$CONSTANT.text}}
-	|	^(CLASS_STATIC_ACCESS staticAccess CONSTANT)    -> classConstant(accessor={$staticAccess.st}, constant={$CONSTANT.text})
+	|	CONSTANT					-> {%{$CONSTANT.text.substring(0,$CONSTANT.text.length()-1)}}
+	|	^(CLASS_STATIC_ACCESS staticAccess CONSTANT)    -> classConstant(accessor={$staticAccess.st}, constant={$CONSTANT.text.substring(0,$CONSTANT.text.length()-1)})
 	;
 
 arrayKeyValue
@@ -720,33 +724,33 @@ actualParameters returns[List<Object> parameters]
 
 functionCall
 	:	^(FUNCTION_CALL	identifier=TYPE_NAME actualParameters)
-		-> functionCall(identifier={$identifier.text}, parameters={$actualParameters.parameters})
+		-> functionCall(identifier={getMethodName($identifier.text)}, parameters={$actualParameters.parameters})
 	;
 	
 methodCall
 	:	^(METHOD_CALL (callee=This|callee=VariableId) identifier=Identifier actualParameters)
-		-> methodCall(callee={$callee.text}, identifier={$identifier.text}, parameters={$actualParameters.parameters})
+		-> methodCall(callee={$callee.text}, identifier={getMethodName($identifier.text)}, parameters={$actualParameters.parameters})
 	;
 
 methodCallSelfOrParent
 	:	^(METHOD_CALL (callee=Self|callee=Parent) identifier=Identifier actualParameters)
-		-> methodCallStatic(callee={$callee.text}, identifier={$identifier.text}, parameters={$actualParameters.parameters})
+		-> methodCallStatic(callee={$callee.text}, identifier={getMethodName($identifier.text)}, parameters={$actualParameters.parameters})
 	;
 
 methodCallStatic
 	:	^(METHOD_CALL_STATIC TYPE_NAME identifier=Identifier actualParameters)	
-		-> methodCallStatic(callee={$TYPE_NAME.text}, identifier={$identifier.text}, parameters={$actualParameters.parameters})
+		-> methodCallStatic(callee={$TYPE_NAME.text}, identifier={getMethodName($identifier.text)}, parameters={$actualParameters.parameters})
 	;
 
 classStaticAccess
-	:	^(CLASS_STATIC_ACCESS staticAccess (identifier=CLASS_STATIC_ACCESS_VARIABLE_ID|identifier=CONSTANT))
+	:	^(CLASS_STATIC_ACCESS staticAccess identifier=CLASS_STATIC_ACCESS_VARIABLE_ID)
 		-> classMemberAccessStatic(accessor={$staticAccess.st}, identifier={$identifier.text})
 	;	
 
 postFixExpression
 	:	^(CLASS_MEMBER_ACCESS expression Identifier) 			-> classMemberAccess(expression={$expression.st}, identifier={$Identifier.text})
 	|	^(ARRAY_ACCESS expr=expression index=expression)		-> arrayAccess(expression={$expr.st}, index={$index.st})
-	|	^(METHOD_CALL_POSTFIX expression Identifier actualParameters)	-> postFixCall(expression={$expression.st}, identifier={$Identifier.text}, parameters={$actualParameters.parameters})
+	|	^(METHOD_CALL_POSTFIX expression Identifier actualParameters)	-> postFixCall(expression={$expression.st}, identifier={getMethodName($Identifier.text)}, parameters={$actualParameters.parameters})
 	;
 
 exit

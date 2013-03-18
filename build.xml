@@ -54,6 +54,7 @@
     <property name="parser" location="${basedir}/../TSPHP-parser"/>
     <property name="parser.tokens" location="${parser}/src/main/antlr/output"/>
     <property name="parser.jar" location="${parser}/build/lib"/>
+    <property name="typechecker.jar" location="${basedir}/../TSPHP-typechecker/build/lib"/>
     
     <!-- setting target locations -->
     <property name="target" location="${basedir}/build" />
@@ -156,6 +157,16 @@
             <fileset dir="${parser.jar}" includes="TSPHP-parser-*.jar"/>
         </copy>
     </target>
+    
+     <target name="copyTypeChecker" depends="" description="copy typechecker jar to the lib folder">
+        <delete>
+            <fileset dir="${libdev}" includes="TSPHP-typechecker-*.jar"/>
+        </delete>
+        <copy todir="${libdev}">
+            <fileset dir="${typechecker.jar}" includes="TSPHP-typechecker-*.jar"/>
+        </copy>
+    </target>
+    
     <target name="copyCommon" depends="" description="copy common library to the lib folder">
         <delete>
             <fileset dir="${lib}" includes="TSPHP-common-*.jar"/>
