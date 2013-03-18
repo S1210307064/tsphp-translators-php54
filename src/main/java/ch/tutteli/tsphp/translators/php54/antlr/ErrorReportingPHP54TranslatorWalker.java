@@ -47,9 +47,12 @@ public class ErrorReportingPHP54TranslatorWalker extends PHP54TranslatorWalker i
     @Override
     public void reportError(RecognitionException exception) {
         hasFoundError = true;
+        String tokenText = exception.token != null
+                ? "Unexpected token: " + exception.token.getText()
+                : "Unknown token";
         for (IErrorLogger logger : errorLoggers) {
             logger.log(new TSPHPException("Line " + exception.line + "|" + exception.charPositionInLine
-                    + " translator php 5.4 exception occured. Unexpected token: " + exception.token.getText(), exception));
+                    + " translator php 5.4  exception occured. " + tokenText, exception));
         }
     }
 

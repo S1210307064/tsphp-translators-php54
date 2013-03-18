@@ -160,7 +160,7 @@ constDeclarationList
 	
 constantAssignment
 	:	^(Identifier v=unaryPrimitiveAtom)
-		 -> assign(id={$Identifier}, value={$unaryPrimitiveAtom.st})
+		 -> assign(id={$Identifier.text.substring(0,$Identifier.text.length()-1)}, value={$unaryPrimitiveAtom.st})
 	;
 	
 unaryPrimitiveAtom
