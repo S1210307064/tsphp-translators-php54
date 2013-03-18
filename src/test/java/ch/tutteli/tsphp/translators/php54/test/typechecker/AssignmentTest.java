@@ -33,10 +33,10 @@ import org.junit.runners.Parameterized;
  * @author Robert Stoll <rstoll@tutteli.ch>
  */
 @RunWith(Parameterized.class)
-public class VariableInitTest extends ATranslatorTypeCheckerTest
+public class AssignmentTest extends ATranslatorTypeCheckerTest
 {
 
-    public VariableInitTest(String testString, String theExpectedResult) {
+    public AssignmentTest(String testString, String theExpectedResult) {
         super(testString, theExpectedResult);
     }
 
@@ -49,7 +49,7 @@ public class VariableInitTest extends ATranslatorTypeCheckerTest
     public static Collection<Object[]> testStrings() {
         List<Object[]> collection = new ArrayList<>();
 
-        AssignHelper.addCastingAssignment(collection, true);
+        AssignHelper.addCastingAssignment(collection, false);
 
         return collection;
     }
