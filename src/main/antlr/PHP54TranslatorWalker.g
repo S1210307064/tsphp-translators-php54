@@ -169,11 +169,10 @@ unaryPrimitiveAtom
 	;
 
 scalarTypes
-@after {$st = %{$text};}
-	:	'bool'
-	|	'int'
-	|	'float'
-	|	'string'
+	:	TypeBool -> {%{$TypeBool.text}}
+	|	TypeInt -> {%{$TypeInt.text}}
+	|	TypeFloat -> {%{$TypeFloat.text}}
+	|	TypeString -> {%{$TypeString.text}}
 	;
 
 classMemberDeclaration
@@ -685,16 +684,17 @@ binaryOperator returns[boolean needParentheses]
 	;
 
 castingOperator
+@init{boolean isNullable = false;}
 	:	^(CASTING
 			^(TYPE 
-				(	^(TYPE_MODIFIER Cast? (isNullable='?')?)
+				(	^(TYPE_MODIFIER Cast? ('?'{isNullable=true;})?)
 				|	TYPE_MODIFIER
 				)
-				(type=scalarTypes|type=arrayType)
+				(type=scalarTypes|type=arrayType{isNullable=true;})
 			)
 			expression
 		)
-		-> primitiveCast(isNullable = {$isNullable!=null}, type={$type.st}, expression={$expression.st})
+		-> primitiveCast(isNullable = {isNullable}, type={$type.st}, expression={$expression.st})
 		
 	|	^(CASTING
 			^(TYPE 

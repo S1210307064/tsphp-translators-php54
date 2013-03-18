@@ -26,6 +26,9 @@ import ch.tutteli.tsphp.common.ParserUnitDto;
 import ch.tutteli.tsphp.common.TSPHPAstAdaptor;
 import ch.tutteli.tsphp.common.exceptions.TSPHPException;
 import ch.tutteli.tsphp.parser.ParserFacade;
+import ch.tutteli.tsphp.parser.antlr.ANTLRNoCaseStringStream;
+import ch.tutteli.tsphp.parser.antlr.ErrorReportingTSPHPLexer;
+import ch.tutteli.tsphp.parser.antlr.ErrorReportingTSPHPParser;
 import ch.tutteli.tsphp.parser.antlr.TSPHPParser;
 import ch.tutteli.tsphp.translators.php54.PrecedenceHelper;
 import ch.tutteli.tsphp.translators.php54.antlr.ErrorReportingPHP54TranslatorWalker;
@@ -33,6 +36,8 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
+import org.antlr.runtime.CharStream;
+import org.antlr.runtime.CommonTokenStream;
 import org.antlr.runtime.ParserRuleReturnScope;
 import org.antlr.runtime.RecognitionException;
 import org.antlr.runtime.tree.CommonTreeNodeStream;
@@ -79,14 +84,21 @@ public abstract class ATest implements IErrorLogger
         adaptor = new TSPHPAstAdaptor();
         AstHelperRegistry.set(new AstHelper(adaptor));
 
-        IParser parser = new ParserFacade(adaptor);
-        parser.addErrorLogger(this);
-        ParserUnitDto parserUnitDto = parser.parse(testString);
-        ast = parserUnitDto.compilationUnit;
-        Assert.assertFalse(testString + " failed. found parser exception(s). See output.", parser.hasFoundError());
+        CharStream stream = new ANTLRNoCaseStringStream(testString);
+        ErrorReportingTSPHPLexer lexer = new ErrorReportingTSPHPLexer(stream);
+        CommonTokenStream tokens = new CommonTokenStream(lexer);
+
+        ErrorReportingTSPHPParser parser = new ErrorReportingTSPHPParser(tokens);
+        parser.setTreeAdaptor(adaptor);
+
+        ParserRuleReturnScope parserResult = parserRun(parser);
+        ast = (ITSPHPAst) parserResult.getTree();
+
+        Assert.assertFalse(testString.replaceAll("\n", " ") + " failed - lexer throw exception", lexer.hasFoundError());
+        Assert.assertFalse(testString.replaceAll("\n", " ") + " failed - parser throw exception", parser.hasFoundError());
 
         commonTreeNodeStream = new CommonTreeNodeStream(adaptor, ast);
-        commonTreeNodeStream.setTokenStream(parserUnitDto.tokenStream);
+        commonTreeNodeStream.setTokenStream(parser.getTokenStream());
     }
 
     protected void typecheck() {
