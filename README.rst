@@ -1,4 +1,4 @@
-TSPHP-parser
+TSPHP-translators-php54
 =====
 | This repository contains the translator to PHP 5.4 for TSPHP.
 | Please visit the `project's homepage <http://tsphp.tutteli.ch/>`_ for more information.

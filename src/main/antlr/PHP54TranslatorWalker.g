@@ -545,7 +545,7 @@ whileLoop
 	;
 
 doWhileLoop
-	:	^('do' blockConditional expression) -> doWhile(block={$blockConditional.instructions}, condition={$expression.st})
+	:	^('do' block expression) -> doWhile(block={$block.instructions}, condition={$expression.st})
 	;
 
 tryCatch
