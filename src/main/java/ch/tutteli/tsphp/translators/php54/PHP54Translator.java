@@ -33,8 +33,8 @@ import org.antlr.stringtemplate.StringTemplateGroup;
 public class PHP54Translator implements ITranslator, IErrorLogger
 {
 
-    StringTemplateGroup templateGroup;
-    IPrecedenceHelper precedenceHelper;
+    private StringTemplateGroup templateGroup;
+    private IPrecedenceHelper precedenceHelper;
     private Collection<IErrorLogger> errorLoggers = new ArrayDeque<>();
     private boolean hasFoundError;
     private Exception loadingTemplateException;

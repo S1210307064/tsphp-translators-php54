@@ -24,5 +24,5 @@ import ch.tutteli.tsphp.common.ITSPHPAst;
  */
 public interface IPrecedenceHelper
 {
-    public boolean needParentheses(ITSPHPAst operatorAst);
+    boolean needParentheses(ITSPHPAst operatorAst);
 }

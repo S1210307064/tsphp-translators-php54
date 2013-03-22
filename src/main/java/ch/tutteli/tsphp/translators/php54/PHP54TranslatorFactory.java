@@ -31,7 +31,7 @@ public class PHP54TranslatorFactory implements ITranslatorFactory
 {
 
     private StringTemplateGroup templateGroup;
-    private IPrecedenceHelper precedenceHelper;
+    private final IPrecedenceHelper precedenceHelper;
     private Exception loadingTemplateException;
 
     public PHP54TranslatorFactory() {
@@ -39,7 +39,7 @@ public class PHP54TranslatorFactory implements ITranslatorFactory
         InputStreamReader streamReader = null;
         try {
             // LOAD TEMPLATES (via classpath)
-            URL url = ClassLoader.getSystemResource("PHP54.stg");
+            final URL url = ClassLoader.getSystemResource("PHP54.stg");
             streamReader = new InputStreamReader(url.openStream());
             templateGroup = new StringTemplateGroup(streamReader);
             streamReader.close();

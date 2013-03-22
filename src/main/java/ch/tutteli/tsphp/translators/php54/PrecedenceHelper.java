@@ -42,6 +42,7 @@ public class PrecedenceHelper implements IPrecedenceHelper
     }
 
     private void initPrecendecRules() {
+        //CHECKSTYLE:OFF:MagicNumber
         precedenceRules.put("or", 10);
         precedenceRules.put("xor", 11);
         precedenceRules.put("and", 12);
@@ -102,5 +103,6 @@ public class PrecedenceHelper implements IPrecedenceHelper
         
         precedenceRules.put("postIncr", 130);
         precedenceRules.put("postDecr", 130);
+        //CHECKSTYLE:ON:MagicNumber
     }
 }
