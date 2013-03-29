@@ -1,7 +1,9 @@
 group PHP54;
 
 file(namespaces) ::= <<
+\<?php
 <namespaces; separator="\n">
+?\>
 >>
 
 namespace(name, body) ::= <<

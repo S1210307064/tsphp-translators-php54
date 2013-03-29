@@ -59,9 +59,9 @@ public class NamespaceTest extends ATranslatorParserTest
     @Parameterized.Parameters
     public static Collection<Object[]> testStrings() {
         return Arrays.asList(new Object[][]{
-                    {"namespace{}", "namespace{}"},
-                    {"namespace  {}", "namespace{}"},
-                    {"namespace a{}", "namespace a{}"}
+                    {"namespace{}", "<?php\nnamespace{}\n?>"},
+                    {"namespace  {}", "<?php\nnamespace{}\n?>"},
+                    {"namespace a{}", "<?php\nnamespace a{}\n?>"}
                 });
     }
 }

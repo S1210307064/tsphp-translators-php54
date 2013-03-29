@@ -58,9 +58,9 @@ public class GlobalConstantTest extends ATranslatorParserTest
     @Parameterized.Parameters
     public static Collection<Object[]> testStrings() {
         return Arrays.asList(new Object[][]{
-                    {"const int a=1;", "namespace{\n    const a = 1;\n}"},
-                    {"const int a=1,b=1;", "namespace{\n    const a = 1, b = 1;\n}"},
-                    {"const int a=1; const float b=1;", "namespace{\n    const a = 1;\n    const b = 1;\n}"}
+                    {"const int a=1;", "<?php\nnamespace{\n    const a = 1;\n}\n?>"},
+                    {"const int a=1,b=1;", "<?php\nnamespace{\n    const a = 1, b = 1;\n}\n?>"},
+                    {"const int a=1; const float b=1;", "<?php\nnamespace{\n    const a = 1;\n    const b = 1;\n}\n?>"}
                 });
     }
 }

@@ -205,33 +205,33 @@ public class AssignHelper
         for (String type2 : noCastTypes) {
             collection.add(new Object[]{
                 type2 + " $b; cast " + typeName + " $a " + assign + " $b;",
-                "namespace{\n    $b;\n    $a" + outputAssign + "$b;\n}"
+                "<?php\nnamespace{\n    $b;\n    $a" + outputAssign + "$b;\n}\n?>"
             });
             collection.add(new Object[]{
                 type2 + " $b; " + typeName + " $a " + castAssign + "$b;",
-                "namespace{\n    $b;\n    $a" + outputAssign + cast + ";\n}"
+                "<?php\nnamespace{\n    $b;\n    $a" + outputAssign + cast + ";\n}\n?>"
             });
         }
 
         for (String type2 : castTypes) {
             collection.add(new Object[]{
                 type2 + " $b; cast " + typeName + " $a " + assign + " $b;",
-                "namespace{\n    $b;\n    $a" + outputAssign + cast + ";\n}"
+                "<?php\nnamespace{\n    $b;\n    $a" + outputAssign + cast + ";\n}\n?>"
             });
             collection.add(new Object[]{
                 type2 + " $b; " + typeName + " $a " + castAssign + "$b;",
-                "namespace{\n    $b;\n    $a" + outputAssign + cast + ";\n}"
+                "<?php\nnamespace{\n    $b;\n    $a" + outputAssign + cast + ";\n}\n?>"
             });
         }
 
         for (String type2 : castToBoolTypes) {
             collection.add(new Object[]{
                 type2 + " $b; cast " + typeName + " $a " + assign + " $b;",
-                "namespace{\n    $b;\n    $a" + outputAssign + castBool + ";\n}"
+                "<?php\nnamespace{\n    $b;\n    $a" + outputAssign + castBool + ";\n}\n?>"
             });
             collection.add(new Object[]{
                 type2 + " $b; " + typeName + " $a" + castAssign + "$b;",
-                "namespace{\n    $b;\n    $a" + outputAssign + castBool + ";\n}"
+                "<?php\nnamespace{\n    $b;\n    $a" + outputAssign + castBool + ";\n}\n?>"
             });
         }
 
