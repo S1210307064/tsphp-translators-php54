@@ -38,7 +38,7 @@ public abstract class ATranslatorTypeCheckerTest extends ATest
 
     @Override
     protected void typecheck() {
-        ITypeChecker typeChecker = new TypeChecker(adaptor);
+        ITypeChecker typeChecker = new TypeChecker();
         typeChecker.addErrorLogger(this);
 
         typeChecker.enrichWithDefinitions(ast, commonTreeNodeStream);
