@@ -61,7 +61,7 @@ private String getMethodName(String name) {
 }
 
 compilationUnit	
-	:	(n+=namespace) -> file(namespaces={$n})
+	:	(n+=namespace*) -> file(namespaces={$n})
 	;
 	
 namespace
