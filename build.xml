@@ -26,8 +26,6 @@
 
     <!-- Properties hierarchisch einlesen -->
     <property file="${basedir}/build.properties" />
-    <property file="${basedir}/../build.properties" />
-    <property file="${user.home}/build.properties" />
 
     <!-- project-properties (last defaults), set them in build.properties!) -->
     <property name="proj.modul" value="xxx" />
@@ -45,14 +43,14 @@
     <property name="lib" location="${basedir}/lib" />
     <property name="libdev" location="${lib}/dev" />
     <property name="src" location="${basedir}/src" />
-    <property name="src.main" location="${src}/main/java" />
-    <property name="src.test" location="${src}/test/java" />
-    <property name="antlr" location="${src}/main/antlr" />
-    <property name="antlr.output" location="${src}/main/antlr/output" />
+    <property name="src.main" location="${src}" />
+    <property name="src.test" location="${basedir}/test" />
+    <property name="antlr" location="${basedir}/antlr" />
+    <property name="antlr.output" location="${basedir}/antlr/output" />
     <property name="antlr.copyLocation" location="${src.main}/ch/tutteli/tsphp/translators/php54/antlr" />
     <property name="common.jar" location="${basedir}/../TSPHP-common/build/lib" />
     <property name="parser" location="${basedir}/../TSPHP-parser"/>
-    <property name="parser.tokens" location="${parser}/src/main/antlr/output"/>
+    <property name="parser.tokens" location="${parser}/antlr/output"/>
     <property name="parser.jar" location="${parser}/build/lib"/>
     <property name="typechecker.jar" location="${basedir}/../TSPHP-typechecker/build/lib"/>
     
@@ -128,7 +126,7 @@
         </copy>
     </target>
     
-    <target name="antlr">
+    <target name="antlr" description="generates java source code from a antlr grammar file">
         <java classname="org.antlr.Tool" fork="true" failonerror="true">
             <arg value="-verbose"/>
             <arg value="-lib"/>
@@ -142,7 +140,7 @@
         </java>
     </target>
 
-    <target name="copyParser" depends="" description="copy parser jar and token file to /lib/dev/, src/main/antlr respectively">
+    <target name="copyParser" depends="" description="copy parser jar and token file to /lib/dev/, /antlr respectively">
         <delete>
             <fileset dir="${antlr}" includes="*.tokens"/>
         </delete>
@@ -266,7 +264,6 @@
                forkmode="once"
                showoutput="true"
                failureproperty="test.failed">
-            <jvmarg value="${test.vm.param}" />
             <sysproperty key="proj.basedir" value="${basedir}" />
             <formatter usefile="false" type="brief" />
             <formatter type="xml" />
@@ -281,30 +278,6 @@
         <junit.report />
         <coverage.report />
         <fail message="JUnit tests FAILED!" if="test.failed" />
-    </target>
-
-    <target name="test.single" depends="jar">
-        <fail unless="test.class">Must set property 'test.class'</fail>
-        <junit fork="true" printsummary="off" > 
-            <classpath refid="test"/>
-            <formatter type="plain" usefile="false"/>
-            <test name="${test.class}"/>
-        </junit>
-    </target>
-    
-    <target name="test.debug.single" depends="jar">
-        <fail unless="test.class">Must set property 'test.class'</fail>
-        <nbjpdastart addressproperty="jpda.address" name="TSPHP-translators-php54" transport="dt_socket">
-            <classpath refid="test"/>
-        </nbjpdastart>
-        <junit fork="true" printsummary="off" >
-            <classpath refid="test"/>
-            <formatter type="plain" usefile="false"/>
-            <test name="${test.class}"/>
-            
-            <jvmarg value="-Xdebug" />
-            <jvmarg value="-Xrunjdwp:transport=dt_socket,address=${jpda.address}"/>
-        </junit>
     </target>
 
     <!-- ================================================================== -->
@@ -407,7 +380,7 @@
             <![CDATA[<h1>Dokumentation</h1>]]>
             </doctitle>
             <bottom>
-            <![CDATA[<i>Copyright 2012 Hochschule Luzern Technik & Architektur, Switzerland</i>]]>
+                <![CDATA[<i>Copyright 2013 Robert Stoll <a href="mailto:rstoll@tutteli.ch">mailto:rstoll@tutteli.ch</a></i>]]>
             </bottom>
             <fileset dir="${src.main}">
                 <include name="**/*.java" />
@@ -451,8 +424,10 @@
                 <include name="**/*" />
                 <exclude name="build/**" />
                 <exclude name="nbproject/**" />
+                <exclude name="out/**" />
                 <exclude name="target/**" />
                 <exclude name=".*/**" />
+                <exclude name="*.iml" />
                 <exclude name="pom.xml" />
                 <exclude name="*.jenkins" />
             </zipfileset>
@@ -530,7 +505,7 @@
                         <fileset dir="${src.main}" />
                     </sourcefiles>
                 </structure>
-                <html destdir="${coverage}" footer="TSPHP - Grammar" />
+                <html destdir="${coverage}" footer="TSPHP - Translator" />
                 <xml destfile="${coverage}/coverage.xml" />
             </jacoco:report>
         </sequential>

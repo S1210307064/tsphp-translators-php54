@@ -88,7 +88,6 @@ public class ExpressionHelper
             {"$a === $b", "$a === $b"},
             {"$a != $b", "$a != $b"},
             {"$a !== $b", "$a !== $b"},
-            {"$a <> $b", "$a <> $b"},
             {"$a < $b", "$a < $b"},
             {"$a <= $b", "$a <= $b"},
             {"$a > $b", "$a > $b"},
