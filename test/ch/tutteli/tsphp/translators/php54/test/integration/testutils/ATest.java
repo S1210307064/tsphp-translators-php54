@@ -12,7 +12,7 @@ import ch.tutteli.tsphp.parser.antlr.ErrorReportingTSPHPLexer;
 import ch.tutteli.tsphp.parser.antlr.ErrorReportingTSPHPParser;
 import ch.tutteli.tsphp.parser.antlr.TSPHPParser;
 import ch.tutteli.tsphp.translators.php54.PrecedenceHelper;
-import ch.tutteli.tsphp.translators.php54.antlr.ErrorReportingPHP54TranslatorWalker;
+import ch.tutteli.tsphp.translators.php54.antlrmod.ErrorReportingPHP54TranslatorWalker;
 import org.antlr.runtime.CharStream;
 import org.antlr.runtime.CommonTokenStream;
 import org.antlr.runtime.ParserRuleReturnScope;
@@ -93,7 +93,7 @@ public abstract class ATest implements IErrorLogger
         fr.close();
 
         translator = new ErrorReportingPHP54TranslatorWalker(commonTreeNodeStream, new PrecedenceHelper());
-        translator.addErrorLogger(this);
+        translator.registerErrorLogger(this);
         translator.setTemplateLib(templates);
 
         run();

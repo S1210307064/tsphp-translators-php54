@@ -3,7 +3,7 @@ package ch.tutteli.tsphp.translators.php54;
 import ch.tutteli.tsphp.common.IErrorLogger;
 import ch.tutteli.tsphp.common.ITranslator;
 import ch.tutteli.tsphp.common.exceptions.TSPHPException;
-import ch.tutteli.tsphp.translators.php54.antlr.ErrorReportingPHP54TranslatorWalker;
+import ch.tutteli.tsphp.translators.php54.antlrmod.ErrorReportingPHP54TranslatorWalker;
 import java.util.ArrayDeque;
 import java.util.Collection;
 import org.antlr.runtime.RecognitionException;
@@ -34,9 +34,9 @@ public class PHP54Translator implements ITranslator, IErrorLogger
                     new ErrorReportingPHP54TranslatorWalker(stream, precedenceHelper);
 
             for (IErrorLogger logger : errorLoggers) {
-                translator.addErrorLogger(logger);
+                translator.registerErrorLogger(logger);
             }
-            translator.addErrorLogger(this);
+            translator.registerErrorLogger(this);
 
             translator.setTemplateLib(templateGroup);
 
@@ -59,7 +59,7 @@ public class PHP54Translator implements ITranslator, IErrorLogger
     }
 
     @Override
-    public void addErrorLogger(IErrorLogger errorLogger) {
+    public void registerErrorLogger(IErrorLogger errorLogger) {
         errorLoggers.add(errorLogger);
     }
 
@@ -76,7 +76,7 @@ public class PHP54Translator implements ITranslator, IErrorLogger
     }
 
     @Override
-    public void log(TSPHPException tsphpe) {
+    public void log(TSPHPException exception) {
         hasFoundError = true;
     }
 }

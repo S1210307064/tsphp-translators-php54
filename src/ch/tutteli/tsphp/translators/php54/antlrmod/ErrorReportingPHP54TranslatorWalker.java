@@ -1,13 +1,15 @@
-package ch.tutteli.tsphp.translators.php54.antlr;
+package ch.tutteli.tsphp.translators.php54.antlrmod;
 
+import ch.tutteli.tsphp.common.ErrorReporterHelper;
 import ch.tutteli.tsphp.common.IErrorLogger;
 import ch.tutteli.tsphp.common.IErrorReporter;
-import ch.tutteli.tsphp.common.exceptions.TSPHPException;
 import ch.tutteli.tsphp.translators.php54.IPrecedenceHelper;
-import java.util.ArrayDeque;
-import java.util.Collection;
+import ch.tutteli.tsphp.translators.php54.antlr.PHP54TranslatorWalker;
 import org.antlr.runtime.RecognitionException;
 import org.antlr.runtime.tree.TreeNodeStream;
+
+import java.util.ArrayDeque;
+import java.util.Collection;
 
 public class ErrorReportingPHP54TranslatorWalker extends PHP54TranslatorWalker implements IErrorReporter
 {
@@ -27,17 +29,11 @@ public class ErrorReportingPHP54TranslatorWalker extends PHP54TranslatorWalker i
     @Override
     public void reportError(RecognitionException exception) {
         hasFoundError = true;
-        String tokenText = exception.token != null
-                ? "Unexpected token: " + exception.token.getText()
-                : "Unknown token";
-        for (IErrorLogger logger : errorLoggers) {
-            logger.log(new TSPHPException("Line " + exception.line + "|" + exception.charPositionInLine
-                    + " translator php 5.4  exception occured. " + tokenText, exception));
-        }
+        ErrorReporterHelper.reportError(errorLoggers, exception, "translating to php 5.4");
     }
 
     @Override
-    public void addErrorLogger(IErrorLogger errorLogger) {
+    public void registerErrorLogger(IErrorLogger errorLogger) {
         errorLoggers.add(errorLogger);
     }
 }

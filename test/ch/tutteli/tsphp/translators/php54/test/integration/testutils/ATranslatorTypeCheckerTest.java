@@ -19,7 +19,7 @@ public abstract class ATranslatorTypeCheckerTest extends ATest
     @Override
     protected void typecheck() {
         ITypeChecker typeChecker = new TypeChecker();
-        typeChecker.addErrorLogger(this);
+        typeChecker.registerErrorLogger(this);
 
         typeChecker.enrichWithDefinitions(ast, commonTreeNodeStream);
         Assert.assertFalse(testString + " failed. found definition exception(s)", typeChecker.hasFoundError());
