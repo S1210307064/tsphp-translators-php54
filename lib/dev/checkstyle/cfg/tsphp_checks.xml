@@ -4,7 +4,7 @@
           "http://www.puppycrawl.com/dtds/configuration_1_3.dtd">
 
 <!-- 
- Copyright 2013 Robert Stoll <rstoll@tutteli.ch>
+ Copyright 2013 Robert Stoll <rstoll@tutteli.ch> 
  
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -202,7 +202,9 @@ Following adoptions are apliead to the original file from checkstyle:
 		<module name="FallThrough">
 			<property name="severity" value="warning"/>
 		</module>
-        <module name="RedundantThrows"/>
+        <module name="RedundantThrows">
+			<property name="severity" value="warning"/>
+		</module>
 		<module name="BooleanExpressionComplexity"/>
         <module name="SimplifyBooleanExpression"/>
         <module name="SimplifyBooleanReturn"/>

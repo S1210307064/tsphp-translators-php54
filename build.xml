@@ -1,15 +1,14 @@
-<project name="TSPHP-parser" default="build" basedir="." >
+<project name="translators/php54" default="build" basedir="." >
 
     <property environment="env" />
-    <import file="${basedir}/build-common.xml" as="common"/>
+    <import file="${basedir}/ant/build-common.xml" as="common"/>
+    <import file="${basedir}/ant/copyCommon.xml" as="copyCommon"/>
+    <import file="${basedir}/ant/copyParser.xml" as="copyParser"/>
+    <import file="${basedir}/ant/copyAntlr.xml" as="copyAntlr"/>
 
-    <property name="antlr.output" location="${basedir}/antlr/output" />
-    <property name="antlr.copyLocation" location="${src.main}/ch/tutteli/tsphp/translators/php54/antlr" />
-    <property name="parser" location="${basedir}/../TSPHP-parser"/>
-    <property name="parser.tokens" location="${parser}/antlr/output"/>
-    <property name="parser.jar" location="${parser}/build/lib"/>
+    <property file="${basedir}/ant/antlr.properties"/>
+
     <property name="typechecker.jar" location="${basedir}/../TSPHP-typechecker/build/lib"/>
-
 
     <!-- ================================================================== -->
     <!-- Specialised Target: dist -->
@@ -46,27 +45,6 @@
         </java>
     </target>
 
-    <target name="copyAntlr" depends="clean" description="copy antlr generated classes to src/java folder">
-        <copy todir="${antlr.copyLocation}">
-            <fileset dir="${antlr.output}" includes="PHP54TranslatorWalker.java"/>
-        </copy>
-    </target>
-
-    <target name="copyParser" depends="" description="copy parser jar and token file to /lib/dev/, /antlr respectively">
-        <delete>
-            <fileset dir="${src.antlr}" includes="*.tokens"/>
-        </delete>
-        <copy todir="${src.antlr}">
-            <fileset dir="${parser.tokens}" includes="*.tokens" />
-        </copy>
-        <delete>
-            <fileset dir="${libdev}" includes="TSPHP-parser-*.jar"/>
-        </delete>
-        <copy todir="${libdev}">
-            <fileset dir="${parser.jar}" includes="TSPHP-parser-*.jar"/>
-        </copy>
-    </target>
-    
     <target name="copyTypeChecker" depends="" description="copy typechecker jar to the lib folder">
         <delete>
             <fileset dir="${libdev}" includes="TSPHP-typechecker-*.jar"/>
@@ -75,4 +53,5 @@
             <fileset dir="${typechecker.jar}" includes="TSPHP-typechecker-*.jar"/>
         </copy>
     </target>
+
 </project>
