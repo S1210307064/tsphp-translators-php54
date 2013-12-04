@@ -258,4 +258,8 @@ cast(type, expression)::=<<
 (<expression> !== null ? (<expression> instanceof <type> ? <expression> : \trigger_error('Cast failed, the evaluation type of <expression> must be <type>', \E_RECOVERABLE_ERROR)) : null)
 >>
 
+castWithTempVariable(type, expression, tempVariableName)::=<<
+((<tempVariableName> = <expression>) !== null ? (<tempVariableName> instanceof <type> ? <tempVariableName> : \trigger_error('Cast failed, the evaluation type of <expression> must be <type>', \E_RECOVERABLE_ERROR)) : null)
+>>
+
 

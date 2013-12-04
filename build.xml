@@ -2,9 +2,9 @@
 
     <property environment="env" />
     <import file="${basedir}/ant/build-common.xml" as="common"/>
-    <import file="${basedir}/ant/copyCommon.xml" as="copyCommon"/>
-    <import file="${basedir}/ant/copyParser.xml" as="copyParser"/>
-    <import file="${basedir}/ant/copyAntlr.xml" as="copyAntlr"/>
+    <import file="${basedir}/ant/copyCommon.xml" as="cp"/>
+    <import file="${basedir}/ant/copyParser.xml" as="cp"/>
+    <import file="${basedir}/ant/copyAntlr.xml" as="cp"/>
 
     <property file="${basedir}/ant/antlr.properties"/>
 
@@ -45,7 +45,7 @@
         </java>
     </target>
 
-    <target name="copyTypeChecker" depends="" description="copy typechecker jar to the lib folder">
+    <target name="cp.typechecker" depends="" description="copy typechecker jar to the lib folder">
         <delete>
             <fileset dir="${libdev}" includes="TSPHP-typechecker-*.jar"/>
         </delete>

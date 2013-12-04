@@ -32,7 +32,7 @@ public class ReturnTest extends ATranslatorParserTest
     @Parameterized.Parameters
     public static Collection<Object[]> testStrings() {
         collection = new ArrayList<>();
-        List<String[]> expressions = ExpressionHelper.getExpressions();
+        List<String[]> expressions = ExpressionHelper.getAllExpressions(7);
         for(String[] expression:expressions){
                collection.add(new Object[]{
                     "return "+expression[0]+";",

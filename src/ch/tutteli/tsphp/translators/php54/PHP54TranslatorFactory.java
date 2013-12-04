@@ -1,10 +1,13 @@
 package ch.tutteli.tsphp.translators.php54;
 
+import ch.tutteli.tsphp.common.ITSPHPAstAdaptor;
 import ch.tutteli.tsphp.common.ITranslator;
 import ch.tutteli.tsphp.common.ITranslatorFactory;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
+
+import ch.tutteli.tsphp.common.TSPHPAstAdaptor;
 import org.antlr.stringtemplate.StringTemplateGroup;
 
 public class PHP54TranslatorFactory implements ITranslatorFactory
@@ -12,10 +15,15 @@ public class PHP54TranslatorFactory implements ITranslatorFactory
 
     private StringTemplateGroup templateGroup;
     private final IPrecedenceHelper precedenceHelper;
+    private final ITempVariableHelper tempVariableHelper;
     private Exception loadingTemplateException;
 
-    public PHP54TranslatorFactory() {
+    public PHP54TranslatorFactory(){
+        this(new TSPHPAstAdaptor());
+    }
+    public PHP54TranslatorFactory(ITSPHPAstAdaptor anAstAdaptor) {
         precedenceHelper = new PrecedenceHelper();
+        tempVariableHelper = new TempVariableHelper(anAstAdaptor);
         InputStreamReader streamReader = null;
         try {
             // LOAD TEMPLATES (via classpath)
@@ -23,7 +31,7 @@ public class PHP54TranslatorFactory implements ITranslatorFactory
             streamReader = new InputStreamReader(url.openStream());
             templateGroup = new StringTemplateGroup(streamReader);
             streamReader.close();
-        } catch (IOException ex) {
+        } catch(Exception ex){
             loadingTemplateException = ex;
         } finally {
             try {
@@ -38,6 +46,6 @@ public class PHP54TranslatorFactory implements ITranslatorFactory
 
     @Override
     public ITranslator build() {
-        return new PHP54Translator(templateGroup, precedenceHelper, loadingTemplateException);
+        return new PHP54Translator(templateGroup, precedenceHelper, tempVariableHelper, loadingTemplateException);
     }
 }

@@ -75,6 +75,31 @@ public class ForTest extends ATranslatorParserTest
         }
 
 
+        List<String[]> castExpressions1 = ExpressionHelper.getCastToTypeExpressions(4);
+        for(String[] castExpression1 : castExpressions1){
+            List<String[]> castExpressions2 = ExpressionHelper.getCastToTypeExpressions(4 + castExpression1[0].length() + 1);
+            for(String[] castExpression2: castExpressions2){
+                List<String[]> castExpressions3 = ExpressionHelper.getCastToTypeExpressions(
+                        4 + castExpression1[0].length() + 1 + castExpression2[0].length() + 1);
+                for(String[] castExpression3: castExpressions3){
+
+                    collection.add(new Object[]{
+                            "for("
+                                    + castExpression1[0] + ";"
+                                    + castExpression2[0] + ";"
+                                    + castExpression3[0]
+                            + ") $a=1;",
+                            "for ("
+                                    + castExpression1[1] + "; "
+                                    + castExpression2[1] + "; "
+                                    + castExpression3[1]
+                            + ") {\n    $a = 1;\n}"
+                    });
+                }
+            }
+        }
+
+
         return collection;
     }
 }

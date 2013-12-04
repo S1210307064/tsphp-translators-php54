@@ -29,13 +29,14 @@ public class ForeachTest extends ATranslatorParserTest
     @Parameterized.Parameters
     public static Collection<Object[]> testStrings() {
         List<Object[]> collection = new ArrayList<>();
-        List<String[]> expressions = ExpressionHelper.getExpressions();
+        List<String[]> expressions = ExpressionHelper.getAllExpressions(8);
         for (Object[] expression : expressions) {
             collection.add(new Object[]{
                         "foreach(" + expression[0] + " as object $v);",
                         "foreach (" + expression[1] + " as $v) {\n}"
                     });
         }
+
         collection.addAll(Arrays.asList(new Object[][]{
                     {
                         "foreach($a as int $k => MyClass $v)$a=1;",

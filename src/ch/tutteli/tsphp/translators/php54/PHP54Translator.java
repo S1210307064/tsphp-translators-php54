@@ -4,25 +4,29 @@ import ch.tutteli.tsphp.common.IErrorLogger;
 import ch.tutteli.tsphp.common.ITranslator;
 import ch.tutteli.tsphp.common.exceptions.TSPHPException;
 import ch.tutteli.tsphp.translators.php54.antlrmod.ErrorReportingPHP54TranslatorWalker;
-import java.util.ArrayDeque;
-import java.util.Collection;
-import org.antlr.runtime.RecognitionException;
 import org.antlr.runtime.tree.TreeNodeStream;
 import org.antlr.stringtemplate.StringTemplateGroup;
+
+import java.util.ArrayDeque;
+import java.util.Collection;
 
 public class PHP54Translator implements ITranslator, IErrorLogger
 {
 
     private StringTemplateGroup templateGroup;
     private IPrecedenceHelper precedenceHelper;
+    private ITempVariableHelper tempVariableHelper;
     private Collection<IErrorLogger> errorLoggers = new ArrayDeque<>();
     private boolean hasFoundError;
     private Exception loadingTemplateException;
 
-    public PHP54Translator(StringTemplateGroup theTemplateGroup, IPrecedenceHelper thePrecedenceHelper,
+    public PHP54Translator(StringTemplateGroup theTemplateGroup,
+            IPrecedenceHelper thePrecedenceHelper,
+            ITempVariableHelper theTempTempVariableHelper,
             Exception exception) {
         templateGroup = theTemplateGroup;
         precedenceHelper = thePrecedenceHelper;
+        tempVariableHelper = theTempTempVariableHelper;
         loadingTemplateException = exception;
     }
 
@@ -31,7 +35,7 @@ public class PHP54Translator implements ITranslator, IErrorLogger
         String translation = null;
         if (loadingTemplateException == null) {
             ErrorReportingPHP54TranslatorWalker translator =
-                    new ErrorReportingPHP54TranslatorWalker(stream, precedenceHelper);
+                    new ErrorReportingPHP54TranslatorWalker(stream, precedenceHelper, tempVariableHelper);
 
             for (IErrorLogger logger : errorLoggers) {
                 translator.registerErrorLogger(logger);
@@ -42,7 +46,7 @@ public class PHP54Translator implements ITranslator, IErrorLogger
 
             try {
                 translation = translator.compilationUnit().getTemplate().toString();
-            } catch (RecognitionException ex) {
+            } catch (Exception ex) {
                 informErrorLogger(ex);
             }
         } else {

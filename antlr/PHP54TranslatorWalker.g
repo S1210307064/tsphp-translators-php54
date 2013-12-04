@@ -10,16 +10,19 @@ options {
 package ch.tutteli.tsphp.translators.php54.antlr;
 
 import ch.tutteli.tsphp.common.ITSPHPAst;
-import  ch.tutteli.tsphp.translators.php54.IPrecedenceHelper;
+import ch.tutteli.tsphp.translators.php54.IPrecedenceHelper;
+import ch.tutteli.tsphp.translators.php54.ITempVariableHelper;
 
 }
 
 @members{
 private IPrecedenceHelper precedenceHelper;
+private ITempVariableHelper tempVariableHelper;
 
-public PHP54TranslatorWalker(TreeNodeStream input, IPrecedenceHelper thePrecedenceHelper) {
+public PHP54TranslatorWalker(TreeNodeStream input, IPrecedenceHelper thePrecedenceHelper, ITempVariableHelper theTempVariableHelper) {
     this(input);
     precedenceHelper = thePrecedenceHelper;
+    tempVariableHelper = theTempVariableHelper;
 }
 
 private String getMethodName(String name) {
@@ -582,7 +585,7 @@ operator
 	|	^(Instanceof expr=expression (type=TYPE_NAME|type=VariableId))  	-> instanceof(expression={$expr.st}, type={$type.text}, needParentheses={precedenceHelper.needParentheses($Instanceof)})
 	|	newOperator								-> {$newOperator.st}
     	|	^('clone' expr=expression)						-> clone(expression={$expr.st})	
- 	; 	
+    	 	; 	
 
 unaryPreOperator 
 	:	PRE_INCREMENT	-> {%{"++"}}
@@ -648,7 +651,6 @@ binaryOperator returns[boolean needParentheses]
 	|	'*' 
 	|	'/' 
 	|	'%' 
-	
 	;
 
 castingOperator
@@ -671,9 +673,21 @@ castingOperator
 				)
 				TYPE_NAME
 			)
-			expression
+			expr=expression
 		)
-		-> cast(type={$TYPE_NAME.text}, expression={$expression.st})
+		{
+		    ITSPHPAst ast = $expr.start;
+		    if(ast!=null){
+		        String exprSt = ast.getText();
+		        String tempVariableName=null;
+   		        if(!exprSt.substring(0,1).equals("$")){
+		            tempVariableName = tempVariableHelper.getTempVariableNameForCast(ast);
+		            $st = %castWithTempVariable(type={$TYPE_NAME.text}, expression={$expr.st}, tempVariableName={tempVariableName});
+		        }else{
+		            $st = %cast(type={$TYPE_NAME.text}, expression={$expr.st});
+		        }
+		    }
+		}
 	;
 	
 newOperator

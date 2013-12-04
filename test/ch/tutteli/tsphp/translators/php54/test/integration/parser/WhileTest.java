@@ -29,29 +29,32 @@ public class WhileTest extends ATranslatorParserTest
     @Parameterized.Parameters
     public static Collection<Object[]> testStrings() {
         List<Object[]> collection = new ArrayList<>();
-        List<String[]> expressions = ExpressionHelper.getExpressions();
-       for (Object[] expression : expressions) {
+        List<String[]> expressions = ExpressionHelper.getAllExpressions(6);
+        for (Object[] expression : expressions) {
             collection.add(new Object[]{
-                        "while(" + expression[0] + ") $a=1;",
-                        "while (" + expression[1] + ") {\n    $a = 1;\n}"
-                    });
+                    "while(" + expression[0] + ") $a=1;",
+                    "while (" + expression[1] + ") {\n    $a = 1;\n}"
+            });
+        }
+        expressions = ExpressionHelper.getAllExpressions(15);
+        for (Object[] expression : expressions) {
             collection.add(new Object[]{
-                        "do $a=1; while(" + expression[0] + ");",
-                        "do {\n    $a = 1;\n} while(" + expression[1] + ");"
-                    });
+                    "do $a=1; while(" + expression[0] + ");",
+                    "do {\n    $a = 1;\n} while(" + expression[1] + ");"
+            });
         }
         collection.addAll(Arrays.asList(new Object[][]{
-                    {"while( true  ) $a=1;", "while (true) {\n    $a = 1;\n}"},
-                    {"while( true  ){$a=1;}", "while (true) {\n    $a = 1;\n}"},
-                    {
+                {"while( true  ) $a=1;", "while (true) {\n    $a = 1;\n}"},
+                {"while( true  ){$a=1;}", "while (true) {\n    $a = 1;\n}"},
+                {
                         "while( true  ){$a=1;int $b=2;}",
                         "while (true) {\n    $a = 1;\n    $b = 2;\n}"
-                    },
-                    {"do $a=1; while( true  );",  "do {\n    $a = 1;\n} while(true);"},
-                    {"do {$a=1;} while( true  );", "do {\n    $a = 1;\n} while(true);"},
-                    {"do {$a=1;$b=2;}while( true  );", "do {\n    $a = 1;\n    $b = 2;\n} while(true);"}
-                }));
+                },
+                {"do $a=1; while( true  );", "do {\n    $a = 1;\n} while(true);"},
+                {"do {$a=1;} while( true  );", "do {\n    $a = 1;\n} while(true);"},
+                {"do {$a=1;$b=2;}while( true  );", "do {\n    $a = 1;\n    $b = 2;\n} while(true);"}
+        }));
         return collection;
-      
+
     }
 }

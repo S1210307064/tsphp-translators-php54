@@ -2,12 +2,9 @@
 
     <property file="${basedir}/ant/antlr.properties"/>
 
-    <target name="do" description="copy antlr generated classes to src/java folder">
-        <delete>
-            <fileset dir="${antlr.copyLocation}" includes="TSPHP*.java"/>
-        </delete>
+    <target name="Antlr" description="copy antlr generated classes to src/java folder">
         <copy todir="${antlr.copyLocation}">
-            <fileset dir="${antlr.output}" includes="TSPHP*.java"/>
+            <fileset dir="${antlr.output}" includes="*.java"/>
         </copy>
     </target>
 

@@ -1,16 +1,62 @@
 package ch.tutteli.tsphp.translators.php54.test.integration.testutils;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class ExpressionHelper
 {
+    /**
+     * @param offset defines how many characters will be on the left of the expression
+     *               is used for the casting operator, TempVariableHelper respectively (getCharPositionInLine)
+     * @return
+     */
+    public static List<String[]> getAllExpressions(int offset){
+        List<String[]> list = new ArrayList<>();
+        list.addAll(getCastToTypeExpressions(offset));
+        list.addAll(getExpressions());
+        return list;
+    }
 
-    public static List<String[]> getExpressions() {
-
+    /**
+     * @param offset defines how many characters will be on the left of the expression
+     *               is used for the casting operator, TempVariableHelper respectively (getCharPositionInLine)
+     * @return
+     */
+    public static List<String[]> getCastToTypeExpressions(int offset) {
         String $a = "($a !== null ? ($a instanceof MyClass ? $a : "
                 + "\\trigger_error('Cast failed, the evaluation type of $a must be MyClass', \\E_RECOVERABLE_ERROR)) "
                 + ": null)";
+        return Arrays.asList(new String[][]{
+                {"(MyClass) $a", $a},
+                {
+                    "(Type) (MyClass) $a",
+                    "(($_t1_" + (offset+7) + " = " + $a + ") !== null ? "
+                        + "($_t1_" + (offset+7) + " instanceof Type ? "
+                            + "$_t1_" + (offset+7) + " "
+                            + ": \\trigger_error('Cast failed, the evaluation type of "
+                            + $a + " must be Type', \\E_RECOVERABLE_ERROR)" +
+                        ") "
+                        + ": null"
+                    + ")"
+                },
+                {"~~$a", "~~$a"},
+                {"@@$a", "@@$a"},
+                {
+                    "@(Type) ~$a",
+                    "@(($_t1_" + (offset+8) + " = ~$a) !== null ? "
+                        + "($_t1_" + (offset+8) + " instanceof Type ? "
+                            + "$_t1_" + (offset+8) + " "
+                            + ": \\trigger_error('Cast failed, the evaluation type of "
+                            + "~$a must be Type', \\E_RECOVERABLE_ERROR)" +
+                        ") "
+                        + ": null"
+                    + ")"
+                },
+        });
+    }
+    public static List<String[]> getExpressions() {
+
         return Arrays.asList(new String[][]{
             {"$a or $b", "$a or $b"},
             {"$a or $b or $c", "$a or $b or $c"},
@@ -99,21 +145,6 @@ public class ExpressionHelper
             {"(int?) $a", "($a !== null ? (int) $a : null)"},
             {"~$a", "~$a"},
             {"@$a", "@$a"},
-            {
-                "(Type) (MyClass) $a",
-                "(" + $a + " !== null ? (" + $a + " instanceof Type ? " + $a + " "
-                + ": \\trigger_error('Cast failed, the evaluation type of "
-                + $a + " must be Type', \\E_RECOVERABLE_ERROR)) "
-                + ": null)"
-            },
-            {"~~$a", "~~$a"},
-            {"@@$a", "@@$a"},
-            {
-                "@(Type) ~$a",
-                "@(~$a !== null ? (~$a instanceof Type ? ~$a : "
-                + "\\trigger_error('Cast failed, the evaluation type of ~$a must be Type', \\E_RECOVERABLE_ERROR)) "
-                + ": null)"
-            },
             {"+$a", "+$a"},
             {"+1", "+1"},
             {"-$a", "-$a"},

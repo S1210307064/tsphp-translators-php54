@@ -16,8 +16,6 @@ import java.util.List;
 public class ExpressionTest extends ATranslatorParserTest
 {
 
-    private static List<Object[]> collection;
-
     public ExpressionTest(String testString, String expectedResult) {
         super(testString, expectedResult);
     }
@@ -29,13 +27,13 @@ public class ExpressionTest extends ATranslatorParserTest
 
     @Parameterized.Parameters
     public static Collection<Object[]> testStrings() {
-        collection = new ArrayList<>();
-        List<String[]> expressions = ExpressionHelper.getExpressions();
+        List<Object[]> collection = new ArrayList<>();
+        List<String[]> expressions = ExpressionHelper.getAllExpressions(0);
         for (String[] expression : expressions) {
             collection.add(new Object[]{
-                        expression[0] + ";",
-                        expression[1] + ";"
-                    });
+                    expression[0] + ";",
+                    expression[1] + ";"
+            });
         }
         return collection;
     }

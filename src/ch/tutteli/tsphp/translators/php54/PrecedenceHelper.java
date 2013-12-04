@@ -10,7 +10,7 @@ public class PrecedenceHelper implements IPrecedenceHelper
     private Map<String, Integer> precedenceRules = new HashMap<>();
 
     public PrecedenceHelper() {
-        initPrecendecRules();
+        initPrecedenceRules();
     }
 
     @Override
@@ -21,7 +21,7 @@ public class PrecedenceHelper implements IPrecedenceHelper
                 && precedenceRules.get(parentOperator) > precedenceRules.get(operator);
     }
 
-    private void initPrecendecRules() {
+    private void initPrecedenceRules() {
         //CHECKSTYLE:OFF:MagicNumber
         precedenceRules.put("or", 10);
         precedenceRules.put("xor", 11);

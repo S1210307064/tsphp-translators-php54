@@ -16,9 +16,6 @@ import java.util.List;
 public class EchoTest extends ATranslatorParserTest
 {
 
-    private static List<Object[]> collection;
-
-   
 
     public EchoTest(String testString, String expectedResult) {
         super(testString, expectedResult);
@@ -31,19 +28,35 @@ public class EchoTest extends ATranslatorParserTest
 
     @Parameterized.Parameters
     public static Collection<Object[]> testStrings() {
-        collection = new ArrayList<>();
+        List<Object[]> collection = new ArrayList<>();
         List<String[]> expressions = ExpressionHelper.getExpressions();
+
         for(String[] expression:expressions){
                collection.add(new Object[]{
-                    "echo "+expression[0]+";",
-                    "echo "+expression[1]+";"
-                });
+                       "echo " + expression[0] + ";",
+                       "echo " + expression[1] + ";"
+               });
                 collection.add(new Object[]{
-                    "echo "+expression[0]+","+expression[0]+";",
-                    "echo "+expression[1]+", "+expression[1]+";"
+                        "echo " + expression[0] + "," + expression[0] + ";",
+                        "echo " + expression[1] + ", " + expression[1] + ";"
                 });
         }
-       
+
+        List<String[]> castExpressions1 = ExpressionHelper.getCastToTypeExpressions(5);
+        for(String[] castExpression1: castExpressions1){
+            collection.add(new Object[]{
+                    "echo " + castExpression1[0] + ";",
+                    "echo " + castExpression1[1] + ";"
+            });
+
+            List<String[]> castExpressions2 = ExpressionHelper.getCastToTypeExpressions(5 + castExpression1[0].length() + 1);
+            for(String[] castExpression2: castExpressions2){
+                collection.add(new Object[]{
+                        "echo " + castExpression1[0] + "," + castExpression2[0] + ";",
+                        "echo " + castExpression1[1] + ", " + castExpression2[1] + ";"
+                });
+            }
+        }
         return collection;
 
     }

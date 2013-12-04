@@ -30,7 +30,7 @@ public class IfTest extends ATranslatorParserTest
     public static Collection<Object[]> testStrings() {
         List<Object[]> collection = new ArrayList<>();
 
-        List<String[]> expressions = ExpressionHelper.getExpressions();
+        List<String[]> expressions = ExpressionHelper.getAllExpressions(3);
         for (Object[] expression : expressions) {
             collection.add(new Object[]{
                         "if(" + expression[0] + ") $a=1; else $a=1;",

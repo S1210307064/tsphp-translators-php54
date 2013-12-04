@@ -30,7 +30,7 @@ public class SwitchTest extends ATranslatorParserTest
     public static Collection<Object[]> testStrings() {
         List<Object[]> collection = new ArrayList<>();
 
-        List<String[]> expressions = ExpressionHelper.getExpressions();
+        List<String[]> expressions = ExpressionHelper.getAllExpressions(7);
         for (Object[] expression : expressions) {
             collection.add(new Object[]{
                         "switch(" + expression[0] + "){}",

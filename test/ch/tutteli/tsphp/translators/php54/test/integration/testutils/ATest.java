@@ -7,11 +7,12 @@ import ch.tutteli.tsphp.common.ITSPHPAst;
 import ch.tutteli.tsphp.common.ITSPHPAstAdaptor;
 import ch.tutteli.tsphp.common.TSPHPAstAdaptor;
 import ch.tutteli.tsphp.common.exceptions.TSPHPException;
-import ch.tutteli.tsphp.parser.antlr.ANTLRNoCaseStringStream;
-import ch.tutteli.tsphp.parser.antlr.ErrorReportingTSPHPLexer;
-import ch.tutteli.tsphp.parser.antlr.ErrorReportingTSPHPParser;
+import ch.tutteli.tsphp.parser.antlrmod.ANTLRNoCaseStringStream;
+import ch.tutteli.tsphp.parser.antlrmod.ErrorReportingTSPHPLexer;
+import ch.tutteli.tsphp.parser.antlrmod.ErrorReportingTSPHPParser;
 import ch.tutteli.tsphp.parser.antlr.TSPHPParser;
 import ch.tutteli.tsphp.translators.php54.PrecedenceHelper;
+import ch.tutteli.tsphp.translators.php54.TempVariableHelper;
 import ch.tutteli.tsphp.translators.php54.antlrmod.ErrorReportingPHP54TranslatorWalker;
 import org.antlr.runtime.CharStream;
 import org.antlr.runtime.CommonTokenStream;
@@ -37,7 +38,7 @@ public abstract class ATest implements IErrorLogger
     protected CommonTreeNodeStream commonTreeNodeStream;
     protected ErrorReportingPHP54TranslatorWalker translator;
     protected TreeRuleReturnScope result;
-    protected ITSPHPAstAdaptor adaptor;
+    protected ITSPHPAstAdaptor astAdaptor;
 
     public ATest(String theTestString, String theExpectedResult) {
         testString = theTestString;
@@ -58,15 +59,15 @@ public abstract class ATest implements IErrorLogger
 
     public void parse() throws RecognitionException {
 
-        adaptor = new TSPHPAstAdaptor();
-        AstHelperRegistry.set(new AstHelper(adaptor));
+        astAdaptor = new TSPHPAstAdaptor();
+        AstHelperRegistry.set(new AstHelper(astAdaptor));
 
         CharStream stream = new ANTLRNoCaseStringStream(testString);
         ErrorReportingTSPHPLexer lexer = new ErrorReportingTSPHPLexer(stream);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
 
         ErrorReportingTSPHPParser parser = new ErrorReportingTSPHPParser(tokens);
-        parser.setTreeAdaptor(adaptor);
+        parser.setTreeAdaptor(astAdaptor);
 
         ParserRuleReturnScope parserResult = parserRun(parser);
         ast = (ITSPHPAst) parserResult.getTree();
@@ -74,7 +75,7 @@ public abstract class ATest implements IErrorLogger
         Assert.assertFalse(testString.replaceAll("\n", " ") + " failed - lexer throw exception", lexer.hasFoundError());
         Assert.assertFalse(testString.replaceAll("\n", " ") + " failed - parser throw exception", parser.hasFoundError());
 
-        commonTreeNodeStream = new CommonTreeNodeStream(adaptor, ast);
+        commonTreeNodeStream = new CommonTreeNodeStream(astAdaptor, ast);
         commonTreeNodeStream.setTokenStream(parser.getTokenStream());
     }
 
@@ -92,7 +93,8 @@ public abstract class ATest implements IErrorLogger
         StringTemplateGroup templates = new StringTemplateGroup(fr);
         fr.close();
 
-        translator = new ErrorReportingPHP54TranslatorWalker(commonTreeNodeStream, new PrecedenceHelper());
+        translator = new ErrorReportingPHP54TranslatorWalker(commonTreeNodeStream, new PrecedenceHelper(),
+                new TempVariableHelper(astAdaptor));
         translator.registerErrorLogger(this);
         translator.setTemplateLib(templates);
 

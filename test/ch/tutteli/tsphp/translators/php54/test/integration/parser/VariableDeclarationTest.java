@@ -32,17 +32,22 @@ public class VariableDeclarationTest extends ATranslatorParserTest
         collection.add(new Object[]{"int $a, $b=1;", "$a;\n$b = 1;"});
         collection.add(new Object[]{"int $a=60*60, $b;", "$a = 60 * 60;\n$b;"});
 
-        List<String[]> expressions = ExpressionHelper.getExpressions();
+        List<String[]> expressions = ExpressionHelper.getAllExpressions(7);
         for (String[] expression : expressions) {
             collection.add(new Object[]{
                 "int $a=" + expression[0] + ";",
                 "$a = " + expression[1] + ";"
             });
+        }
+
+        expressions = ExpressionHelper.getAllExpressions(9);
+        for (String[] expression : expressions) {
             collection.add(new Object[]{
-                "int $a=()" + expression[0] + ";",
-                "$a = (int) " + expression[1] + ";"
+                    "int $a=()" + expression[0] + ";",
+                    "$a = (int) " + expression[1] + ";"
             });
         }
+
         return collection;
     }
 }
