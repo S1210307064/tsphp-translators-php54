@@ -17,9 +17,6 @@ import java.util.List;
 public class FunctionTest extends ATranslatorParserTest
 {
 
-    private static List<Object[]> collection;
-
-   
 
     public FunctionTest(String testString, String expectedResult) {
         super(testString, expectedResult);
@@ -32,17 +29,17 @@ public class FunctionTest extends ATranslatorParserTest
 
     @Parameterized.Parameters
     public static Collection<Object[]> testStrings() {
-        collection = new ArrayList<>();
+        List<Object[]> collection = new ArrayList<>();
         
          //return values
         collection.addAll(TypeHelper.getAllTypesWithModifier(
                 "function ", " get(){}",
-                "function get() {\n}",""));
+                "function get() {\n}", ""));
 
         //parameters
         collection.addAll(ParameterListHelper.getTestStrings(
                 "function void set", "{}",
-                "function set"," {\n}"));
+                "function set", " {\n}"));
        
         return collection;
 

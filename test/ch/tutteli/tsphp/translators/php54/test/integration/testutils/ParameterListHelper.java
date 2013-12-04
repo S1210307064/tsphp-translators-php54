@@ -145,7 +145,7 @@ public class ParameterListHelper
                 prefix, "cast int?", appendix,
                 prefixExpect, "", "", appendixExpected);
         //TODO TSPHP-589 rstoll add test for optional parameters
-//        addVariationsForOptional(prefix, appendix, prefixExpect, appendixExpected);
+        addVariationsForOptional(prefix, appendix, prefixExpect, appendixExpected);
 
         //empty params
         collection.add(new Object[]{prefix + appendix, prefixExpect + appendixExpected});
@@ -229,59 +229,31 @@ public class ParameterListHelper
                     //optional parameter
                     {
                         prefix + "int $a, int $b='hallo'" + appendix,
-                        prefixExpect + "(params "
-                        + "(pDecl (type tMod int) $a) "
-                        + "(pDecl (type tMod int) ($b 'hallo'))"
-                        + ")" + appendixExpect
+                        prefixExpect + "$a, $b = 'hallo'" + appendixExpect
                     },
                     {
                         prefix + "int $a, int? $i, int $b=+1" + appendix,
-                        prefixExpect + "(params "
-                        + "(pDecl (type tMod int) $a) "
-                        + "(pDecl (type (tMod ?) int) $i) "
-                        + "(pDecl (type tMod int) ($b 1))"
-                        + ")" + appendixExpect
+                        prefixExpect + "$a, $i, $b = +1" + appendixExpect
                     },
                     {
-                        prefix + "int $a,cast int? $i, int $b=-10, int $d=2.0" + appendix,
-                        prefixExpect + "(params "
-                        + "(pDecl (type tMod int) $a) "
-                        + "(pDecl (type (tMod cast ?) int) $i) "
-                        + "(pDecl (type tMod int) ($b (uMinus 10))) "
-                        + "(pDecl (type tMod int) ($d 2.0))"
-                        + ")" + appendixExpect
+                        prefix + "int $a,cast int? $i = null, int $b=-10, int $d=2.0" + appendix,
+                        prefixExpect + "$a, $i = null, $b = -10, $d = 2.0" + appendixExpect
                     },
                     {
-                        prefix + "int? $a=null,int $b=true, int $c=E_ALL" + appendix,
-                        prefixExpect + "(params "
-                        + "(pDecl (type (tMod ?) int) ($a null)) "
-                        + "(pDecl (type tMod int) ($b true)) "
-                        + "(pDecl (type tMod int) ($c E_ALL))"
-                        + ")" + appendixExpect
+                        prefix + "int? $a=null,int? $b=true, int $c=E_ALL" + appendix,
+                        prefixExpect + "$a = null, $b = true, $c = E_ALL" + appendixExpect
                     },
                     {
                         prefix + "int $a, int $b=false, int $d=null" + appendix,
-                        prefixExpect + "(params "
-                        + "(pDecl (type tMod int) $a) "
-                        + "(pDecl (type tMod int) ($b false)) "
-                        + "(pDecl (type tMod int) ($d null))"
-                        + ")" + appendixExpect
+                        prefixExpect + "$a, $b = false, $d = null" + appendixExpect
                     },
                     {
                         prefix + "int $a, int $b, int $d=true" + appendix,
-                        prefixExpect + "(params "
-                        + "(pDecl (type tMod int) $a) "
-                        + "(pDecl (type tMod int) $b) "
-                        + "(pDecl (type tMod int) ($d true))"
-                        + ")" + appendixExpect
+                        prefixExpect + "$a, $b, $d = true" + appendixExpect
                     },
                     {
                         prefix + "cast int $a=1, int? $b=2, cast int $d=3" + appendix,
-                        prefixExpect + "(params "
-                        + "(pDecl (type (tMod cast) int) ($a 1)) "
-                        + "(pDecl (type (tMod ?) int) ($b 2)) "
-                        + "(pDecl (type (tMod cast) int) ($d 3))"
-                        + ")" + appendixExpect
+                        prefixExpect + "$a = 1, $b = 2, $d = 3" + appendixExpect
                     }
                 }));
 
@@ -291,9 +263,7 @@ public class ParameterListHelper
         for (String type : types) {
             collection.add(new Object[]{
                         prefix + "int $a=" + type + "::a" + appendix,
-                        prefixExpect
-                        + "(params (pDecl (type tMod int) ($a (sMemAccess " + type + " a))))"
-                        + appendixExpect
+                        prefixExpect + "$a = " + type + "::a" + appendixExpect
                     });
         }
     }

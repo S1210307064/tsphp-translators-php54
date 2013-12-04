@@ -136,7 +136,10 @@ constantAssignment
 	
 unaryPrimitiveAtom
 	:	primitiveAtomWithConstant -> {$primitiveAtomWithConstant.st}
-	|	^(UNARY_MINUS primitiveAtomWithConstant) -> unaryPostOperator(operator = {$UNARY_MINUS.text}, expression = {$primitiveAtomWithConstant.st})
+	|	^(	(	unary=UNARY_MINUS
+			|	unary=UNARY_PLUS
+			) primitiveAtomWithConstant) 
+		-> unaryPostOperator(operator = {$unary.text}, expression = {$primitiveAtomWithConstant.st})
 	;
 
 scalarTypes
@@ -351,8 +354,8 @@ scalarAndResource
 	;
 
 parameterNormalOrOptional returns[String variableId,String defaultValue]
-	:	^(VariableId v=Int) {$variableId=$VariableId.text; $defaultValue=$v.text;} 
-	|	VariableId {$variableId=$VariableId.text;}
+	:	VariableId {$variableId=$VariableId.text;}
+	|	^(VariableId v=unaryPrimitiveAtom) {$variableId=$VariableId.text; $defaultValue=$v.text;} 
 	;
 
 block returns[List<Object> instructions]
