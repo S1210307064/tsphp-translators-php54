@@ -16,13 +16,13 @@ public class TypeHelper
 
     public static String[] getClassInterfaceTypes() {
         return new String[]{
-                    "B",
-                    "a\\C",
-                    "a\\b\\A",
-                    "\\e",
-                    "\\f\\D",
-                    "\\g\\b\\A"
-                };
+                "B",
+                "a\\C",
+                "a\\b\\A",
+                "\\e",
+                "\\f\\D",
+                "\\g\\b\\A"
+        };
     }
 
     public static List<String> getAllTypesWithoutResourceAndObject() {
@@ -53,13 +53,13 @@ public class TypeHelper
 
     public static String[] getScalarTypes() {
         return new String[]{
-                    "bool",
-                    "int",
-                    "float",
-                    "string"
-                };
+                "bool",
+                "int",
+                "float",
+                "string"
+        };
     }
-    
+
     public static List<Object[]> getAllTypesWithModifier(String prefix, String appendix,
             String prefixExpect, String appendixExpect) {
         return getAllTypesWithModifier(prefix, appendix, prefixExpect, appendixExpect, true);
@@ -77,55 +77,89 @@ public class TypeHelper
         String[] types = getScalarTypes();
         for (String type : types) {
             collection.add(new String[]{
-                        prefix + type + appendix, prefixExpect + appendixExpect
-                    });
+                    prefix + type + appendix, prefixExpect + appendixExpect
+            });
             collection.add(new String[]{
-                        prefix + "cast " + type + appendix,
-                        prefixExpect + appendixExpect
-                    });
+                    prefix + "cast " + type + appendix,
+                    prefixExpect + appendixExpect
+            });
             collection.add(new String[]{
-                        prefix + type + "?" + appendix,
-                        prefixExpect + appendixExpect
-                    });
+                    prefix + type + "?" + appendix,
+                    prefixExpect + appendixExpect
+            });
             collection.add(new String[]{
-                        prefix + "cast " + type + "?" + appendix,
-                        prefixExpect + appendixExpect
-                    });
+                    prefix + "cast " + type + "?" + appendix,
+                    prefixExpect + appendixExpect
+            });
         }
 
         collection.add(new String[]{
-                    prefix + "array" + appendix,
-                    prefixExpect + appendixExpect
-                });
+                prefix + "array" + appendix,
+                prefixExpect + appendixExpect
+        });
         collection.add(new String[]{
-                    prefix + "cast array" + appendix,
-                    prefixExpect + appendixExpect
-                });
+                prefix + "cast array" + appendix,
+                prefixExpect + appendixExpect
+        });
 
         types = getClassInterfaceTypes();
         for (String type : types) {
             collection.add(new String[]{
-                        prefix + type + appendix,
-                        prefixExpect + appendixExpect
-                    });
+                    prefix + type + appendix,
+                    prefixExpect + appendixExpect
+            });
             collection.add(new String[]{
-                        prefix + "cast " + type + appendix,
-                        prefixExpect + appendixExpect
-                    });
+                    prefix + "cast " + type + appendix,
+                    prefixExpect + appendixExpect
+            });
         }
 
         if (withObjectAndResource) {
             collection.add(new String[]{
-                        prefix + "resource" + appendix,
-                        prefixExpect + appendixExpect
-                    });
+                    prefix + "resource" + appendix,
+                    prefixExpect + appendixExpect
+            });
             collection.add(new String[]{
-                        prefix + "object" + appendix,
-                        prefixExpect + appendixExpect
-                    });
+                    prefix + "object" + appendix,
+                    prefixExpect + appendixExpect
+            });
         }
         return collection;
     }
 
-   
+    public static String[][] getTypesInclDefaultValueWithoutExceptions() {
+        return new String[][]{
+                {"bool", "false"},
+                {"bool?", "null"},
+                {"int", "0"},
+                {"int?", "null"},
+                {"float", "0.0"},
+                {"float?", "null"},
+                {"string", "''"},
+                {"string?", "null"},
+                {"array", "null"},
+                {"resource", "null"},
+                {"object", "null"},
+        };
+    }
+
+    public static String[][] getTypesInclDefaultValue() {
+        return new String[][]{
+                {"bool", "false"},
+                {"bool?", "null"},
+                {"int", "0"},
+                {"int?", "null"},
+                {"float", "0.0"},
+                {"float?", "null"},
+                {"string", "''"},
+                {"string?", "null"},
+                {"array", "null"},
+                {"resource", "null"},
+                {"object", "null"},
+                {"Exception", "null"},
+                {"ErrorException", "null"}
+        };
+    }
+
+
 }

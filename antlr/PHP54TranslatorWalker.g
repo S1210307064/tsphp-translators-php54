@@ -32,7 +32,7 @@ private String getMethodName(String name) {
 }
 
 compilationUnit	
-	:	(n+=namespace*) -> file(namespaces={$n})
+	:	(n+=namespace+) -> file(namespaces={$n})
 	;
 	
 namespace
@@ -69,10 +69,10 @@ useDeclaration
 	;
 
 definition
-	:	classDeclaration 	-> {$classDeclaration.st}
-	|	interfaceDeclaration 	-> {$interfaceDeclaration.st}
-	|	functionDeclaration 	-> {$functionDeclaration.st}
-	|	constDeclarationList 	-> {$constDeclarationList.st}
+	:	classDeclaration		-> {$classDeclaration.st}
+	|	interfaceDeclaration	-> {$interfaceDeclaration.st}
+	|	functionDeclaration		-> {$functionDeclaration.st}
+	|	constDeclarationList	-> {$constDeclarationList.st}
 	;
 	
 classDeclaration
@@ -85,6 +85,7 @@ classDeclaration
 			body={$classBody.st}
 		)
 	;
+	
 classModifier
 	:	^(CLASS_MODIFIER list+=classModifierNames) -> modifier(modifiers={$list})
 	|	CLASS_MODIFIER -> {null}
@@ -124,13 +125,13 @@ classBodyDefinition
 constDeclarationList
 	:	^(CONSTANT_DECLARATION_LIST 
 			^(TYPE ^(TYPE_MODIFIER Public Static Final) scalarTypes)
-			identifiers+=constantAssignment+
+			identifiers+=constDeclaration+
 		) 
 		-> const(identifiers={$identifiers})
 	;
 	
-constantAssignment
-	:	^(Identifier v=unaryPrimitiveAtom)
+constDeclaration
+	:	^(Identifier unaryPrimitiveAtom)
 		 -> assign(id={$Identifier.text.substring(0,$Identifier.text.length()-1)}, value={$unaryPrimitiveAtom.st})
 	;
 	
@@ -138,16 +139,11 @@ unaryPrimitiveAtom
 	:	primitiveAtomWithConstant -> {$primitiveAtomWithConstant.st}
 	|	^(	(	unary=UNARY_MINUS
 			|	unary=UNARY_PLUS
-			) primitiveAtomWithConstant) 
+			) primitiveAtomWithConstant
+		) 
 		-> unaryPostOperator(operator = {$unary.text}, expression = {$primitiveAtomWithConstant.st})
 	;
 
-scalarTypes
-	:	TypeBool -> {%{$TypeBool.text}}
-	|	TypeInt -> {%{$TypeInt.text}}
-	|	TypeFloat -> {%{$TypeFloat.text}}
-	|	TypeString -> {%{$TypeString.text}}
-	;
 
 classMemberDeclaration
 	:	^(CLASS_MEMBER variableDeclarationList) -> {$variableDeclarationList.st}
@@ -170,7 +166,7 @@ localVariableDeclarationList
 	;
 	
 typeModifier returns[boolean isCast, boolean isNullable]
-	:	^(TYPE_MODIFIER cast=Cast? nullable='?'? variableModifier?) {$isCast=cast!=null; $isNullable=nullable!=null;} -> {$variableModifier.st}
+	:	^(TYPE_MODIFIER cast='cast'? nullable='?'? variableModifier?) {$isCast=cast!=null; $isNullable=nullable!=null;} -> {$variableModifier.st}
 	|	TYPE_MODIFIER -> {null}
 	;
 	
@@ -218,25 +214,31 @@ primitiveTypesWithoutArray
 	|	TypeObject -> {%{$TypeObject.text}}
 	;
 	
+scalarTypes
+	:	TypeBool -> {%{$TypeBool.text}}
+	|	TypeInt -> {%{$TypeInt.text}}
+	|	TypeFloat -> {%{$TypeFloat.text}}
+	|	TypeString -> {%{$TypeString.text}}
+	;
+	
 abstractConstructDeclaration
 	:	^(identifier='__construct' 
 			^(METHOD_MODIFIER abstractMethodModifier)
-			^(TYPE typeModifier returnType)
+			^(TYPE typeModifier returnTypes)
 			formalParameters
-			block
+			BLOCK
 		)	
 		-> abstractMethod(
 			modifier={$abstractMethodModifier.st},
 			identifier={getMethodName($identifier.text)},
-			params={$formalParameters.st},
-			body={$block.instructions}
+			params={$formalParameters.st}
 		)
 	;
 	
 constructDeclaration
 	:	^(identifier='__construct' 
 			^(METHOD_MODIFIER methodModifier)
-			^(TYPE typeModifier returnType)
+			^(TYPE typeModifier returnTypes)
 			formalParameters
 			block
 		)	
@@ -251,7 +253,7 @@ constructDeclaration
 abstractMethodDeclaration
 	:	^(METHOD_DECLARATION
 			^(METHOD_MODIFIER abstractMethodModifier)
-			^(TYPE typeModifier returnType)
+			^(TYPE typeModifier returnTypes)
 			(identfier=Identifier|identfier=Destruct)
 			formalParameters
 			BLOCK
@@ -277,7 +279,7 @@ abstractToken
 methodDeclaration
 	:	^(METHOD_DECLARATION
 			^(METHOD_MODIFIER methodModifier)
-			^(TYPE typeModifier returnType)
+			^(TYPE typeModifier returnTypes)
 			(identifier=Identifier|identifier=Destruct)
 			formalParameters
 			block
@@ -313,7 +315,7 @@ finalToken
 	:	Final -> {%{$Final.text}}
 	;
 	
-returnType
+returnTypes
 	:	allTypes
 	|	Void 
 	;
@@ -340,6 +342,7 @@ paramDeclaration
 		}
 		-> parameter(type={$typeName.text}, variableId={$parameterNormalOrOptional.variableId}, defaultValue={defaultValue})
 	;
+
 arrayType
 	:	TypeArray -> {%{$TypeArray.text}}
 	;
@@ -391,22 +394,21 @@ interfaceBodyDefinition
 interfaceConstructDeclaration
 	:	^(identifier='__construct' 
 			^(METHOD_MODIFIER abstractMethodModifier)
-			^(TYPE typeModifier returnType)
+			^(TYPE typeModifier returnTypes)
 			formalParameters
 			block
 		)	
 		-> abstractMethod(
 			modifier={"public"},
 			identifier={getMethodName($identifier.text)},
-			params={$formalParameters.st},
-			body={$block.instructions}
+			params={$formalParameters.st}
 		)
 	;
 	
 interfaceMethodDeclaration
 	:	^(METHOD_DECLARATION
 			^(METHOD_MODIFIER abstractMethodModifier)
-			^(TYPE typeModifier returnType)
+			^(TYPE typeModifier returnTypes)
 			Identifier
 			formalParameters
 			BLOCK
@@ -421,7 +423,7 @@ interfaceMethodDeclaration
 functionDeclaration
 	:	^('function' 
 			FUNCTION_MODIFIER
-			^(TYPE typeModifier returnType)
+			^(TYPE typeModifier returnTypes)
 			Identifier
 			formalParameters
 			block
@@ -433,7 +435,6 @@ functionDeclaration
 			body={$block.instructions}
 		)
 	;
-
 
 instruction
 	:	localVariableDeclarationList 	-> {$localVariableDeclarationList.st}
@@ -448,9 +449,9 @@ instruction
 	|	^('return' expression?) 	-> return(expression = {$expression.st})
 	|	^('throw' expression)		-> throw(expression = {$expression.st})
 	|	^('echo' exprs+=expression+)	-> echo(expressions = {$exprs})
-	|	^('break' (index=Int)?)		-> break(index={$index.text})
+	|	^('break' index=Int)		-> break(index={$index.text})
 	|	'break'				-> break(index={null})
-	|	^('continue' (index=Int)?)	-> continue(index={$index.text})
+	|	^('continue' index=Int)		-> continue(index={$index.text})
 	|	'continue'			-> continue(index={null})
 	;
 
@@ -480,7 +481,7 @@ caseLabel
 	:	expression 	-> caseLabel(label={$expression.st})
 	|	Default		-> {%{$Default.text+":"}}
 	;
-
+	
 forLoop
 	:	^('for' 
 			(init=variableDeclarationList|init=expressionList[true])
@@ -490,16 +491,15 @@ forLoop
 		)
 		-> for(init={$init.st}, condition={$condition.st}, update={$update.st}, block={$blockConditional.instructions})
 	;
-	
+
 expressionList[boolean semicolonAtTheEnd]
 	:	^(EXPRESSION_LIST expr+=expression*) -> expressionList(expressions={$expr}, semicolonAtTheEnd={semicolonAtTheEnd})
 	|	EXPRESSION_LIST -> expressionList(expressions={null}, semicolonAtTheEnd={semicolonAtTheEnd})
 	;
-	
+
 foreachLoop
 	:	^('foreach' 
 			expression
-			
 			
 			//key 
 			(	^(VARIABLE_DECLARATION_LIST
@@ -539,7 +539,6 @@ catchBlock
 	;
 
 expression
-options {backtrack=true;}
 	:   	atom 			-> {$atom.st}
 	|	operator		-> {$operator.st}
     	|	functionCall 		-> {$functionCall.st}
@@ -553,7 +552,6 @@ options {backtrack=true;}
   
 atom
 	:	primitiveAtomWithConstant 			-> {$primitiveAtomWithConstant.st}
-	|	^(TypeArray keyValuePairs+=arrayKeyValue*)	-> array(content ={$keyValuePairs})
 	|	VariableId 					-> {%{$VariableId.text}}
 	|	This						-> {%{$This.text}}
 	;
@@ -564,8 +562,9 @@ primitiveAtomWithConstant
 	|	Float						-> {%{$Float.text}}
 	|	String						-> {%{$String.text}}
 	|	Null						-> {%{$Null.text}}
+	|	^(TypeArray keyValuePairs+=arrayKeyValue*)	-> array(content ={$keyValuePairs})
 	|	CONSTANT					-> {%{$CONSTANT.text.substring(0,$CONSTANT.text.length()-1)}}
-	|	^(CLASS_STATIC_ACCESS staticAccess CONSTANT)    -> classConstant(accessor={$staticAccess.st}, constant={$CONSTANT.text.substring(0,$CONSTANT.text.length()-1)})
+	|	^(CLASS_STATIC_ACCESS staticAccess CONSTANT)    -> classMemberAccessStatic(accessor={$staticAccess.st}, identifier={$CONSTANT.text.substring(0,$CONSTANT.text.length()-1)})
 	;
 
 arrayKeyValue
@@ -587,8 +586,8 @@ operator
 	|	castingOperator 							-> {$castingOperator.st}
 	|	^(Instanceof expr=expression (type=TYPE_NAME|type=VariableId))  	-> instanceof(expression={$expr.st}, type={$type.text}, needParentheses={precedenceHelper.needParentheses($Instanceof)})
 	|	newOperator								-> {$newOperator.st}
-    	|	^('clone' expr=expression)						-> clone(expression={$expr.st})	
-    	 	; 	
+	|	^('clone' expr=expression)						-> clone(expression={$expr.st})	
+	; 	
 
 unaryPreOperator 
 	:	PRE_INCREMENT	-> {%{"++"}}
@@ -687,7 +686,7 @@ castingOperator
 		            tempVariableName = tempVariableHelper.getTempVariableNameForCast(ast);
 		            $st = %castWithTempVariable(type={$TYPE_NAME.text}, expression={$expr.st}, tempVariableName={tempVariableName});
 		        }else{
-		            $st = %cast(type={$TYPE_NAME.text}, expression={$expr.st});
+		            $st = %cast(type={$TYPE_NAME.text}, variableId={$expr.st});
 		        }
 		    }
 		}
@@ -702,9 +701,8 @@ newOperator
 	;
 
 actualParameters returns[List<Object> parameters]
-	:	(	^(ACTUAL_PARAMETERS params+=expression+) {$parameters=$params;}
-		|	ACTUAL_PARAMETERS
-		)	
+	:	^(ACTUAL_PARAMETERS params+=expression+) {$parameters=$params;}
+	|	ACTUAL_PARAMETERS
 	;
 
 functionCall
@@ -740,6 +738,6 @@ postFixExpression
 
 exit
 	:	^('exit' expression?)	-> exit(expression={$expression.st})
-	|	Exit 			-> exit(expression={null})
+	|	'exit'			-> exit(expression={null})
 	;
 	

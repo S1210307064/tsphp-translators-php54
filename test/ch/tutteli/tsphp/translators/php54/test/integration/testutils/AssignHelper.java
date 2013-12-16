@@ -13,158 +13,177 @@ public class AssignHelper
         AssignHelper.isDeclaration = isDeclaration;
 
 
-        String[] noCastNeededTypes = new String[]{
-            "bool"
+        String[][] noCastNeededTypes = new String[][]{
+                {"bool", "false"}
         };
-        String[] castTypes = new String[]{
-            "bool?",
-            "int",
-            "int?",
-            "float",
-            "float?",
-            "string",
-            "string?",
-            "object"
+
+        String[][] castTypes = new String[][]{
+                {"bool?", "null"},
+                {"int", "0"},
+                {"int?", "null"},
+                {"float", "0.0"},
+                {"float?", "null"},
+                {"string", "''"},
+                {"string?", "null"},
+                {"object", "null"}
         };
-        String[] castToBoolTypes = new String[]{
-            "array",
-            "resource",
-            "Exception",
-            "ErrorException"
+
+        String[][] castToBoolTypes = new String[][]{
+                {"array", "null"},
+                {"resource", "null"},
+                {"Exception", "null"},
+                {"ErrorException", "null"}
         };
+
         addVariations(noCastNeededTypes, castTypes, castToBoolTypes, "bool", false);
 
-        noCastNeededTypes = new String[]{
-            "bool",
-            "int"
+        noCastNeededTypes = new String[][]{
+                {"bool", "false"},
+                {"int", "0"}
         };
-        castTypes = new String[]{
-            "bool?",
-            "int?",
-            "float",
-            "float?",
-            "string",
-            "string?",
-            "object"
+
+        castTypes = new String[][]{
+                {"bool?", "null"},
+                {"int?", "null"},
+                {"float", "0.0"},
+                {"float?", "null"},
+                {"string", "''"},
+                {"string?", "null"},
+                {"object", "null"},
         };
+
         addVariations(noCastNeededTypes, castTypes, castToBoolTypes, "int", false);
 
-        noCastNeededTypes = new String[]{
-            "bool",
-            "int",
-            "float"
+        noCastNeededTypes = new String[][]{
+                {"bool", "false"},
+                {"int", "0"},
+                {"float", "0.0"}
         };
-        castTypes = new String[]{
-            "bool?",
-            "int?",
-            "float?",
-            "string",
-            "string?",
-            "object"
+
+        castTypes = new String[][]{
+                {"bool?", "null"},
+                {"int?", "null"},
+                {"float?", "null"},
+                {"string", "''"},
+                {"string?", "null"},
+                {"object", "null"},
         };
+
         addVariations(noCastNeededTypes, castTypes, castToBoolTypes, "float", false);
 
-        noCastNeededTypes = new String[]{
-            "bool",
-            "int",
-            "float",
-            "string"
+        noCastNeededTypes = new String[][]{
+                {"bool", "false"},
+                {"int", "0"},
+                {"float", "0.0"},
+                {"string", "''"},
         };
-        castTypes = new String[]{
-            "bool?",
-            "int?",
-            "float?",
-            "string?",
-            "object"
+
+        castTypes = new String[][]{
+                {"bool?", "null"},
+                {"int?", "null"},
+                {"float?", "null"},
+                {"string?", "null"},
+                {"object", "null"},
         };
+
         addVariations(noCastNeededTypes, castTypes, castToBoolTypes, "string", false);
 
-        noCastNeededTypes = new String[]{
-            "bool",
-            "bool?"
+        noCastNeededTypes = new String[][]{
+                {"bool", "false"},
+                {"bool?", "null"},
         };
-        castTypes = new String[]{
-            "int",
-            "int?",
-            "float",
-            "float?",
-            "string",
-            "string?",
-            "object"
+
+        castTypes = new String[][]{
+                {"int", "0"},
+                {"int?", "null"},
+                {"float", "0.0"},
+                {"float?", "null"},
+                {"string", "''"},
+                {"string?", "null"},
+                {"object", "null"}
         };
+
         addVariations(noCastNeededTypes, castTypes, castToBoolTypes, "bool?", true);
 
-        noCastNeededTypes = new String[]{
-            "bool",
-            "bool?",
-            "int",
-            "int?"
+        noCastNeededTypes = new String[][]{
+                {"bool", "false"},
+                {"bool?", "null"},
+                {"int", "0"},
+                {"int?", "null"},
         };
-        castTypes = new String[]{
-            "float",
-            "float?",
-            "string",
-            "string?",
-            "object"
+
+        castTypes = new String[][]{
+                {"float", "0.0"},
+                {"float?", "null"},
+                {"string", "''"},
+                {"string?", "null"},
+                {"object", "null"},
         };
 
         addVariations(noCastNeededTypes, castTypes, castToBoolTypes, "int?", true);
 
-        noCastNeededTypes = new String[]{
-            "bool",
-            "bool?",
-            "int",
-            "int?",
-            "float",
-            "float?"
+        noCastNeededTypes = new String[][]{
+                {"bool", "false"},
+                {"bool?", "null"},
+                {"int", "0"},
+                {"int?", "null"},
+                {"float", "0.0"},
+                {"float?", "null"},
         };
-        castTypes = new String[]{
-            "string",
-            "string?",
-            "object"
+
+        castTypes = new String[][]{
+                {"string", "''"},
+                {"string?", "null"},
+                {"object", "null"},
         };
+
         addVariations(noCastNeededTypes, castTypes, castToBoolTypes, "float?", true);
 
-        noCastNeededTypes = new String[]{
-            "bool",
-            "bool?",
-            "int",
-            "int?",
-            "float",
-            "float?",
-            "string",
-            "string?"
+        noCastNeededTypes = new String[][]{
+                {"bool", "false"},
+                {"bool?", "null"},
+                {"int", "0"},
+                {"int?", "null"},
+                {"float", "0.0"},
+                {"float?", "null"},
+                {"string", "''"},
+                {"string?", "null"},
         };
-        castTypes = new String[]{
-            "object"
+
+        castTypes = new String[][]{
+                {"object", "null"},
         };
+
         addVariations(noCastNeededTypes, castTypes, castToBoolTypes, "string?", true);
 
 
-        noCastNeededTypes = new String[]{
-            "array"
+        noCastNeededTypes = new String[][]{
+                {"array", "null"}
         };
-        castTypes = new String[]{
-            "bool",
-            "bool?",
-            "int",
-            "int?",
-            "float",
-            "float?",
-            "string",
-            "string?",
-            "object",
-            "resource",
-            "Exception",
-            "ErrorException"
+
+        castTypes = new String[][]{
+                {"bool", "false"},
+                {"bool?", "null"},
+                {"int", "0"},
+                {"int?", "null"},
+                {"float", "0.0"},
+                {"float?", "null"},
+                {"string", "''"},
+                {"string?", "null"},
+                {"object", "null"},
+                {"resource", "null"},
+                {"Exception", "null"},
+                {"ErrorException", "null"}
         };
-        castToBoolTypes = new String[]{};
+
+        castToBoolTypes = new String[][]{
+        };
 
         addVariations(noCastNeededTypes, castTypes, castToBoolTypes, "array", true);
 
     }
 
-    private static void addVariations(String[] noCastTypes, String[] castTypes, String[] castToBoolTypes,
+    private static void addVariations(String[][] noCastTypes, String[][] castTypes, String[][] castToBoolTypes,
             String typeName, boolean isNullable) {
 
         String typeNameWithoutNullable = typeName;
@@ -182,36 +201,36 @@ public class AssignHelper
         String castAssign = isDeclaration ? " =() " : "; $a =() ";
 
 
-        for (String type2 : noCastTypes) {
+        for (String type2[] : noCastTypes) {
             collection.add(new Object[]{
-                type2 + " $b; cast " + typeName + " $a " + assign + " $b;",
-                "<?php\nnamespace{\n    $b;\n    $a" + outputAssign + "$b;\n}\n?>"
+                    type2[0] + " $b=" + type2[1] + "; cast " + typeName + " $a " + assign + " $b;",
+                    "<?php\nnamespace{\n    $b = "+type2[1]+";\n    $a" + outputAssign + "$b;\n}\n?>"
             });
             collection.add(new Object[]{
-                type2 + " $b; " + typeName + " $a " + castAssign + "$b;",
-                "<?php\nnamespace{\n    $b;\n    $a" + outputAssign + cast + ";\n}\n?>"
-            });
-        }
-
-        for (String type2 : castTypes) {
-            collection.add(new Object[]{
-                type2 + " $b; cast " + typeName + " $a " + assign + " $b;",
-                "<?php\nnamespace{\n    $b;\n    $a" + outputAssign + cast + ";\n}\n?>"
-            });
-            collection.add(new Object[]{
-                type2 + " $b; " + typeName + " $a " + castAssign + "$b;",
-                "<?php\nnamespace{\n    $b;\n    $a" + outputAssign + cast + ";\n}\n?>"
+                    type2[0] + " $b=" + type2[1] + ";" + typeName + " $a " + castAssign + "$b;",
+                    "<?php\nnamespace{\n    $b = "+type2[1]+";\n    $a" + outputAssign + cast + ";\n}\n?>"
             });
         }
 
-        for (String type2 : castToBoolTypes) {
+        for (String type2[] : castTypes) {
             collection.add(new Object[]{
-                type2 + " $b; cast " + typeName + " $a " + assign + " $b;",
-                "<?php\nnamespace{\n    $b;\n    $a" + outputAssign + castBool + ";\n}\n?>"
+                    type2[0] + " $b=" + type2[1] + ";cast " + typeName + " $a " + assign + " $b;",
+                    "<?php\nnamespace{\n    $b = "+type2[1]+";\n    $a" + outputAssign + cast + ";\n}\n?>"
             });
             collection.add(new Object[]{
-                type2 + " $b; " + typeName + " $a" + castAssign + "$b;",
-                "<?php\nnamespace{\n    $b;\n    $a" + outputAssign + castBool + ";\n}\n?>"
+                    type2[0] + " $b=" + type2[1] + ";" + typeName + " $a " + castAssign + "$b;",
+                    "<?php\nnamespace{\n    $b = "+type2[1]+";\n    $a" + outputAssign + cast + ";\n}\n?>"
+            });
+        }
+
+        for (String type2[] : castToBoolTypes) {
+            collection.add(new Object[]{
+                    type2[0] + " $b=" + type2[1] + ";cast " + typeName + " $a " + assign + " $b;",
+                    "<?php\nnamespace{\n    $b = "+type2[1]+";\n    $a" + outputAssign + castBool + ";\n}\n?>"
+            });
+            collection.add(new Object[]{
+                    type2[0] + " $b=" + type2[1] + ";" + typeName + " $a" + castAssign + "$b;",
+                    "<?php\nnamespace{\n    $b = "+type2[1]+";\n    $a" + outputAssign + castBool + ";\n}\n?>"
             });
         }
 

@@ -62,7 +62,7 @@ localVariableDeclaration(modifier, variableId, initValue) ::= <<
 <if(modifier)><modifier> <endif><variableId><if(initValue)> = <initValue><endif>;
 >>
 
-abstractMethod(modifier, identifier, params, primitiveCastings, castings, primitiveTypeChecks, body) ::=<<
+abstractMethod(modifier, identifier, params, primitiveCastings, castings, primitiveTypeChecks) ::=<<
 <modifier> function <identifier>(<if(params)><params><endif>);
 >>
 
@@ -226,10 +226,6 @@ keyValue(key, value) ::= <<
 <key> => <value>
 >>
 
-classConstant(accessor, constant) ::= <<
-<accessor>::<constant>
->>
-
 return(expression) ::= <<
 return<if(expression)> <expression><endif>;
 >>
@@ -254,8 +250,8 @@ primitiveCast(isNullable, type, expression)::=<<
 <if(isNullable)>(<expression> !== null ? <endif>(<type>) <expression><if(isNullable)> : null)<endif>
 >>
 
-cast(type, expression)::=<<
-(<expression> !== null ? (<expression> instanceof <type> ? <expression> : \trigger_error('Cast failed, the evaluation type of <expression> must be <type>', \E_RECOVERABLE_ERROR)) : null)
+cast(type, variableId)::=<<
+(<variableId> !== null ? (<variableId> instanceof <type> ? <variableId> : \trigger_error('Cast failed, the evaluation type of <variableId> must be <type>', \E_RECOVERABLE_ERROR)) : null)
 >>
 
 castWithTempVariable(type, expression, tempVariableName)::=<<

@@ -22,7 +22,7 @@ import java.util.HashSet;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
-public class TempVariableHelper_ScopesTest
+public class TempVariableHelperScopesTest
 {
     private ITSPHPAstAdaptor astAdaptor;
     private IScopeHelper scopeHelper;
