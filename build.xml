@@ -45,6 +45,8 @@
         </java>
     </target>
 
+    <target name="cp.all" depends="cp.common, cp.parser, cp.typechecker"/>
+
     <target name="cp.typechecker" depends="" description="copy typechecker jar to the lib folder">
         <delete>
             <fileset dir="${libdev}" includes="TSPHP-typechecker-*.jar"/>

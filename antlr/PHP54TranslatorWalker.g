@@ -583,7 +583,7 @@ operator
 	|	^(unaryPostOperator expr=expression)					-> unaryPostOperator(operator = {$unaryPostOperator.st}, expression = {$expr.st})
 	|	^(binaryOperator left=expression right=expression) 			-> binaryOperator(operator={$binaryOperator.st}, left={$left.st}, right={$right.st}, needParentheses={$binaryOperator.needParentheses})
 	|	^(QuestionMark cond=expression ifCase=expression elseCase=expression) 	-> ternaryOperator(cond={$cond.st}, ifCase={$ifCase.st}, elseCase={$elseCase.st}, needParentheses={precedenceHelper.needParentheses($QuestionMark)})
-	|	castingOperator 							-> {$castingOperator.st}
+	|	castOperator 							-> {$castOperator.st}
 	|	^(Instanceof expr=expression (type=TYPE_NAME|type=VariableId))  	-> instanceof(expression={$expr.st}, type={$type.text}, needParentheses={precedenceHelper.needParentheses($Instanceof)})
 	|	newOperator								-> {$newOperator.st}
 	|	^('clone' expr=expression)						-> clone(expression={$expr.st})	
@@ -655,9 +655,9 @@ binaryOperator returns[boolean needParentheses]
 	|	'%' 
 	;
 
-castingOperator
+castOperator
 @init{boolean isNullable = false;}
-	:	^(CASTING
+	:	^(CAST
 			^(TYPE 
 				(	^(TYPE_MODIFIER Cast? ('?'{isNullable=true;})?)
 				|	TYPE_MODIFIER
@@ -668,7 +668,7 @@ castingOperator
 		)
 		-> primitiveCast(isNullable = {isNullable}, type={$type.st}, expression={$expression.st})
 		
-	|	^(CASTING
+	|	^(CAST
 			^(TYPE 
 				(	^(TYPE_MODIFIER Cast? '?'?)
 				|	TYPE_MODIFIER
