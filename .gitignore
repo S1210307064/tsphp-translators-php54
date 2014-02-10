@@ -5,8 +5,6 @@ out/*
 *.iml
 antlr/output/*
 
-PHP54Translator.tokens
-PHP54Translator.java
 PHP54TranslatorWalker.tokens
 PHP54TranslatorWalker.java
 /lib/dev/pmd/cfg/pmd_tsphp.xml
