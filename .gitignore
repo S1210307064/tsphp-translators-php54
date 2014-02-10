@@ -12,3 +12,4 @@ PHP54TranslatorWalker.java
 /lib/dev/pmd/cfg/pmd_tsphp.xml
 /lib/dev/checkstyle/cfg/checkstyle.properties
 /lib/dev/QA.html
+/atlassian-ide-plugin.xml

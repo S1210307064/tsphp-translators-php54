@@ -7,11 +7,11 @@ options {
 }
 
 @header{
-package ch.tutteli.tsphp.translators.php54.antlr;
+package ch.tsphp.translators.php54.antlr;
 
-import ch.tutteli.tsphp.common.ITSPHPAst;
-import ch.tutteli.tsphp.translators.php54.IPrecedenceHelper;
-import ch.tutteli.tsphp.translators.php54.ITempVariableHelper;
+import ch.tsphp.common.ITSPHPAst;
+import ch.tsphp.translators.php54.IPrecedenceHelper;
+import ch.tsphp.translators.php54.ITempVariableHelper;
 
 }
 
