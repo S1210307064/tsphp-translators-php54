@@ -3,12 +3,13 @@ package ch.tsphp.translators.php54;
 import ch.tsphp.common.ITSPHPAstAdaptor;
 import ch.tsphp.common.ITranslator;
 import ch.tsphp.common.ITranslatorFactory;
+import ch.tsphp.common.TSPHPAstAdaptor;
+import ch.tsphp.common.exceptions.TSPHPException;
+import org.antlr.stringtemplate.StringTemplateGroup;
 
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
-
-import ch.tsphp.common.TSPHPAstAdaptor;
-import org.antlr.stringtemplate.StringTemplateGroup;
 
 public class PHP54TranslatorFactory implements ITranslatorFactory
 {
@@ -18,20 +19,26 @@ public class PHP54TranslatorFactory implements ITranslatorFactory
     private final ITempVariableHelper tempVariableHelper;
     private Exception loadingTemplateException;
 
-    public PHP54TranslatorFactory(){
+    public PHP54TranslatorFactory() {
         this(new TSPHPAstAdaptor());
     }
+
     public PHP54TranslatorFactory(ITSPHPAstAdaptor anAstAdaptor) {
         precedenceHelper = new PrecedenceHelper();
         tempVariableHelper = new TempVariableHelper(anAstAdaptor);
         InputStreamReader streamReader = null;
         try {
             // LOAD TEMPLATES (via classpath)
-            final URL url = ClassLoader.getSystemResource("PHP54.stg");
-            streamReader = new InputStreamReader(url.openStream());
-            templateGroup = new StringTemplateGroup(streamReader);
-            streamReader.close();
-        } catch(Exception ex){
+            ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+            final InputStream inputStream = classLoader.getResourceAsStream("PHP54.stg");
+            if (inputStream != null) {
+                streamReader = new InputStreamReader(inputStream);
+                templateGroup = new StringTemplateGroup(streamReader);
+                streamReader.close();
+            }else{
+                loadingTemplateException = new TSPHPException("PHP54.stg could not be resolved");
+            }
+        } catch (Exception ex) {
             loadingTemplateException = ex;
         } finally {
             try {
