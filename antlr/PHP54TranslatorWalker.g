@@ -634,7 +634,6 @@ binaryOperator returns[boolean needParentheses]
 	
 	|	'==' 			
 	|	'!=' 
-	|	'<>' 
 	|	'==='
 	|	'!=='
 	
