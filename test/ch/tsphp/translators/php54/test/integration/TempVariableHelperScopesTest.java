@@ -8,8 +8,12 @@ import ch.tsphp.common.TSPHPAstAdaptor;
 import ch.tsphp.translators.php54.ITempVariableHelper;
 import ch.tsphp.translators.php54.TempVariableHelper;
 import ch.tsphp.translators.php54.antlr.PHP54TranslatorWalker;
+import ch.tsphp.typechecker.error.ErrorMessageProvider;
+import ch.tsphp.typechecker.error.ITypeCheckerErrorReporter;
+import ch.tsphp.typechecker.error.TypeCheckerErrorReporter;
 import ch.tsphp.typechecker.scopes.ConditionalScope;
 import ch.tsphp.typechecker.scopes.GlobalNamespaceScope;
+import ch.tsphp.typechecker.scopes.IGlobalNamespaceScope;
 import ch.tsphp.typechecker.scopes.IScopeHelper;
 import ch.tsphp.typechecker.scopes.NamespaceScope;
 import ch.tsphp.typechecker.scopes.ScopeHelper;
@@ -26,11 +30,13 @@ public class TempVariableHelperScopesTest
 {
     private ITSPHPAstAdaptor astAdaptor;
     private IScopeHelper scopeHelper;
+    private ITypeCheckerErrorReporter typeCheckerErrorReporter;
 
     @Before
     public void setUp() {
         astAdaptor = new TSPHPAstAdaptor();
-        scopeHelper = new ScopeHelper();
+        typeCheckerErrorReporter = new TypeCheckerErrorReporter(new ErrorMessageProvider());
+        scopeHelper = new ScopeHelper(typeCheckerErrorReporter);
     }
 
     @Test
@@ -38,10 +44,7 @@ public class TempVariableHelperScopesTest
         ITSPHPAst ast = astAdaptor.create(PHP54TranslatorWalker.Plus, "+");
         ast.getToken().setLine(12);
         ast.getToken().setCharPositionInLine(14);
-        ast.setScope(
-                new ConditionalScope(scopeHelper,
-                        new NamespaceScope(scopeHelper, "\\test\\",
-                                new GlobalNamespaceScope(scopeHelper, "\\test\\"))));
+        ast.setScope(createConditionalScope(scopeHelper, typeCheckerErrorReporter));
 
         ITempVariableHelper tempVariableHelper = createTempVariableHelper();
         String name = tempVariableHelper.getTempVariableNameForCast(ast);
@@ -54,10 +57,8 @@ public class TempVariableHelperScopesTest
         ITSPHPAst ast = astAdaptor.create(PHP54TranslatorWalker.Plus, "+");
         ast.getToken().setLine(12);
         ast.getToken().setCharPositionInLine(14);
-        IScope scope =
-                new ConditionalScope(scopeHelper,
-                        new NamespaceScope(scopeHelper, "\\test\\",
-                                new GlobalNamespaceScope(scopeHelper, "\\test\\")));
+        IScope scope = createConditionalScope(scopeHelper, typeCheckerErrorReporter);
+
         scope.define(new VariableSymbol(new TSPHPAst(), new HashSet<Integer>(), "$_t12_14"));
         ast.setScope(scope);
 
@@ -72,7 +73,7 @@ public class TempVariableHelperScopesTest
         ITSPHPAst ast = astAdaptor.create(PHP54TranslatorWalker.Plus, "+");
         ast.getToken().setLine(12);
         ast.getToken().setCharPositionInLine(14);
-        ast.setScope(new NamespaceScope(scopeHelper, "\\test\\", new GlobalNamespaceScope(scopeHelper, "\\test\\")));
+        ast.setScope(createNamespaceScope(scopeHelper, typeCheckerErrorReporter));
 
 
         ITempVariableHelper tempVariableHelper = createTempVariableHelper();
@@ -86,7 +87,7 @@ public class TempVariableHelperScopesTest
         ITSPHPAst ast = astAdaptor.create(PHP54TranslatorWalker.Plus, "+");
         ast.getToken().setLine(12);
         ast.getToken().setCharPositionInLine(14);
-        IScope scope = new NamespaceScope(scopeHelper, "\\test\\", new GlobalNamespaceScope(scopeHelper, "\\test\\"));
+        IScope scope = createNamespaceScope(scopeHelper, typeCheckerErrorReporter);
         scope.define(new VariableSymbol(new TSPHPAst(), new HashSet<Integer>(), "$_t12_14"));
         ast.setScope(scope);
 
@@ -101,7 +102,7 @@ public class TempVariableHelperScopesTest
         ITSPHPAst ast = astAdaptor.create(PHP54TranslatorWalker.Plus, "+");
         ast.getToken().setLine(12);
         ast.getToken().setCharPositionInLine(14);
-        ast.setScope(new GlobalNamespaceScope(scopeHelper, "\\test\\"));
+        ast.setScope(createGlobalNamespaceScope(scopeHelper));
 
         ITempVariableHelper tempVariableHelper = createTempVariableHelper();
         String name = tempVariableHelper.getTempVariableNameForCast(ast);
@@ -114,7 +115,7 @@ public class TempVariableHelperScopesTest
         ITSPHPAst ast = astAdaptor.create(PHP54TranslatorWalker.Plus, "+");
         ast.getToken().setLine(12);
         ast.getToken().setCharPositionInLine(14);
-        IScope scope = new GlobalNamespaceScope(scopeHelper, "\\test\\");
+        IScope scope = createGlobalNamespaceScope(scopeHelper);
         scope.define(new VariableSymbol(new TSPHPAst(), new HashSet<Integer>(), "$_t12_14"));
         ast.setScope(scope);
 
@@ -124,7 +125,23 @@ public class TempVariableHelperScopesTest
         assertThat(name, is("$_t12_14_0"));
     }
 
-    private ITempVariableHelper createTempVariableHelper() {
+    protected ITempVariableHelper createTempVariableHelper() {
         return new TempVariableHelper(astAdaptor);
+    }
+
+    protected IScope createConditionalScope(
+            IScopeHelper scopeHelper, ITypeCheckerErrorReporter typeCheckerErrorReporter) {
+        return new ConditionalScope(
+                scopeHelper, createNamespaceScope(scopeHelper, typeCheckerErrorReporter), typeCheckerErrorReporter);
+    }
+
+    protected IScope createNamespaceScope(
+            IScopeHelper scopeHelper, ITypeCheckerErrorReporter typeCheckerErrorReporter) {
+        return new NamespaceScope(
+                scopeHelper, "\\test\\", createGlobalNamespaceScope(scopeHelper), typeCheckerErrorReporter);
+    }
+
+    protected IGlobalNamespaceScope createGlobalNamespaceScope(IScopeHelper scopeHelper) {
+        return new GlobalNamespaceScope(scopeHelper, "\\test\\");
     }
 }
