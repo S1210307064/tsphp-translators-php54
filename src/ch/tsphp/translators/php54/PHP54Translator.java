@@ -10,6 +10,7 @@ import ch.tsphp.common.IErrorLogger;
 import ch.tsphp.common.ITranslator;
 import ch.tsphp.common.exceptions.TSPHPException;
 import ch.tsphp.translators.php54.antlrmod.ErrorReportingPHP54TranslatorWalker;
+import org.antlr.runtime.RecognitionException;
 import org.antlr.runtime.tree.TreeNodeStream;
 import org.antlr.stringtemplate.StringTemplateGroup;
 
@@ -52,7 +53,7 @@ public class PHP54Translator implements ITranslator, IErrorLogger
 
             try {
                 translation = translator.compilationUnit().getTemplate().toString();
-            } catch (Exception ex) {
+            } catch (RecognitionException ex) {
                 informErrorLogger(ex);
             }
         } else {

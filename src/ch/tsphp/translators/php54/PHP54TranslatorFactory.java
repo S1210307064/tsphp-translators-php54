@@ -13,9 +13,9 @@ import ch.tsphp.common.TSPHPAstAdaptor;
 import ch.tsphp.common.exceptions.TSPHPException;
 import org.antlr.stringtemplate.StringTemplateGroup;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.URL;
 
 public class PHP54TranslatorFactory implements ITranslatorFactory
 {
@@ -41,17 +41,17 @@ public class PHP54TranslatorFactory implements ITranslatorFactory
                 streamReader = new InputStreamReader(inputStream);
                 templateGroup = new StringTemplateGroup(streamReader);
                 streamReader.close();
-            }else{
+            } else {
                 loadingTemplateException = new TSPHPException("PHP54.stg could not be resolved");
             }
-        } catch (Exception ex) {
+        } catch (IOException ex) {
             loadingTemplateException = ex;
         } finally {
             try {
                 if (streamReader != null) {
                     streamReader.close();
                 }
-            } catch (Exception ex) {
+            } catch (IOException ex) {
                 //no further exception handling needed
             }
         }
