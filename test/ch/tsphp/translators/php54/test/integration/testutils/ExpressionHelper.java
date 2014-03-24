@@ -62,7 +62,16 @@ public class ExpressionHelper
         });
     }
 
+
     public static List<String[]> getExpressions() {
+        List<String[]> list = new ArrayList<>();
+        list.addAll(getExpressionsWithoutUnaryPrimary());
+        list.addAll(ExpressionHelper.getUnaryPrimaryExpressions());
+        return list;
+    }
+
+    public static List<String[]> getExpressionsWithoutUnaryPrimary() {
+
 
         return Arrays.asList(new String[][]{
                 {"$a or $b", "$a or $b"},
@@ -141,11 +150,15 @@ public class ExpressionHelper
                 {"1 - 2", "1 - 2"},
                 {"$a . $b", "$a . $b"},
                 {"$a << $b >> $c + $d * $e - $f", "$a << $b >> $c + $d * $e - $f"},
-                {"!$a", "!$a"},
-                {"!!$a", "!!$a"},
-                {"!!! $a", "!!!$a"},
+
                 {"$a instanceof MyClass", "$a instanceof MyClass"},
                 {"$a instanceof $b", "$a instanceof $b"},
+        });
+
+    }
+
+    public static List<String[]> getUnaryPrimaryExpressions() {
+        return Arrays.asList(new String[][]{
                 {
                         "(Type) $a",
                         "($a !== null ? ("
@@ -158,6 +171,9 @@ public class ExpressionHelper
                 {"(int?) $a", "($a !== null ? (int) $a : null)"},
                 {"~$a", "~$a"},
                 {"@$a", "@$a"},
+                {"!$a", "!$a"},
+                {"!!$a", "!!$a"},
+                {"!!! $a", "!!!$a"},
                 {"+$a", "+$a"},
                 {"+1", "+1"},
                 {"-$a", "-$a"},

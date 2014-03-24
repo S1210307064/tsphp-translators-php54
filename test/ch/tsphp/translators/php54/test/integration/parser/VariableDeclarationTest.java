@@ -46,11 +46,11 @@ public class VariableDeclarationTest extends ATranslatorParserTest
             });
         }
 
-        expressions = ExpressionHelper.getAllExpressions(9);
+        expressions = ExpressionHelper.getExpressionsWithoutUnaryPrimary();
         for (String[] expression : expressions) {
             collection.add(new Object[]{
                     "int $a=()" + expression[0] + ";",
-                    "$a = (int) " + expression[1] + ";"
+                    "$a = (int) (" + expression[1] + ");"
             });
         }
 
