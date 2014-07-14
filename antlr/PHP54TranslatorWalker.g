@@ -22,6 +22,7 @@ options {
 package ch.tsphp.translators.php54.antlr;
 
 import ch.tsphp.common.ITSPHPAst;
+import ch.tsphp.common.ITypeSymbol;
 import ch.tsphp.translators.php54.IPrecedenceHelper;
 import ch.tsphp.translators.php54.ITempVariableHelper;
 
@@ -39,6 +40,14 @@ public PHP54TranslatorWalker(TreeNodeStream input, IPrecedenceHelper thePreceden
 
 private String getMethodName(String name) {
    return name.substring(0, name.length() - 2);
+}
+
+private boolean evaluatesToInt(ITSPHPAst ast){
+  ITypeSymbol typeSymbol = ast.getEvalType();
+  if(typeSymbol != null){
+    return typeSymbol.getName().equals("int") && typeSymbol.getDefinitionScope().getScopeName().equals("\\");
+  }
+  return false;
 }
 
 }
@@ -81,9 +90,9 @@ useDeclaration
 	;
 
 definition
-	:	classDeclaration		-> {$classDeclaration.st}
+	:	classDeclaration	-> {$classDeclaration.st}
 	|	interfaceDeclaration	-> {$interfaceDeclaration.st}
-	|	functionDeclaration		-> {$functionDeclaration.st}
+	|	functionDeclaration	-> {$functionDeclaration.st}
 	|	constDeclarationList	-> {$constDeclarationList.st}
 	;
 	
@@ -221,16 +230,16 @@ primitiveTypes
 	;
 	
 primitiveTypesWithoutArray
-	:	scalarTypes -> {$scalarTypes.st}
-	|	TypeResource -> {%{$TypeResource.text}}
-	|	TypeObject -> {%{$TypeObject.text}}
+	:	scalarTypes 	-> {$scalarTypes.st}
+	|	TypeResource	-> {%{$TypeResource.text}}
+	|	TypeObject 	-> {%{$TypeObject.text}}
 	;
 	
 scalarTypes
-	:	TypeBool -> {%{$TypeBool.text}}
-	|	TypeInt -> {%{$TypeInt.text}}
-	|	TypeFloat -> {%{$TypeFloat.text}}
-	|	TypeString -> {%{$TypeString.text}}
+	:	TypeBool 	-> {%{$TypeBool.text}}
+	|	TypeInt 	-> {%{$TypeInt.text}}
+	|	TypeFloat 	-> {%{$TypeFloat.text}}
+	|	TypeString 	-> {%{$TypeString.text}}
 	;
 	
 abstractConstructDeclaration
@@ -593,9 +602,10 @@ staticAccess
 operator
  	:	^(unaryPreOperator expr=expression) 					-> unaryPreOperator(operator ={$unaryPreOperator.st}, expression = {$expr.st})
 	|	^(unaryPostOperator expr=expression)					-> unaryPostOperator(operator = {$unaryPostOperator.st}, expression = {$expr.st})
-	|	^(binaryOperator left=expression right=expression) 			-> binaryOperator(operator={$binaryOperator.st}, left={$left.st}, right={$right.st}, needParentheses={$binaryOperator.needParentheses})
+	|	^(binaryOperatorWithoutDivision left=expression right=expression) 	-> binaryOperator(operator={$binaryOperatorWithoutDivision.st}, left={$left.st}, right={$right.st}, needParentheses={$binaryOperatorWithoutDivision.needParentheses})
+	|	division								-> {$division.st}
 	|	^(QuestionMark cond=expression ifCase=expression elseCase=expression) 	-> ternaryOperator(cond={$cond.st}, ifCase={$ifCase.st}, elseCase={$elseCase.st}, needParentheses={precedenceHelper.needParentheses($QuestionMark)})
-	|	castOperator 							-> {$castOperator.st}
+	|	castOperator 								-> {$castOperator.st}
 	|	^(Instanceof expr=expression (type=TYPE_NAME|type=VariableId))  	-> instanceof(expression={$expr.st}, type={$type.text}, needParentheses={precedenceHelper.needParentheses($Instanceof)})
 	|	newOperator								-> {$newOperator.st}
 	|	^('clone' expr=expression)						-> clone(expression={$expr.st})	
@@ -616,7 +626,7 @@ unaryPostOperator
     	|	POST_DECREMENT -> {%{"--"}}
     	;
 
-binaryOperator returns[boolean needParentheses]
+binaryOperatorWithoutDivision returns[boolean needParentheses]
 @after {
     $st = %operator(o={$start.getText()});
     $needParentheses = precedenceHelper.needParentheses($start);
@@ -629,7 +639,6 @@ binaryOperator returns[boolean needParentheses]
 	|	'+='
 	|	'-='
 	|	'*='
-	|	'/='
 	|	'&='
 	|	'|='
 	|	'^='
@@ -662,8 +671,30 @@ binaryOperator returns[boolean needParentheses]
 	|	'.' 
 	
 	|	'*' 
-	|	'/' 
 	|	'%' 
+	;
+
+division returns[boolean needParentheses]
+@init {
+    $needParentheses = precedenceHelper.needParentheses($start);
+}
+	:	^('/' left=expression right=expression)
+		{
+		  if(evaluatesToInt($left.start) && evaluatesToInt($right.start)){
+		    $st = %intDivision(operator={$start.getText()}, left={$left.st}, right={$right.st}, needParentheses={$needParentheses});
+		  } else {
+		    $st = %binaryOperator(operator={$start.getText()}, left={$left.st}, right={$right.st}, needParentheses={$needParentheses});
+		  }
+		}
+	|	^('/=' left=expression right=expression)
+		{
+		  if(evaluatesToInt($left.start) && evaluatesToInt($right.start)){
+		    $st = %intDivision(operator={$start.getText()}, left={$left.st}, right={$right.st}, needParentheses={false});
+		    $st = %binaryOperator(operator={"="}, left={$left.st}, right={$right.st}, needParentheses={$needParentheses});
+		  } else {
+		    $st = %binaryOperator(operator={$start.getText()}, left={$left.st}, right={$right.st}, needParentheses={$needParentheses});
+		  }
+		}
 	;
 
 castOperator

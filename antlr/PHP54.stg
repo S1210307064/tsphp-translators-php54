@@ -180,6 +180,10 @@ binaryOperator(operator, left, right, needParentheses) ::= <<
 <if(needParentheses)>(<endif><left> <operator> <right><if(needParentheses)>)<endif>
 >>
 
+intDivision(operator, left, right, needParentheses) ::= <<
+<if(needParentheses)>(<endif>(int) (<left> <operator> <right>)<if(needParentheses)>)<endif>
+>>
+
 ternaryOperator(cond, ifCase, elseCase, needParentheses) ::= <<
 <if(needParentheses)>(<endif><cond> ? <ifCase> : <elseCase><if(needParentheses)>)<endif>
 >>
