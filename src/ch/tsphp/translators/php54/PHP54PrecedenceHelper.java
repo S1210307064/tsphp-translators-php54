@@ -12,12 +12,15 @@ import ch.tsphp.translators.php54.antlr.PHP54TranslatorWalker;
 import java.util.HashMap;
 import java.util.Map;
 
-public class PrecedenceHelper implements IPrecedenceHelper
+/**
+ * A precedence helper which orients itself by PHP 5.4.
+ */
+public class PHP54PrecedenceHelper implements IPrecedenceHelper
 {
 
     private Map<Integer, Integer> precedenceRules = new HashMap<>();
 
-    public PrecedenceHelper() {
+    public PHP54PrecedenceHelper() {
         initPrecedenceRules();
     }
 

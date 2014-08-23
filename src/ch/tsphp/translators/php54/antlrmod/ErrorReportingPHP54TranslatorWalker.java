@@ -6,11 +6,11 @@
 
 package ch.tsphp.translators.php54.antlrmod;
 
-import ch.tsphp.translators.php54.IPrecedenceHelper;
-import ch.tsphp.translators.php54.ITempVariableHelper;
 import ch.tsphp.common.ErrorReporterHelper;
 import ch.tsphp.common.IErrorLogger;
 import ch.tsphp.common.IErrorReporter;
+import ch.tsphp.translators.php54.IPrecedenceHelper;
+import ch.tsphp.translators.php54.ITempVariableHelper;
 import ch.tsphp.translators.php54.antlr.PHP54TranslatorWalker;
 import org.antlr.runtime.RecognitionException;
 import org.antlr.runtime.tree.TreeNodeStream;
@@ -18,6 +18,9 @@ import org.antlr.runtime.tree.TreeNodeStream;
 import java.util.ArrayDeque;
 import java.util.Collection;
 
+/**
+ * Extends PHP54TranslatorWalker by IErrorReporter.
+ */
 public class ErrorReportingPHP54TranslatorWalker extends PHP54TranslatorWalker implements IErrorReporter
 {
 

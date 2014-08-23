@@ -17,6 +17,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
+/**
+ * The factory which builds the PHP54Translator.
+ * <p/>
+ * It loads a StringTemplate which is used by the PHP54Translator.
+ */
 public class PHP54TranslatorFactory implements ITranslatorFactory
 {
 
@@ -30,7 +35,7 @@ public class PHP54TranslatorFactory implements ITranslatorFactory
     }
 
     public PHP54TranslatorFactory(ITSPHPAstAdaptor anAstAdaptor) {
-        precedenceHelper = new PrecedenceHelper();
+        precedenceHelper = new PHP54PrecedenceHelper();
         tempVariableHelper = new TempVariableHelper(anAstAdaptor);
         InputStreamReader streamReader = null;
         try {

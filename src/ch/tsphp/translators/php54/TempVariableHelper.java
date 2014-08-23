@@ -12,6 +12,9 @@ import ch.tsphp.common.ITSPHPAst;
 import ch.tsphp.common.ITSPHPAstAdaptor;
 import ch.tsphp.translators.php54.antlr.PHP54TranslatorWalker;
 
+/**
+ * A temp variable helper which uses the format "$_t + line + char position".
+ */
 public class TempVariableHelper implements ITempVariableHelper
 {
 

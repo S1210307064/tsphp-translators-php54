@@ -17,6 +17,9 @@ import org.antlr.stringtemplate.StringTemplateGroup;
 import java.util.ArrayDeque;
 import java.util.Collection;
 
+/**
+ * The translator which translates TSPHP to PHP 5.4.
+ */
 public class PHP54Translator implements ITranslator, IErrorLogger
 {
 

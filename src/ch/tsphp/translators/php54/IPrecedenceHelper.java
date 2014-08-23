@@ -8,6 +8,9 @@ package ch.tsphp.translators.php54;
 
 import ch.tsphp.common.ITSPHPAst;
 
+/**
+ * A helper which informs whether a operator needs parentheses or not.
+ */
 public interface IPrecedenceHelper
 {
     boolean needParentheses(ITSPHPAst operatorAst);

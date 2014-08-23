@@ -8,6 +8,9 @@ package ch.tsphp.translators.php54;
 
 import ch.tsphp.common.ITSPHPAst;
 
+/**
+ * A Helper which provides variable names which can be used for temp variables.
+ */
 public interface ITempVariableHelper
 {
     String getTempVariableNameForCast(ITSPHPAst expression);
