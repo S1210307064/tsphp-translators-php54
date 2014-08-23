@@ -9,14 +9,16 @@ package ch.tsphp.translators.php54.test.unit.testutils;
 import ch.tsphp.common.ITSPHPAst;
 import ch.tsphp.translators.php54.antlr.PHP54TranslatorWalker;
 import org.antlr.runtime.RecognitionException;
+import org.antlr.runtime.tree.TreeRuleReturnScope;
+import org.antlr.stringtemplate.StringTemplate;
 import org.junit.Ignore;
 
-import static ch.tsphp.typechecker.antlr.TSPHPTypeCheckWalker.EOF;
+import java.lang.reflect.Field;
+
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.verify;
 
 @Ignore
 public abstract class ANodeWithoutChildrenWalkerTest extends AWalkerTest
@@ -30,15 +32,16 @@ public abstract class ANodeWithoutChildrenWalkerTest extends AWalkerTest
         tokenType = theTokenType;
     }
 
-    public abstract void walk(PHP54TranslatorWalker walker) throws RecognitionException;
+    public abstract TreeRuleReturnScope walk(PHP54TranslatorWalker walker) throws RecognitionException;
 
-    public void check() throws RecognitionException {
+    public void check() throws RecognitionException, NoSuchFieldException, IllegalAccessException {
         ITSPHPAst ast = createAst(tokenType);
 
         PHP54TranslatorWalker walker = spy(createWalker(ast));
-        walk(walker);
+        TreeRuleReturnScope result = walk(walker);
 
-        assertThat(testCase, treeNodeStream.LA(1), is(EOF));
-        verify(walker).reportError(any(org.antlr.runtime.NoViableAltException.class));
+        Field fieldSt = result.getClass().getField("st");
+        StringTemplate stringTemplate = (StringTemplate) fieldSt.get(result);
+        assertThat(testCase, stringTemplate, is(nullValue()));
     }
 }

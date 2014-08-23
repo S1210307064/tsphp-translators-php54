@@ -13,10 +13,10 @@ import ch.tsphp.common.ITSPHPAst;
 import ch.tsphp.common.ITSPHPAstAdaptor;
 import ch.tsphp.common.TSPHPAstAdaptor;
 import ch.tsphp.common.exceptions.TSPHPException;
+import ch.tsphp.parser.antlr.TSPHPParser;
 import ch.tsphp.parser.antlrmod.ANTLRNoCaseStringStream;
 import ch.tsphp.parser.antlrmod.ErrorReportingTSPHPLexer;
 import ch.tsphp.parser.antlrmod.ErrorReportingTSPHPParser;
-import ch.tsphp.parser.antlr.TSPHPParser;
 import ch.tsphp.translators.php54.PrecedenceHelper;
 import ch.tsphp.translators.php54.TempVariableHelper;
 import ch.tsphp.translators.php54.antlrmod.ErrorReportingPHP54TranslatorWalker;
@@ -52,7 +52,8 @@ public abstract class ATest implements IErrorLogger
     }
 
     public void check() {
-        Assert.assertFalse(testString + " failed. found translator exception(s). See output.", translator.hasFoundError());
+        Assert.assertFalse(testString + " failed. found translator exception(s). See output.",
+                translator.hasFoundError());
 
         Assert.assertEquals(testString + " failed.", expectedResult,
                 result.getTemplate().toString().replaceAll("\r", ""));
@@ -74,12 +75,14 @@ public abstract class ATest implements IErrorLogger
 
         ErrorReportingTSPHPParser parser = new ErrorReportingTSPHPParser(tokens);
         parser.setTreeAdaptor(astAdaptor);
+        parser.registerErrorLogger(new WriteExceptionToConsole());
 
         ParserRuleReturnScope parserResult = parserRun(parser);
         ast = (ITSPHPAst) parserResult.getTree();
 
         Assert.assertFalse(testString.replaceAll("\n", " ") + " failed - lexer throw exception", lexer.hasFoundError());
-        Assert.assertFalse(testString.replaceAll("\n", " ") + " failed - parser throw exception", parser.hasFoundError());
+        Assert.assertFalse(testString.replaceAll("\n", " ") + " failed - parser throw exception",
+                parser.hasFoundError());
 
         commonTreeNodeStream = new CommonTreeNodeStream(astAdaptor, ast);
         commonTreeNodeStream.setTokenStream(parser.getTokenStream());

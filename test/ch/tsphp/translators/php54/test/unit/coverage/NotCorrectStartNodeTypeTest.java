@@ -9,21 +9,23 @@ package ch.tsphp.translators.php54.test.unit.coverage;
 import ch.tsphp.common.ITSPHPAst;
 import ch.tsphp.translators.php54.antlrmod.ErrorReportingPHP54TranslatorWalker;
 import ch.tsphp.translators.php54.test.unit.testutils.AWalkerTest;
-import org.antlr.runtime.NoViableAltException;
 import org.antlr.runtime.RecognitionException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
+import org.mockito.ArgumentCaptor;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Collection;
 
+import static ch.tsphp.translators.php54.antlr.PHP54TranslatorWalker.Namespace;
 import static ch.tsphp.translators.php54.antlr.PHP54TranslatorWalker.Try;
 import static ch.tsphp.translators.php54.antlr.PHP54TranslatorWalker.VariableId;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.fail;
-import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 
@@ -39,7 +41,7 @@ public class NotCorrectStartNodeTypeTest extends AWalkerTest
     }
 
     @Test
-    public void standard_reportNoViableAltException()
+    public void standard_reportRecognitionException()
             throws RecognitionException, NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         ITSPHPAst ast = createAst(tokenType);
 
@@ -48,7 +50,9 @@ public class NotCorrectStartNodeTypeTest extends AWalkerTest
         method.invoke(walker);
 
         try {
-            verify(walker).reportError(any(NoViableAltException.class));
+            ArgumentCaptor<RecognitionException> captor = ArgumentCaptor.forClass(RecognitionException.class);
+            verify(walker).reportError(captor.capture());
+            assertThat(methodName + " - failed. Wrong token type", captor.getValue().token.getType(), is(tokenType));
         } catch (Exception e) {
             fail(methodName + " failed - verify caused exception:\n" + e.getClass().getName() + e.getMessage());
         }
@@ -62,6 +66,7 @@ public class NotCorrectStartNodeTypeTest extends AWalkerTest
                 {"abstractMethodModifier", Try},
                 {"abstractToken", Try},
                 {"accessModifier", Try},
+                {"accessModifierWithoutPrivate", Try},
                 {"actualParameters", Try},
                 {"allTypes", Try},
                 {"arrayKeyValue", Try},
@@ -85,6 +90,7 @@ public class NotCorrectStartNodeTypeTest extends AWalkerTest
                 {"constDeclaration", Try},
                 {"constDeclarationList", Try},
                 {"constructDeclaration", Try},
+                {"constructDestructModifier", Try},
                 {"definition", Try},
                 {"division", Try},
                 {"doWhileLoop", Try},
@@ -99,7 +105,7 @@ public class NotCorrectStartNodeTypeTest extends AWalkerTest
                 {"functionDeclaration", Try},
                 {"ifCondition", Try},
                 {"implementsDeclaration", Try},
-                {"instruction", Try},
+                {"instruction", Namespace},
                 {"interfaceBody", Try},
                 {"interfaceBodyDefinition", Try},
                 {"interfaceConstructDeclaration", Try},
@@ -124,7 +130,7 @@ public class NotCorrectStartNodeTypeTest extends AWalkerTest
                 {"returnTypes", Try},
                 {"scalarAndResource", Try},
                 {"scalarTypes", Try},
-                {"statement", Try},
+                {"statement", Namespace},
                 {"staticAccess", Try},
                 {"staticToken", Try},
                 {"switchCondition", Try},

@@ -38,45 +38,45 @@ public class ConstructDestructTest extends ATranslatorParserTest
         collection = new ArrayList<>();
 
         addModifiers();
-    
+
         //parameters
         collection.addAll(ParameterListHelper.getTestStrings(
                 "class a {function __construct", "{}}",
                 "class a {\n    public function __construct", " {\n    }\n}"));
-    
+
         return collection;
 
     }
 
     private static void addModifiers() {
         String[][] variations = new String[][]{
-            {"", "public"},
-            //
-            {"private", "private"},
-            {"private final", "private final"},
-            //
-            {"protected", "protected"},
-            {"protected final", "protected final"},
-            //
-            {"public", "public"},
-            {"public final", "public final"},
-            //
-            {"final", "final public"},
-            {"final private", "final private"},
-            {"final protected", "final protected"},
-            {"final public", "final public"}
+                {"", "public"},
+                //
+                {"private", "private"},
+                {"private final", "private final"},
+                //
+                {"protected", "protected"},
+                {"protected final", "protected final"},
+                //
+                {"public", "public"},
+                {"public final", "public final"},
+                //
+                {"final", "final public"},
+                {"final private", "final private"},
+                {"final protected", "final protected"},
+                {"final public", "final public"}
         };
 
 
         for (String[] variation : variations) {
             collection.add(new Object[]{
-                        "class a{" + variation[0] + " function __construct(){}}",
-                        "class a {\n    " + variation[1] + " function __construct() {\n    }\n}"
-                    });
+                    "class a{" + variation[0] + " function __construct(){}}",
+                    "class a {\n    " + variation[1] + " function __construct() {\n    }\n}"
+            });
             collection.add(new Object[]{
-                        "class a{" + variation[0] + " function __destruct(){}}",
-                        "class a {\n    " + variation[1] + " function __destruct() {\n    }\n}"
-                    });
+                    "class a{" + variation[0] + " function __destruct(){}}",
+                    "class a {\n    " + variation[1] + " function __destruct() {\n    }\n}"
+            });
         }
     }
 }

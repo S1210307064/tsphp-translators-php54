@@ -200,11 +200,15 @@ variableModifier
 staticToken
 	:	Static -> {%{$Static.text}}
 	;
+
+accessModifierWithoutPrivate
+	:	Protected -> {%{$Protected.text}}
+	|	Public -> {%{$Public.text}}
+	;	
 	
 accessModifier
-	:	Private -> {%{$Private.text}}
-	|	Protected -> {%{$Protected.text}}
-	|	Public -> {%{$Public.text}}
+	:	accessModifierWithoutPrivate -> {$accessModifierWithoutPrivate.st}
+	|	Private -> {%{$Private.text}}
 	;
 
 variableDeclaration
@@ -256,45 +260,54 @@ abstractConstructDeclaration
 		)
 	;
 	
-constructDeclaration
-	:	^(identifier='__construct' 
-			^(METHOD_MODIFIER methodModifier)
-			^(TYPE typeModifier returnTypes)
-			formalParameters
-			block
-		)	
-		-> method(
-			modifier={$methodModifier.st},
-			identifier={getMethodName($identifier.text)},
-			params={$formalParameters.st},
-			body={$block.instructions}
-		)
-	;
-
-abstractMethodDeclaration
-	:	^(METHOD_DECLARATION
-			^(METHOD_MODIFIER abstractMethodModifier)
-			^(TYPE typeModifier returnTypes)
-			(identfier=Identifier|identfier=Destruct)
-			formalParameters
-			BLOCK
-		)
-		-> abstractMethod(
-			modifier={$abstractMethodModifier.st},
-			identifier={getMethodName($identfier.text)},
-			params={$formalParameters.st}
-		)
-	;
-	
 abstractMethodModifier
-	:	(	list+=abstractToken list+=accessModifier 
-		|	list+=accessModifier list+=abstractToken
+	:	(	list+=abstractToken list+=accessModifierWithoutPrivate
+		|	list+=accessModifierWithoutPrivate list+=abstractToken
 		)
 		-> modifier(modifiers={$list})
 	;
 
 abstractToken
 	:	Abstract -> {%{$Abstract.text}}
+	;
+	
+constructDeclaration
+	:	^(identifier='__construct' 
+			^(METHOD_MODIFIER constructDestructModifier)
+			^(TYPE typeModifier returnTypes)
+			formalParameters
+			block
+		)	
+		-> method(
+			modifier={$constructDestructModifier.st},
+			identifier={getMethodName($identifier.text)},
+			params={$formalParameters.st},
+			body={$block.instructions}
+		)
+	;
+
+constructDestructModifier
+	:	(	list+=finalToken list+=accessModifier
+		|	list+=finalToken
+		|	list+=accessModifier list+=finalToken
+		|	list+=accessModifier
+		)
+		-> modifier(modifiers={$list})
+	;
+
+abstractMethodDeclaration
+	:	^(METHOD_DECLARATION
+			^(METHOD_MODIFIER abstractMethodModifier)
+			^(TYPE typeModifier returnTypes)
+			(identifier=Identifier|identifier=Destruct)
+			formalParameters
+			BLOCK
+		)
+		-> abstractMethod(
+			modifier={$abstractMethodModifier.st},
+			identifier={getMethodName($identifier.text)},
+			params={$formalParameters.st}
+		)
 	;
 
 methodDeclaration

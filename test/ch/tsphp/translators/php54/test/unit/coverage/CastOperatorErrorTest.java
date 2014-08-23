@@ -12,6 +12,7 @@ import ch.tsphp.translators.php54.test.unit.testutils.AWalkerTest;
 import org.antlr.runtime.NoViableAltException;
 import org.antlr.runtime.RecognitionException;
 import org.junit.Test;
+import org.mockito.ArgumentCaptor;
 
 import static ch.tsphp.typechecker.antlr.TSPHPTypeCheckWalker.CAST;
 import static ch.tsphp.typechecker.antlr.TSPHPTypeCheckWalker.Cast;
@@ -20,12 +21,13 @@ import static ch.tsphp.typechecker.antlr.TSPHPTypeCheckWalker.Plus;
 import static ch.tsphp.typechecker.antlr.TSPHPTypeCheckWalker.QuestionMark;
 import static ch.tsphp.typechecker.antlr.TSPHPTypeCheckWalker.TYPE;
 import static ch.tsphp.typechecker.antlr.TSPHPTypeCheckWalker.TYPE_MODIFIER;
+import static org.antlr.runtime.tree.TreeParser.UP;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 
+@SuppressWarnings("ThrowableResultOfMethodCallIgnored")
 public class CastOperatorErrorTest extends AWalkerTest
 {
 
@@ -36,9 +38,9 @@ public class CastOperatorErrorTest extends AWalkerTest
         ErrorReportingPHP54TranslatorWalker walker = spy(createWalker(ast));
         walker.castOperator();
 
-        assertThat(treeNodeStream.LA(1), is(EOF));
-        assertThat(treeNodeStream.index(), is(1));
-        verify(walker).reportError(any(NoViableAltException.class));
+        ArgumentCaptor<NoViableAltException> captor = ArgumentCaptor.forClass(NoViableAltException.class);
+        verify(walker).reportError(captor.capture());
+        assertThat(captor.getValue().token.getType(), is(EOF));
     }
 
     @Test
@@ -49,9 +51,9 @@ public class CastOperatorErrorTest extends AWalkerTest
         ErrorReportingPHP54TranslatorWalker walker = spy(createWalker(ast));
         walker.castOperator();
 
-        assertThat(treeNodeStream.LA(1), is(EOF));
-        assertThat(treeNodeStream.index(), is(4));
-        verify(walker).reportError(any(NoViableAltException.class));
+        ArgumentCaptor<NoViableAltException> captor = ArgumentCaptor.forClass(NoViableAltException.class);
+        verify(walker).reportError(captor.capture());
+        assertThat(captor.getValue().token.getType(), is(Plus));
     }
 
     @Test
@@ -62,9 +64,9 @@ public class CastOperatorErrorTest extends AWalkerTest
         ErrorReportingPHP54TranslatorWalker walker = spy(createWalker(ast));
         walker.castOperator();
 
-        assertThat(treeNodeStream.LA(1), is(EOF));
-        assertThat(treeNodeStream.index(), is(4));
-        verify(walker).reportError(any(NoViableAltException.class));
+        ArgumentCaptor<NoViableAltException> captor = ArgumentCaptor.forClass(NoViableAltException.class);
+        verify(walker).reportError(captor.capture());
+        assertThat(captor.getValue().token.getType(), is(UP));
     }
 
     @Test
@@ -77,9 +79,9 @@ public class CastOperatorErrorTest extends AWalkerTest
         ErrorReportingPHP54TranslatorWalker walker = spy(createWalker(ast));
         walker.castOperator();
 
-        assertThat(treeNodeStream.LA(1), is(EOF));
-        assertThat(treeNodeStream.index(), is(7));
-        verify(walker).reportError(any(NoViableAltException.class));
+        ArgumentCaptor<NoViableAltException> captor = ArgumentCaptor.forClass(NoViableAltException.class);
+        verify(walker).reportError(captor.capture());
+        assertThat(captor.getValue().token.getType(), is(Plus));
     }
 
     @Test
@@ -94,9 +96,9 @@ public class CastOperatorErrorTest extends AWalkerTest
         ErrorReportingPHP54TranslatorWalker walker = spy(createWalker(ast));
         walker.castOperator();
 
-        assertThat(treeNodeStream.LA(1), is(EOF));
-        assertThat(treeNodeStream.index(), is(10));
-        verify(walker).reportError(any(NoViableAltException.class));
+        ArgumentCaptor<NoViableAltException> captor = ArgumentCaptor.forClass(NoViableAltException.class);
+        verify(walker).reportError(captor.capture());
+        assertThat(captor.getValue().token.getType(), is(Plus));
     }
 
 
@@ -113,9 +115,9 @@ public class CastOperatorErrorTest extends AWalkerTest
         ErrorReportingPHP54TranslatorWalker walker = spy(createWalker(ast));
         walker.castOperator();
 
-        assertThat(treeNodeStream.LA(1), is(EOF));
-        assertThat(treeNodeStream.index(), is(11));
-        verify(walker).reportError(any(NoViableAltException.class));
+        ArgumentCaptor<NoViableAltException> captor = ArgumentCaptor.forClass(NoViableAltException.class);
+        verify(walker).reportError(captor.capture());
+        assertThat(captor.getValue().token.getType(), is(Plus));
     }
 
     @Test
@@ -132,9 +134,9 @@ public class CastOperatorErrorTest extends AWalkerTest
         ErrorReportingPHP54TranslatorWalker walker = spy(createWalker(ast));
         walker.castOperator();
 
-        assertThat(treeNodeStream.LA(1), is(EOF));
-        assertThat(treeNodeStream.index(), is(12));
-        verify(walker).reportError(any(NoViableAltException.class));
+        ArgumentCaptor<NoViableAltException> captor = ArgumentCaptor.forClass(NoViableAltException.class);
+        verify(walker).reportError(captor.capture());
+        assertThat(captor.getValue().token.getType(), is(Plus));
     }
 
     @Test
@@ -151,29 +153,9 @@ public class CastOperatorErrorTest extends AWalkerTest
         ErrorReportingPHP54TranslatorWalker walker = spy(createWalker(ast));
         walker.castOperator();
 
-        assertThat(treeNodeStream.LA(1), is(EOF));
-        assertThat(treeNodeStream.index(), is(11));
-        verify(walker).reportError(any(NoViableAltException.class));
-    }
-
-    @Test
-    public void ErroneousTypeModifierWithQuestionMarkCast_reportNoViableAltException()
-            throws RecognitionException {
-        ITSPHPAst ast = createAst(CAST);
-        ITSPHPAst type = createAst(TYPE);
-        ast.addChild(type);
-        ITSPHPAst typeModifier = createAst(TYPE_MODIFIER);
-        type.addChild(typeModifier);
-        typeModifier.addChild(createAst(QuestionMark));
-        typeModifier.addChild(createAst(Cast));
-        typeModifier.addChild(createAst(Plus));
-
-        ErrorReportingPHP54TranslatorWalker walker = spy(createWalker(ast));
-        walker.castOperator();
-
-        assertThat(treeNodeStream.LA(1), is(EOF));
-        assertThat(treeNodeStream.index(), is(12));
-        verify(walker).reportError(any(NoViableAltException.class));
+        ArgumentCaptor<NoViableAltException> captor = ArgumentCaptor.forClass(NoViableAltException.class);
+        verify(walker).reportError(captor.capture());
+        assertThat(captor.getValue().token.getType(), is(Plus));
     }
 
     @Test
@@ -190,9 +172,9 @@ public class CastOperatorErrorTest extends AWalkerTest
         ErrorReportingPHP54TranslatorWalker walker = spy(createWalker(ast));
         walker.castOperator();
 
-        assertThat(treeNodeStream.LA(1), is(EOF));
-        assertThat(treeNodeStream.index(), is(11));
-        verify(walker).reportError(any(NoViableAltException.class));
+        ArgumentCaptor<NoViableAltException> captor = ArgumentCaptor.forClass(NoViableAltException.class);
+        verify(walker).reportError(captor.capture());
+        assertThat(captor.getValue().token.getType(), is(Plus));
     }
 
     @Test
@@ -210,9 +192,9 @@ public class CastOperatorErrorTest extends AWalkerTest
         ErrorReportingPHP54TranslatorWalker walker = spy(createWalker(ast));
         walker.castOperator();
 
-        assertThat(treeNodeStream.LA(1), is(EOF));
-        assertThat(treeNodeStream.index(), is(12));
-        verify(walker).reportError(any(NoViableAltException.class));
+        ArgumentCaptor<NoViableAltException> captor = ArgumentCaptor.forClass(NoViableAltException.class);
+        verify(walker).reportError(captor.capture());
+        assertThat(captor.getValue().token.getType(), is(Plus));
     }
 
     @Test
@@ -229,29 +211,9 @@ public class CastOperatorErrorTest extends AWalkerTest
         ErrorReportingPHP54TranslatorWalker walker = spy(createWalker(ast));
         walker.castOperator();
 
-        assertThat(treeNodeStream.LA(1), is(EOF));
-        assertThat(treeNodeStream.index(), is(11));
-        verify(walker).reportError(any(NoViableAltException.class));
-    }
-
-    @Test
-    public void ErroneousTypeWithTypeModifierQuestionMarkAndCast_reportNoViableAltException()
-            throws RecognitionException {
-        ITSPHPAst ast = createAst(CAST);
-        ITSPHPAst type = createAst(TYPE);
-        ast.addChild(type);
-        ITSPHPAst typeModifier = createAst(TYPE_MODIFIER);
-        type.addChild(typeModifier);
-        typeModifier.addChild(createAst(QuestionMark));
-        typeModifier.addChild(createAst(Cast));
-        type.addChild(createAst(Plus));
-
-        ErrorReportingPHP54TranslatorWalker walker = spy(createWalker(ast));
-        walker.castOperator();
-
-        assertThat(treeNodeStream.LA(1), is(EOF));
-        assertThat(treeNodeStream.index(), is(12));
-        verify(walker).reportError(any(NoViableAltException.class));
+        ArgumentCaptor<NoViableAltException> captor = ArgumentCaptor.forClass(NoViableAltException.class);
+        verify(walker).reportError(captor.capture());
+        assertThat(captor.getValue().token.getType(), is(Plus));
     }
 
     @Test
@@ -266,9 +228,9 @@ public class CastOperatorErrorTest extends AWalkerTest
         ErrorReportingPHP54TranslatorWalker walker = spy(createWalker(ast));
         walker.castOperator();
 
-        assertThat(treeNodeStream.LA(1), is(EOF));
-        assertThat(treeNodeStream.index(), is(8));
-        verify(walker).reportError(any(NoViableAltException.class));
+        ArgumentCaptor<NoViableAltException> captor = ArgumentCaptor.forClass(NoViableAltException.class);
+        verify(walker).reportError(captor.capture());
+        assertThat(captor.getValue().token.getType(), is(Plus));
     }
 }
 
