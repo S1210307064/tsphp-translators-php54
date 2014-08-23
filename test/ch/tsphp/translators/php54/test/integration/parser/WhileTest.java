@@ -46,7 +46,7 @@ public class WhileTest extends ATranslatorParserTest
         for (Object[] expression : expressions) {
             collection.add(new Object[]{
                     "do $a=1; while(" + expression[0] + ");",
-                    "do {\n    $a = 1;\n} while(" + expression[1] + ");"
+                    "do {\n    $a = 1;\n} while (" + expression[1] + ");"
             });
         }
         collection.addAll(Arrays.asList(new Object[][]{
@@ -56,9 +56,9 @@ public class WhileTest extends ATranslatorParserTest
                         "while( true  ){$a=1;int $b=2;}",
                         "while (true) {\n    $a = 1;\n    $b = 2;\n}"
                 },
-                {"do $a=1; while( true  );", "do {\n    $a = 1;\n} while(true);"},
-                {"do {$a=1;} while( true  );", "do {\n    $a = 1;\n} while(true);"},
-                {"do {$a=1;$b=2;}while( true  );", "do {\n    $a = 1;\n    $b = 2;\n} while(true);"}
+                {"do $a=1; while( true  );", "do {\n    $a = 1;\n} while (true);"},
+                {"do {$a=1;} while( true  );", "do {\n    $a = 1;\n} while (true);"},
+                {"do {$a=1;$b=2;}while( true  );", "do {\n    $a = 1;\n    $b = 2;\n} while (true);"}
         }));
         return collection;
 

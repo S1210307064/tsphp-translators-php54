@@ -20,47 +20,47 @@ public class ParameterListHelper
     }
 
     public static Collection<Object[]> getTestStrings(String prefix, String appendix,
-            String prefixExpect, String appendixExpected) {
+            String prefixExpected, String appendixExpected) {
 
         collection = new ArrayList<>();
         prefix += "(";
-        prefixExpect += "(";
+        prefixExpected += "(";
         appendix = ")" + appendix;
         appendixExpected = ")" + appendixExpected;
         String[] types = TypeHelper.getScalarTypes();
         for (String type : types) {
             collection.add(new Object[]{
                     prefix + type + " $a" + appendix,
-                    prefixExpect + "$a" + appendixExpected
+                    prefixExpected + "$a" + appendixExpected
             });
             collection.add(new Object[]{
                     prefix + type + " $a," + type + " $b" + appendix,
-                    prefixExpect + "$a, $b" + appendixExpected
+                    prefixExpected + "$a, $b" + appendixExpected
             });
             collection.add(new Object[]{
                     prefix + "cast " + type + " $a" + appendix,
-                    prefixExpect + "$a" + appendixExpected
+                    prefixExpected + "$a" + appendixExpected
             });
             collection.add(new Object[]{
                     prefix + "cast " + type + " $a, cast " + type + " $b" + appendix,
-                    prefixExpect + "$a, $b" + appendixExpected
+                    prefixExpected + "$a, $b" + appendixExpected
             });
             collection.add(new Object[]{
                     prefix + type + "? $a" + appendix,
-                    prefixExpect + "$a" + appendixExpected
+                    prefixExpected + "$a" + appendixExpected
             });
             collection.add(new Object[]{
                     prefix + type + "? $a, " + type + "? $b" + appendix,
-                    prefixExpect + "$a, $b" + appendixExpected
+                    prefixExpected + "$a, $b" + appendixExpected
             });
 
             collection.add(new Object[]{
                     prefix + "cast " + type + "? $a" + appendix,
-                    prefixExpect + "$a" + appendixExpected
+                    prefixExpected + "$a" + appendixExpected
             });
             collection.add(new Object[]{
                     prefix + "cast " + type + "? $a, cast " + type + "? $b" + appendix,
-                    prefixExpect + "$a, $b" + appendixExpected
+                    prefixExpected + "$a, $b" + appendixExpected
             });
         }
         types = TypeHelper.getClassInterfaceTypes();
@@ -69,92 +69,92 @@ public class ParameterListHelper
         for (String type : types) {
             collection.add(new Object[]{
                     prefix + type + " $a" + appendix,
-                    prefixExpect + type + " $a" + appendixExpected
+                    prefixExpected + type + " $a" + appendixExpected
             });
             collection.add(new Object[]{
                     prefix + type + " $a, " + type + " $b" + appendix,
-                    prefixExpect + type + " $a, " + type + " $b" + appendixExpected
+                    prefixExpected + type + " $a, " + type + " $b" + appendixExpected
             });
             collection.add(new Object[]{
                     prefix + "cast " + type + " $a" + appendix,
-                    prefixExpect + type + " $a" + appendixExpected
+                    prefixExpected + type + " $a" + appendixExpected
             });
             collection.add(new Object[]{
                     prefix + "cast " + type + " $a, cast " + type + " $b" + appendix,
-                    prefixExpect + type + " $a, " + type + " $b" + appendixExpected
+                    prefixExpected + type + " $a, " + type + " $b" + appendixExpected
             });
             collection.add(new Object[]{
                     prefix + type + "? $a" + appendix,
-                    prefixExpect + type + " $a = null" + appendixExpected
+                    prefixExpected + type + " $a = null" + appendixExpected
             });
             collection.add(new Object[]{
                     prefix + type + "? $a, " + type + "? $b" + appendix,
-                    prefixExpect + type + " $a = null, " + type + " $b = null" + appendixExpected
+                    prefixExpected + type + " $a = null, " + type + " $b = null" + appendixExpected
             });
             collection.add(new Object[]{
                     prefix + "cast " + type + "? $a" + appendix,
-                    prefixExpect + type + " $a = null" + appendixExpected
+                    prefixExpected + type + " $a = null" + appendixExpected
             });
             collection.add(new Object[]{
                     prefix + "cast " + type + "? $a, cast " + type + "? $b" + appendix,
-                    prefixExpect + type + " $a = null, " + type + " $b = null" + appendixExpected
+                    prefixExpected + type + " $a = null, " + type + " $b = null" + appendixExpected
             });
         }
         collection.add(new Object[]{
                 prefix + "array $a" + appendix,
-                prefixExpect + "array $a" + appendixExpected
+                prefixExpected + "array $a" + appendixExpected
         });
         collection.add(new Object[]{
                 prefix + "cast array $a" + appendix,
-                prefixExpect + "array $a" + appendixExpected
+                prefixExpected + "array $a" + appendixExpected
         });
         collection.add(new Object[]{
                 prefix + "array? $a" + appendix,
-                prefixExpect + "array $a = null" + appendixExpected
+                prefixExpected + "array $a = null" + appendixExpected
         });
         collection.add(new Object[]{
                 prefix + "cast array $a" + appendix,
-                prefixExpect + "array $a" + appendixExpected
+                prefixExpected + "array $a" + appendixExpected
         });
 
         collection.add(new Object[]{
                 prefix + "resource $a" + appendix,
-                prefixExpect + "$a" + appendixExpected
+                prefixExpected + "$a" + appendixExpected
         });
         collection.add(new Object[]{
                 prefix + "resource? $a" + appendix,
-                prefixExpect + "$a" + appendixExpected
+                prefixExpected + "$a" + appendixExpected
         });
         collection.add(new Object[]{
                 prefix + "object $a" + appendix,
-                prefixExpect + "$a" + appendixExpected
+                prefixExpected + "$a" + appendixExpected
         });
         collection.add(new Object[]{
                 prefix + "object? $a" + appendix,
-                prefixExpect + "$a" + appendixExpected
+                prefixExpected + "$a" + appendixExpected
         });
 
         //normal
         addVariations(
                 prefix, "int", appendix,
-                prefixExpect, "", "", appendixExpected);
+                prefixExpected, "", "", appendixExpected);
         //cast
         addVariations(
                 prefix, "cast array", appendix,
-                prefixExpect, "array ", "", appendixExpected);
+                prefixExpected, "array ", "", appendixExpected);
         //?
         addVariations(
                 prefix, "\\Exception?", appendix,
-                prefixExpect, "\\Exception ", " = null", appendixExpected);
+                prefixExpected, "\\Exception ", " = null", appendixExpected);
         //cast and ? mixed
         addVariations(
                 prefix, "cast int?", appendix,
-                prefixExpect, "", "", appendixExpected);
+                prefixExpected, "", "", appendixExpected);
 
-        addVariationsForOptional(prefix, appendix, prefixExpect, appendixExpected);
+        addVariationsForOptional(prefix, appendix, prefixExpected, appendixExpected);
 
         //empty params
-        collection.add(new Object[]{prefix + appendix, prefixExpect + appendixExpected});
+        collection.add(new Object[]{prefix + appendix, prefixExpected + appendixExpected});
         return collection;
     }
 
