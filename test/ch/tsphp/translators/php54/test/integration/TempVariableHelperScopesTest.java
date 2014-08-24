@@ -14,7 +14,7 @@ import ch.tsphp.common.TSPHPAstAdaptor;
 import ch.tsphp.translators.php54.ITempVariableHelper;
 import ch.tsphp.translators.php54.TempVariableHelper;
 import ch.tsphp.translators.php54.antlr.PHP54TranslatorWalker;
-import ch.tsphp.typechecker.error.ErrorMessageProvider;
+import ch.tsphp.typechecker.error.HardCodedErrorMessageProvider;
 import ch.tsphp.typechecker.error.ITypeCheckerErrorReporter;
 import ch.tsphp.typechecker.error.TypeCheckerErrorReporter;
 import ch.tsphp.typechecker.scopes.ConditionalScope;
@@ -41,7 +41,7 @@ public class TempVariableHelperScopesTest
     @Before
     public void setUp() {
         astAdaptor = new TSPHPAstAdaptor();
-        typeCheckerErrorReporter = new TypeCheckerErrorReporter(new ErrorMessageProvider());
+        typeCheckerErrorReporter = new TypeCheckerErrorReporter(new HardCodedErrorMessageProvider());
         scopeHelper = new ScopeHelper(typeCheckerErrorReporter);
     }
 
