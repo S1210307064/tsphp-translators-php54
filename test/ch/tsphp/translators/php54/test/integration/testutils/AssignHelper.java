@@ -31,7 +31,7 @@ public class AssignHelper
                 {"float?", "null"},
                 {"string", "''"},
                 {"string?", "null"},
-                {"object", "null"}
+                {"mixed", "null"}
         };
 
         String[][] castToBoolTypes = new String[][]{
@@ -55,7 +55,7 @@ public class AssignHelper
                 {"float?", "null"},
                 {"string", "''"},
                 {"string?", "null"},
-                {"object", "null"},
+                {"mixed", "null"},
         };
 
         addVariations(noCastNeededTypes, castTypes, castToBoolTypes, "int", false);
@@ -72,7 +72,7 @@ public class AssignHelper
                 {"float?", "null"},
                 {"string", "''"},
                 {"string?", "null"},
-                {"object", "null"},
+                {"mixed", "null"},
         };
 
         addVariations(noCastNeededTypes, castTypes, castToBoolTypes, "float", false);
@@ -89,7 +89,7 @@ public class AssignHelper
                 {"int?", "null"},
                 {"float?", "null"},
                 {"string?", "null"},
-                {"object", "null"},
+                {"mixed", "null"},
         };
 
         addVariations(noCastNeededTypes, castTypes, castToBoolTypes, "string", false);
@@ -106,7 +106,7 @@ public class AssignHelper
                 {"float?", "null"},
                 {"string", "''"},
                 {"string?", "null"},
-                {"object", "null"}
+                {"mixed", "null"}
         };
 
         addVariations(noCastNeededTypes, castTypes, castToBoolTypes, "bool?", true);
@@ -123,7 +123,7 @@ public class AssignHelper
                 {"float?", "null"},
                 {"string", "''"},
                 {"string?", "null"},
-                {"object", "null"},
+                {"mixed", "null"},
         };
 
         addVariations(noCastNeededTypes, castTypes, castToBoolTypes, "int?", true);
@@ -140,7 +140,7 @@ public class AssignHelper
         castTypes = new String[][]{
                 {"string", "''"},
                 {"string?", "null"},
-                {"object", "null"},
+                {"mixed", "null"},
         };
 
         addVariations(noCastNeededTypes, castTypes, castToBoolTypes, "float?", true);
@@ -157,7 +157,7 @@ public class AssignHelper
         };
 
         castTypes = new String[][]{
-                {"object", "null"},
+                {"mixed", "null"},
         };
 
         addVariations(noCastNeededTypes, castTypes, castToBoolTypes, "string?", true);
@@ -176,7 +176,7 @@ public class AssignHelper
                 {"float?", "null"},
                 {"string", "''"},
                 {"string?", "null"},
-                {"object", "null"},
+                {"mixed", "null"},
                 {"resource", "null"},
                 {"Exception", "null"},
                 {"ErrorException", "null"}

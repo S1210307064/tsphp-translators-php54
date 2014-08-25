@@ -230,13 +230,13 @@ primitiveTypes
 	:	scalarTypes 
 	|	TypeArray 
 	|	TypeResource 
-	|	TypeObject 
+	|	TypeMixed 
 	;
 	
 primitiveTypesWithoutArray
 	:	scalarTypes 	-> {$scalarTypes.st}
 	|	TypeResource	-> {%{$TypeResource.text}}
-	|	TypeObject 	-> {%{$TypeObject.text}}
+	|	TypeMixed 	-> {%{$TypeMixed.text}}
 	;
 	
 scalarTypes
@@ -365,7 +365,7 @@ paramDeclaration
 			^(TYPE typeModifier 
 				(	scalarAndResource
 				|	typeName=arrayType
-				|	TypeObject
+				|	TypeMixed
 				|	typeName=classInterfaceType
 				)
 			)

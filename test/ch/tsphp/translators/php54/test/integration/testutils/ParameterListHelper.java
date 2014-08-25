@@ -126,11 +126,11 @@ public class ParameterListHelper
                 prefixExpected + "$a" + appendixExpected
         });
         collection.add(new Object[]{
-                prefix + "object $a" + appendix,
+                prefix + "mixed $a" + appendix,
                 prefixExpected + "$a" + appendixExpected
         });
         collection.add(new Object[]{
-                prefix + "object? $a" + appendix,
+                prefix + "mixed? $a" + appendix,
                 prefixExpected + "$a" + appendixExpected
         });
 

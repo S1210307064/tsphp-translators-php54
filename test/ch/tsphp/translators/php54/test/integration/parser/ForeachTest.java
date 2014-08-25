@@ -38,7 +38,7 @@ public class ForeachTest extends ATranslatorParserTest
         List<String[]> expressions = ExpressionHelper.getAllExpressions(8);
         for (Object[] expression : expressions) {
             collection.add(new Object[]{
-                        "foreach(" + expression[0] + " as object $v);",
+                        "foreach(" + expression[0] + " as mixed $v);",
                         "foreach (" + expression[1] + " as $v) {\n}"
                     });
         }

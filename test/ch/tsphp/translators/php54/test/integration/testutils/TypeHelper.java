@@ -31,7 +31,7 @@ public class TypeHelper
         };
     }
 
-    public static List<String> getAllTypesWithoutResourceAndObject() {
+    public static List<String> getAllTypesWithoutResourceAndMixed() {
         List<String> collection = new ArrayList<>();
         collection.addAll(Arrays.asList(getScalarTypes()));
         collection.add("array");
@@ -44,7 +44,7 @@ public class TypeHelper
         collection.addAll(Arrays.asList(getClassInterfaceTypes()));
         collection.add("array");
         collection.add("resource");
-        collection.add("object");
+        collection.add("mixed");
         return collection;
     }
 
@@ -53,7 +53,7 @@ public class TypeHelper
         collection.addAll(Arrays.asList(getScalarTypes()));
         collection.add("array");
         collection.add("resource");
-        collection.add("object");
+        collection.add("mixed");
         return collection;
     }
 
@@ -71,7 +71,7 @@ public class TypeHelper
         return getAllTypesWithModifier(prefix, appendix, prefixExpect, appendixExpect, true);
     }
 
-    public static List<Object[]> getAllTypesWithoutObjectAndResourceWithModifier(String prefix, String appendix,
+    public static List<Object[]> getAllTypesWithoutMixedAndResourceWithModifier(String prefix, String appendix,
             String prefixExpect, String appendixExpect) {
         return getAllTypesWithModifier(prefix, appendix, prefixExpect, appendixExpect, false);
     }
@@ -126,7 +126,7 @@ public class TypeHelper
                     prefixExpect + appendixExpect
             });
             collection.add(new String[]{
-                    prefix + "object" + appendix,
+                    prefix + "mixed" + appendix,
                     prefixExpect + appendixExpect
             });
         }
@@ -145,7 +145,7 @@ public class TypeHelper
                 {"string?", "null"},
                 {"array", "null"},
                 {"resource", "null"},
-                {"object", "null"},
+                {"mixed", "null"},
         };
     }
 
@@ -161,7 +161,7 @@ public class TypeHelper
                 {"string?", "null"},
                 {"array", "null"},
                 {"resource", "null"},
-                {"object", "null"},
+                {"mixed", "null"},
                 {"Exception", "null"},
                 {"ErrorException", "null"}
         };

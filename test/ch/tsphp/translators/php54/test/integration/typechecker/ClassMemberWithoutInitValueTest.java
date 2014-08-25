@@ -40,7 +40,7 @@ public class ClassMemberWithoutInitValueTest extends ATranslatorTypeCheckerTest
             {"class a{string $a;}", prefix + "''" + appendix},
             {"class a{array $a;}", prefix + "null" + appendix},
             {"class a{resource $a;}", prefix + "null" + appendix},
-            {"class a{object $a;}", prefix + "null" + appendix},
+            {"class a{mixed $a;}", prefix + "null" + appendix},
             {"class a{bool? $a;}", prefix + "null" + appendix},
             {"class a{int? $a;}", prefix + "null" + appendix},
             {"class a{float? $a;}", prefix + "null" + appendix},
