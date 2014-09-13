@@ -256,16 +256,26 @@ continue(index) ::= <<
 continue<if(index)> <index><endif>;
 >>
 
-primitiveCast(isNullable, type, expression)::=<<
-<if(isNullable)>(<expression> !== null ? <endif>(<type>) <expression><if(isNullable)> : null)<endif>
+primitiveCast(type, expression)::=<<
+(<expression> !== null ? (<expression> !== false ? (<type>) <expression> : false) : null)
+>>
+primitiveCastWithTempVariable(type, expression, tempVariableName)::=<<
+((<tempVariableName> = <expression>) !== null ? (<tempVariableName> !== false ? (<type>) <tempVariableName> : false) : null)
 >>
 
-cast(type, variableId)::=<<
-(<variableId> !== null ? (<variableId> instanceof <type> ? <variableId> : \trigger_error('Cast failed, the evaluation type of <variableId> must be <type>', \E_RECOVERABLE_ERROR)) : null)
+checkedPrimitiveCast(type, expression)::=<<
+(<expression> !== null ? (<expression> !== false ? (is_<type>(<expression>) ? <expression> : trigger_error('Cast failed, the evaluation type of <expression> must be <type>.',\E_RECOVERABLE_ERROR)) : false) : null)
+>>
+checkedPrimitiveFalseableNullableCastWithTempVariable(type, expression, tempVariableName)::=<<
+((<tempVariableName> = <expression>) !== null ? (<tempVariableName> !== false ? (is_<type>(<tempVariableName>) ? <tempVariableName> : trigger_error('Cast failed, the evaluation type of <expression> must be <type>.',\E_RECOVERABLE_ERROR)) : false) : null)
 >>
 
-castWithTempVariable(type, expression, tempVariableName)::=<<
-((<tempVariableName> = <expression>) !== null ? (<tempVariableName> instanceof <type> ? <tempVariableName> : \trigger_error('Cast failed, the evaluation type of <expression> must be <type>', \E_RECOVERABLE_ERROR)) : null)
+classInterfaceCast(type, expression)::=<<
+(<expression> !== null ? (<expression> !== false ? (<expression> instanceof <type> ? <expression> : \trigger_error('Cast failed, the evaluation type of <expression> must be <type>.', \E_RECOVERABLE_ERROR)) : false) : null)
+>>
+
+classInterfaceCastWithTempVariable(type, expression, tempVariableName)::=<<
+((<tempVariableName> = <expression>) !== null ? (<tempVariableName> !== false ? (<tempVariableName> instanceof <type> ? <tempVariableName> : \trigger_error('Cast failed, the evaluation type of <expression> must be <type>.', \E_RECOVERABLE_ERROR)) : false) : null)
 >>
 
 

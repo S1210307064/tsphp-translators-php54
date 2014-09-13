@@ -9,17 +9,14 @@ package ch.tsphp.translators.php54.test.unit.testutils;
 import ch.tsphp.common.ITSPHPAst;
 import ch.tsphp.common.TSPHPAst;
 import ch.tsphp.common.TSPHPAstAdaptor;
+import ch.tsphp.translators.php54.ICastHelper;
 import ch.tsphp.translators.php54.IPrecedenceHelper;
-import ch.tsphp.translators.php54.ITempVariableHelper;
-import ch.tsphp.translators.php54.TempVariableHelper;
 import ch.tsphp.translators.php54.antlrmod.ErrorReportingPHP54TranslatorWalker;
-import ch.tsphp.typechecker.symbols.IVariableSymbol;
 import org.antlr.runtime.CommonToken;
 import org.antlr.runtime.tree.CommonTreeNodeStream;
 import org.antlr.runtime.tree.TreeNodeStream;
 import org.junit.Ignore;
 
-import static ch.tsphp.typechecker.antlr.TSPHPTypeCheckWalker.VariableId;
 import static org.mockito.Mockito.mock;
 
 @Ignore
@@ -27,13 +24,13 @@ public abstract class AWalkerTest
 {
     protected TreeNodeStream treeNodeStream;
     protected IPrecedenceHelper precedenceHelper;
-    protected ITempVariableHelper tempVariableHelper;
+    protected ICastHelper castHelper;
 
     protected ErrorReportingPHP54TranslatorWalker createWalker(ITSPHPAst ast) {
         treeNodeStream = createTreeNodeStream(ast);
         precedenceHelper = mock(IPrecedenceHelper.class);
-        tempVariableHelper = mock(TempVariableHelper.class);
-        return new ErrorReportingPHP54TranslatorWalker(treeNodeStream, precedenceHelper, tempVariableHelper);
+        castHelper = mock(ICastHelper.class);
+        return new ErrorReportingPHP54TranslatorWalker(treeNodeStream, precedenceHelper, castHelper);
     }
 
     protected TreeNodeStream createTreeNodeStream(ITSPHPAst ast) {
@@ -42,11 +39,5 @@ public abstract class AWalkerTest
 
     protected ITSPHPAst createAst(int tokenType) {
         return new TSPHPAst(new CommonToken(tokenType));
-    }
-
-    protected ITSPHPAst createVariable() {
-        ITSPHPAst variable = createAst(VariableId);
-        variable.setSymbol(mock(IVariableSymbol.class));
-        return variable;
     }
 }

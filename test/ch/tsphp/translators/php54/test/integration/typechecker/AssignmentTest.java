@@ -34,7 +34,6 @@ public class AssignmentTest extends ATranslatorTypeCheckerTest
     @Parameterized.Parameters
     public static Collection<Object[]> testStrings() {
         List<Object[]> collection = new ArrayList<>();
-
         AssignHelper.addCastingAssignment(collection, false);
 
         return collection;

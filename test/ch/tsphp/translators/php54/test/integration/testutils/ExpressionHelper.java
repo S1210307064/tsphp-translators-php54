@@ -30,34 +30,37 @@ public class ExpressionHelper
      * @return The cast expressions
      */
     public static List<String[]> getCastToTypeExpressions(int offset) {
-        String $a = "($a !== null ? ($a instanceof MyClass ? $a : "
-                + "\\trigger_error('Cast failed, the evaluation type of $a must be MyClass', \\E_RECOVERABLE_ERROR)) "
-                + ": null)";
+        String $a = "($a !== null ? ($a !== false ? ($a instanceof MyClass ? $a : "
+                + "\\trigger_error('Cast failed, the evaluation type of $a must be MyClass.', \\E_RECOVERABLE_ERROR))"
+                + " : false)"
+                + " : null)";
         return Arrays.asList(new String[][]{
                 {"(MyClass) $a", $a},
                 {
                         "(Type) (MyClass) $a",
                         "(($_t1_" + (offset + 7) + " = " + $a + ") !== null ? "
+                                + "($_t1_" + (offset + 7) + " !== false ? "
                                 + "($_t1_" + (offset + 7) + " instanceof Type ? "
                                 + "$_t1_" + (offset + 7) + " "
                                 + ": \\trigger_error('Cast failed, the evaluation type of "
-                                + $a + " must be Type', \\E_RECOVERABLE_ERROR)" +
-                                ") "
-                                + ": null"
-                                + ")"
+                                + $a + " must be Type.', \\E_RECOVERABLE_ERROR)" +
+                                ")"
+                                + " : false)"
+                                + " : null)"
                 },
                 {"~~$a", "~~$a"},
                 {"@@$a", "@@$a"},
                 {
                         "@(Type) ~$a",
                         "@(($_t1_" + (offset + 8) + " = ~$a) !== null ? "
+                                + "($_t1_" + (offset + 8) + " !== false ? "
                                 + "($_t1_" + (offset + 8) + " instanceof Type ? "
                                 + "$_t1_" + (offset + 8) + " "
                                 + ": \\trigger_error('Cast failed, the evaluation type of "
-                                + "~$a must be Type', \\E_RECOVERABLE_ERROR)" +
-                                ") "
-                                + ": null"
-                                + ")"
+                                + "~$a must be Type.', \\E_RECOVERABLE_ERROR)" +
+                                ")"
+                                + " : false)"
+                                + " : null)"
                 },
         });
     }
@@ -162,13 +165,13 @@ public class ExpressionHelper
                 {
                         "(Type) $a",
                         "($a !== null ? ("
+                                + "$a !== false ? ("
                                 + "$a instanceof Type ? $a "
-                                + ": \\trigger_error('Cast failed, the evaluation type of $a must be Type', " +
-                                "\\E_RECOVERABLE_ERROR)"
-                                + ") : null)"
+                                + ": \\trigger_error('Cast failed, the evaluation type of $a must be Type.', " +
+                                "\\E_RECOVERABLE_ERROR))"
+                                + " : false)"
+                                + " : null)"
                 },
-                {"(int) $a", "(int) $a"},
-                {"(int?) $a", "($a !== null ? (int) $a : null)"},
                 {"~$a", "~$a"},
                 {"@$a", "@$a"},
                 {"!$a", "!$a"},
@@ -220,7 +223,6 @@ public class ExpressionHelper
                 {"'a'", "'a'"},
                 {"\"asdf\"", "\"asdf\""},
                 {"[1,2,'a'=>3]", "[1, 2, 'a' => 3]"},
-                {"(int) clone $a + $b", "(int) clone $a + $b"},
                 {"(-$a + $b) * $c", "(-$a + $b) * $c"},
                 {
                         "!($a instanceof Type) || $a < $b+$c == ~(1 | 3 & 12)",

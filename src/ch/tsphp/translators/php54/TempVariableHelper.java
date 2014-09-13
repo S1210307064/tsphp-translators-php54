@@ -7,9 +7,9 @@
 package ch.tsphp.translators.php54;
 
 import ch.tsphp.common.IScope;
-import ch.tsphp.common.ISymbol;
 import ch.tsphp.common.ITSPHPAst;
 import ch.tsphp.common.ITSPHPAstAdaptor;
+import ch.tsphp.common.symbols.ISymbol;
 import ch.tsphp.translators.php54.antlr.PHP54TranslatorWalker;
 
 /**

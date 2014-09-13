@@ -25,18 +25,18 @@ public class PHP54Translator implements ITranslator, IErrorLogger
 
     private StringTemplateGroup templateGroup;
     private IPrecedenceHelper precedenceHelper;
-    private ITempVariableHelper tempVariableHelper;
+    private ICastHelper castHelper;
     private Collection<IErrorLogger> errorLoggers = new ArrayDeque<>();
     private boolean hasFoundError;
     private Exception loadingTemplateException;
 
     public PHP54Translator(StringTemplateGroup theTemplateGroup,
             IPrecedenceHelper thePrecedenceHelper,
-            ITempVariableHelper theTempTempVariableHelper,
+            ICastHelper theCastVariableHelper,
             Exception exception) {
         templateGroup = theTemplateGroup;
         precedenceHelper = thePrecedenceHelper;
-        tempVariableHelper = theTempTempVariableHelper;
+        castHelper = theCastVariableHelper;
         loadingTemplateException = exception;
     }
 
@@ -45,7 +45,7 @@ public class PHP54Translator implements ITranslator, IErrorLogger
         String translation = null;
         if (loadingTemplateException == null) {
             ErrorReportingPHP54TranslatorWalker translator =
-                    new ErrorReportingPHP54TranslatorWalker(stream, precedenceHelper, tempVariableHelper);
+                    new ErrorReportingPHP54TranslatorWalker(stream, precedenceHelper, castHelper);
 
             for (IErrorLogger logger : errorLoggers) {
                 translator.registerErrorLogger(logger);

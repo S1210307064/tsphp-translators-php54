@@ -23,11 +23,10 @@ import ch.tsphp.typechecker.scopes.IGlobalNamespaceScope;
 import ch.tsphp.typechecker.scopes.IScopeHelper;
 import ch.tsphp.typechecker.scopes.NamespaceScope;
 import ch.tsphp.typechecker.scopes.ScopeHelper;
+import ch.tsphp.typechecker.symbols.ModifierSet;
 import ch.tsphp.typechecker.symbols.VariableSymbol;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.util.HashSet;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
@@ -65,7 +64,7 @@ public class TempVariableHelperScopesTest
         ast.getToken().setCharPositionInLine(14);
         IScope scope = createConditionalScope(scopeHelper, typeCheckerErrorReporter);
 
-        scope.define(new VariableSymbol(new TSPHPAst(), new HashSet<Integer>(), "$_t12_14"));
+        scope.define(new VariableSymbol(new TSPHPAst(), new ModifierSet(), "$_t12_14"));
         ast.setScope(scope);
 
         ITempVariableHelper tempVariableHelper = createTempVariableHelper();
@@ -94,7 +93,7 @@ public class TempVariableHelperScopesTest
         ast.getToken().setLine(12);
         ast.getToken().setCharPositionInLine(14);
         IScope scope = createNamespaceScope(scopeHelper, typeCheckerErrorReporter);
-        scope.define(new VariableSymbol(new TSPHPAst(), new HashSet<Integer>(), "$_t12_14"));
+        scope.define(new VariableSymbol(new TSPHPAst(), new ModifierSet(), "$_t12_14"));
         ast.setScope(scope);
 
         ITempVariableHelper tempVariableHelper = createTempVariableHelper();
@@ -122,7 +121,7 @@ public class TempVariableHelperScopesTest
         ast.getToken().setLine(12);
         ast.getToken().setCharPositionInLine(14);
         IScope scope = createGlobalNamespaceScope(scopeHelper);
-        scope.define(new VariableSymbol(new TSPHPAst(), new HashSet<Integer>(), "$_t12_14"));
+        scope.define(new VariableSymbol(new TSPHPAst(), new ModifierSet(), "$_t12_14"));
         ast.setScope(scope);
 
         ITempVariableHelper tempVariableHelper = createTempVariableHelper();

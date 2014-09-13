@@ -34,10 +34,14 @@ public class CastAssignTest extends ATranslatorTypeCheckerTest
         String prefix = "<?php\nnamespace{\n    ";
         String appendix = "\n}\n?>";
         return Arrays.asList(new Object[][]{
-                {"int $a =() 1 + 2;", prefix + "$a = (int) (1 + 2);" + appendix},
-                {"int $a =() '1'.'1';", prefix + "$a = (int) ('1' . '1');" + appendix},
-                {"int $a; $a =() 1 + 2;", prefix + "$a;\n    $a = (int) (1 + 2);" + appendix},
-                {"int $a; $a =() '1'.'1';", prefix + "$a;\n    $a = (int) ('1' . '1');" + appendix},
+                {"int $a =() 1 + 2;", prefix + "$a = (($_t1_13 = (1 + 2)) !== null ? ($_t1_13 !== false ? "
+                        + "(int) $_t1_13 : false) : null);" + appendix},
+                {"int $a =() '1'.'1';", prefix + "$a = (($_t1_14 = ('1' . '1')) !== null ? ($_t1_14 !== false ? "
+                        + "(int) $_t1_14 : false) : null);" + appendix},
+                {"int $a; $a =() 1 + 2;", prefix + "$a;\n    $a = (($_t1_17 = (1 + 2)) !== null ? "
+                        + "($_t1_17 !== false ? (int) $_t1_17 : false) : null);" + appendix},
+                {"int $a; $a =() '1'.'1';", prefix + "$a;\n    $a = (($_t1_18 = ('1' . '1')) !== null ? "
+                        + "($_t1_18 !== false ? (int) $_t1_18 : false) : null);" + appendix},
         });
     }
 }

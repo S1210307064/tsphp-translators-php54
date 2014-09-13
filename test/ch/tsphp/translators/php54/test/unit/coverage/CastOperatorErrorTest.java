@@ -9,6 +9,7 @@ package ch.tsphp.translators.php54.test.unit.coverage;
 import ch.tsphp.common.ITSPHPAst;
 import ch.tsphp.translators.php54.antlrmod.ErrorReportingPHP54TranslatorWalker;
 import ch.tsphp.translators.php54.test.unit.testutils.AWalkerTest;
+import org.antlr.runtime.MismatchedTreeNodeException;
 import org.antlr.runtime.NoViableAltException;
 import org.antlr.runtime.RecognitionException;
 import org.junit.Test;
@@ -38,7 +39,7 @@ public class CastOperatorErrorTest extends AWalkerTest
         ErrorReportingPHP54TranslatorWalker walker = spy(createWalker(ast));
         walker.castOperator();
 
-        ArgumentCaptor<NoViableAltException> captor = ArgumentCaptor.forClass(NoViableAltException.class);
+        ArgumentCaptor<MismatchedTreeNodeException> captor = ArgumentCaptor.forClass(MismatchedTreeNodeException.class);
         verify(walker).reportError(captor.capture());
         assertThat(captor.getValue().token.getType(), is(EOF));
     }
@@ -51,7 +52,7 @@ public class CastOperatorErrorTest extends AWalkerTest
         ErrorReportingPHP54TranslatorWalker walker = spy(createWalker(ast));
         walker.castOperator();
 
-        ArgumentCaptor<NoViableAltException> captor = ArgumentCaptor.forClass(NoViableAltException.class);
+        ArgumentCaptor<MismatchedTreeNodeException> captor = ArgumentCaptor.forClass(MismatchedTreeNodeException.class);
         verify(walker).reportError(captor.capture());
         assertThat(captor.getValue().token.getType(), is(Plus));
     }
@@ -64,7 +65,7 @@ public class CastOperatorErrorTest extends AWalkerTest
         ErrorReportingPHP54TranslatorWalker walker = spy(createWalker(ast));
         walker.castOperator();
 
-        ArgumentCaptor<NoViableAltException> captor = ArgumentCaptor.forClass(NoViableAltException.class);
+        ArgumentCaptor<MismatchedTreeNodeException> captor = ArgumentCaptor.forClass(MismatchedTreeNodeException.class);
         verify(walker).reportError(captor.capture());
         assertThat(captor.getValue().token.getType(), is(UP));
     }
@@ -81,81 +82,8 @@ public class CastOperatorErrorTest extends AWalkerTest
 
         ArgumentCaptor<NoViableAltException> captor = ArgumentCaptor.forClass(NoViableAltException.class);
         verify(walker).reportError(captor.capture());
-        assertThat(captor.getValue().token.getType(), is(Plus));
-    }
-
-    @Test
-    public void ErroneousTypeModifier_reportNoViableAltException() throws RecognitionException {
-        ITSPHPAst ast = createAst(CAST);
-        ITSPHPAst type = createAst(TYPE);
-        ast.addChild(type);
-        ITSPHPAst typeModifier = createAst(TYPE_MODIFIER);
-        type.addChild(typeModifier);
-        typeModifier.addChild(createAst(Plus));
-
-        ErrorReportingPHP54TranslatorWalker walker = spy(createWalker(ast));
-        walker.castOperator();
-
-        ArgumentCaptor<NoViableAltException> captor = ArgumentCaptor.forClass(NoViableAltException.class);
-        verify(walker).reportError(captor.capture());
-        assertThat(captor.getValue().token.getType(), is(Plus));
-    }
-
-
-    @Test
-    public void ErroneousTypeModifierWithCast_reportNoViableAltException() throws RecognitionException {
-        ITSPHPAst ast = createAst(CAST);
-        ITSPHPAst type = createAst(TYPE);
-        ast.addChild(type);
-        ITSPHPAst typeModifier = createAst(TYPE_MODIFIER);
-        type.addChild(typeModifier);
-        typeModifier.addChild(createAst(Cast));
-        typeModifier.addChild(createAst(Plus));
-
-        ErrorReportingPHP54TranslatorWalker walker = spy(createWalker(ast));
-        walker.castOperator();
-
-        ArgumentCaptor<NoViableAltException> captor = ArgumentCaptor.forClass(NoViableAltException.class);
-        verify(walker).reportError(captor.capture());
-        assertThat(captor.getValue().token.getType(), is(Plus));
-    }
-
-    @Test
-    public void ErroneousTypeModifierWithCastAndQuestionMark_reportNoViableAltException() throws RecognitionException {
-        ITSPHPAst ast = createAst(CAST);
-        ITSPHPAst type = createAst(TYPE);
-        ast.addChild(type);
-        ITSPHPAst typeModifier = createAst(TYPE_MODIFIER);
-        type.addChild(typeModifier);
-        typeModifier.addChild(createAst(Cast));
-        typeModifier.addChild(createAst(QuestionMark));
-        typeModifier.addChild(createAst(Plus));
-
-        ErrorReportingPHP54TranslatorWalker walker = spy(createWalker(ast));
-        walker.castOperator();
-
-        ArgumentCaptor<NoViableAltException> captor = ArgumentCaptor.forClass(NoViableAltException.class);
-        verify(walker).reportError(captor.capture());
-        assertThat(captor.getValue().token.getType(), is(Plus));
-    }
-
-    @Test
-    public void ErroneousTypeModifierWithQuestionMark_reportNoViableAltException()
-            throws RecognitionException {
-        ITSPHPAst ast = createAst(CAST);
-        ITSPHPAst type = createAst(TYPE);
-        ast.addChild(type);
-        ITSPHPAst typeModifier = createAst(TYPE_MODIFIER);
-        type.addChild(typeModifier);
-        typeModifier.addChild(createAst(QuestionMark));
-        typeModifier.addChild(createAst(Plus));
-
-        ErrorReportingPHP54TranslatorWalker walker = spy(createWalker(ast));
-        walker.castOperator();
-
-        ArgumentCaptor<NoViableAltException> captor = ArgumentCaptor.forClass(NoViableAltException.class);
-        verify(walker).reportError(captor.capture());
-        assertThat(captor.getValue().token.getType(), is(Plus));
+        //since walker uses tMod=. next token is up and not PLUS as previously
+        assertThat(captor.getValue().token.getType(), is(UP));
     }
 
     @Test

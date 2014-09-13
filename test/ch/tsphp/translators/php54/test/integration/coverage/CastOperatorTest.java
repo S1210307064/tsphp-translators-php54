@@ -6,7 +6,7 @@
 
 package ch.tsphp.translators.php54.test.integration.coverage;
 
-import ch.tsphp.translators.php54.test.integration.testutils.ATranslatorParserTest;
+import ch.tsphp.translators.php54.test.integration.testutils.ATranslatorTypeCheckerTest;
 import org.antlr.runtime.RecognitionException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,7 +17,7 @@ import java.util.Arrays;
 import java.util.Collection;
 
 @RunWith(Parameterized.class)
-public class CastOperatorTest extends ATranslatorParserTest
+public class CastOperatorTest extends ATranslatorTypeCheckerTest
 {
 
     public CastOperatorTest(String testString, String expectedResult) {
@@ -31,20 +31,35 @@ public class CastOperatorTest extends ATranslatorParserTest
 
     @Parameterized.Parameters
     public static Collection<Object[]> testStrings() {
-        String $a = "($a !== null ? ($a instanceof MyClass ? $a : "
-                + "\\trigger_error('Cast failed, the evaluation type of $a must be MyClass', \\E_RECOVERABLE_ERROR)) "
-                + ": null);";
+        String prefix = "<?php\nnamespace{\n    $a = null;\n    ($a !== null ? ($a !== false ? ";
+        String appendix = " : false) : null);\n}\n?>";
         return Arrays.asList(new Object[][]{
-                {"(cast bool) $a;", "(bool) $a;"},
-                {"(cast bool?) $a;", "($a !== null ? (bool) $a : null);"},
-                {"(cast int) $a;", "(int) $a;"},
-                {"(cast int?) $a;", "($a !== null ? (int) $a : null);"},
-                {"(cast float) $a;", "(float) $a;"},
-                {"(cast float?) $a;", "($a !== null ? (float) $a : null);"},
-                {"(cast string) $a;", "(string) $a;"},
-                {"(cast string?) $a;", "($a !== null ? (string) $a : null);"},
-                {"(cast array) $a;", "($a !== null ? (array) $a : null);"},
-                {"(cast MyClass) $a;", $a},
+                {"mixed $a=null; (cast bool) $a;", prefix + "(bool) $a" + appendix},
+                {"mixed $a=null; (cast bool!) $a;", prefix + "(bool) $a" + appendix},
+                {"mixed $a=null; (cast bool?) $a;", prefix + "(bool) $a" + appendix},
+                {"mixed $a=null; (cast bool!?) $a;", prefix + "(bool) $a" + appendix},
+                {"mixed $a=null; (cast int) $a;", prefix + "(int) $a" + appendix},
+                {"mixed $a=null; (cast int!) $a;", prefix + "(int) $a" + appendix},
+                {"mixed $a=null; (cast int?) $a;", prefix + "(int) $a" + appendix},
+                {"mixed $a=null; (cast int!?) $a;", prefix + "(int) $a" + appendix},
+                {"mixed $a=null; (cast float) $a;", prefix + "(float) $a" + appendix},
+                {"mixed $a=null; (cast float!) $a;", prefix + "(float) $a" + appendix},
+                {"mixed $a=null; (cast float?) $a;", prefix + "(float) $a" + appendix},
+                {"mixed $a=null; (cast float!?) $a;", prefix + "(float) $a" + appendix},
+                {"mixed $a=null; (cast string) $a;", prefix + "(string) $a" + appendix},
+                {"mixed $a=null; (cast string!) $a;", prefix + "(string) $a" + appendix},
+                {"mixed $a=null; (cast string?) $a;", prefix + "(string) $a" + appendix},
+                {"mixed $a=null; (cast string!?) $a;", prefix + "(string) $a" + appendix},
+                {"mixed $a=null; (cast array) $a;", prefix + "(array) $a" + appendix},
+                {
+                        "class MyClass{} mixed $a=null; (cast MyClass) $a;",
+                        "<?php\nnamespace{\n    class MyClass {}\n    $a = null;\n    "
+                                + "($a !== null ? ($a !== false ? "
+                                + "($a instanceof MyClass ? $a : "
+                                + "\\trigger_error('Cast failed, the evaluation type of $a must be MyClass.',"
+                                + " \\E_RECOVERABLE_ERROR))"
+                                + " : false) : null);\n}\n?>"
+                },
         });
     }
 }

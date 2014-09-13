@@ -41,18 +41,19 @@ public class VariableDeclarationTest extends ATranslatorParserTest
         List<String[]> expressions = ExpressionHelper.getAllExpressions(7);
         for (String[] expression : expressions) {
             collection.add(new Object[]{
-                "int $a=" + expression[0] + ";",
-                "$a = " + expression[1] + ";"
+                    "int $a=" + expression[0] + ";",
+                    "$a = " + expression[1] + ";"
             });
         }
 
-        expressions = ExpressionHelper.getExpressionsWithoutUnaryPrimary();
-        for (String[] expression : expressions) {
-            collection.add(new Object[]{
-                    "int $a=()" + expression[0] + ";",
-                    "$a = (int) (" + expression[1] + ");"
-            });
-        }
+        //TODO rstoll TSPHP-835 improve castings in output
+//        expressions = ExpressionHelper.getExpressionsWithoutUnaryPrimary();
+//        for (String[] expression : expressions) {
+//            collection.add(new Object[]{
+//                    "int $a=()" + expression[0] + ";",
+//                    "$a = (int) (" + expression[1] + ");"
+//            });
+//        }
 
         return collection;
     }

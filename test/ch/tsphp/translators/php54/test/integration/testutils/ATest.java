@@ -17,6 +17,7 @@ import ch.tsphp.parser.antlr.TSPHPParser;
 import ch.tsphp.parser.antlrmod.ANTLRNoCaseStringStream;
 import ch.tsphp.parser.antlrmod.ErrorReportingTSPHPLexer;
 import ch.tsphp.parser.antlrmod.ErrorReportingTSPHPParser;
+import ch.tsphp.translators.php54.CastHelper;
 import ch.tsphp.translators.php54.PHP54PrecedenceHelper;
 import ch.tsphp.translators.php54.TempVariableHelper;
 import ch.tsphp.translators.php54.antlrmod.ErrorReportingPHP54TranslatorWalker;
@@ -102,8 +103,8 @@ public abstract class ATest implements IErrorLogger
         StringTemplateGroup templates = new StringTemplateGroup(fr);
         fr.close();
 
-        translator = new ErrorReportingPHP54TranslatorWalker(commonTreeNodeStream, new PHP54PrecedenceHelper(),
-                new TempVariableHelper(astAdaptor));
+        translator = new ErrorReportingPHP54TranslatorWalker(
+                commonTreeNodeStream, new PHP54PrecedenceHelper(), new CastHelper(new TempVariableHelper(astAdaptor)));
         translator.registerErrorLogger(this);
         translator.setTemplateLib(templates);
 

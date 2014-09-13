@@ -27,7 +27,7 @@ public class PHP54TranslatorFactory implements ITranslatorFactory
 
     private StringTemplateGroup templateGroup;
     private final IPrecedenceHelper precedenceHelper;
-    private final ITempVariableHelper tempVariableHelper;
+    private final ICastHelper castHelper;
     private Exception loadingTemplateException;
 
     public PHP54TranslatorFactory() {
@@ -36,7 +36,7 @@ public class PHP54TranslatorFactory implements ITranslatorFactory
 
     public PHP54TranslatorFactory(ITSPHPAstAdaptor anAstAdaptor) {
         precedenceHelper = new PHP54PrecedenceHelper();
-        tempVariableHelper = new TempVariableHelper(anAstAdaptor);
+        castHelper = new CastHelper(new TempVariableHelper(anAstAdaptor));
         InputStreamReader streamReader = null;
         try {
             // LOAD TEMPLATES (via classpath)
@@ -64,6 +64,6 @@ public class PHP54TranslatorFactory implements ITranslatorFactory
 
     @Override
     public ITranslator build() {
-        return new PHP54Translator(templateGroup, precedenceHelper, tempVariableHelper, loadingTemplateException);
+        return new PHP54Translator(templateGroup, precedenceHelper, castHelper, loadingTemplateException);
     }
 }

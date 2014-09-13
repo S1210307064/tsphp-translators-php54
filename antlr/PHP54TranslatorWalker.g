@@ -22,20 +22,21 @@ options {
 package ch.tsphp.translators.php54.antlr;
 
 import ch.tsphp.common.ITSPHPAst;
-import ch.tsphp.common.ITypeSymbol;
+import ch.tsphp.common.symbols.ITypeSymbol;
+import ch.tsphp.translators.php54.ICastHelper;
 import ch.tsphp.translators.php54.IPrecedenceHelper;
 import ch.tsphp.translators.php54.ITempVariableHelper;
 
 }
 
 @members{
+private ICastHelper castHelper;
 private IPrecedenceHelper precedenceHelper;
-private ITempVariableHelper tempVariableHelper;
 
-public PHP54TranslatorWalker(TreeNodeStream input, IPrecedenceHelper thePrecedenceHelper, ITempVariableHelper theTempVariableHelper) {
+public PHP54TranslatorWalker(TreeNodeStream input, IPrecedenceHelper thePrecedenceHelper, ICastHelper theCastHelper) {
     this(input);
     precedenceHelper = thePrecedenceHelper;
-    tempVariableHelper = theTempVariableHelper;
+    castHelper = theCastHelper;
 }
 
 private String getMethodName(String name) {
@@ -186,8 +187,14 @@ localVariableDeclarationList
 		-> localVariableDeclarationList(variables={$variables})
 	;
 	
-typeModifier returns[boolean isCast, boolean isNullable]
-	:	^(TYPE_MODIFIER cast='cast'? nullable='?'? variableModifier?) {$isCast=cast!=null; $isNullable=nullable!=null;} -> {$variableModifier.st}
+typeModifier returns[boolean isCast,boolean isFalseable, boolean isNullable]
+	:	^(TYPE_MODIFIER cast='cast'? falseable='!'? nullable='?'? variableModifier?) 
+		{
+		    $isCast=cast!=null; 
+		    $isNullable=nullable!=null;
+		    $isFalseable=falseable!=null;
+		} 
+		-> {$variableModifier.st}
 	|	TYPE_MODIFIER -> {null}
 	;
 	
@@ -372,7 +379,7 @@ paramDeclaration
 			parameterNormalOrOptional
 		)
 		{
-		    defaultValue =  $typeModifier.isNullable && typeName!=null ? "null" : $parameterNormalOrOptional.defaultValue;
+  		    defaultValue = $typeModifier.isNullable && typeName!=null ? "null" : $parameterNormalOrOptional.defaultValue;
 		}
 		-> parameter(type={$typeName.text}, variableId={$parameterNormalOrOptional.variableId}, defaultValue={defaultValue})
 	;
@@ -711,39 +718,12 @@ division returns[boolean needParentheses]
 	;
 
 castOperator
-@init{boolean isNullable = false;}
 	:	^(CAST
-			^(TYPE 
-				(	^(TYPE_MODIFIER Cast? ('?'{isNullable=true;})?)
-				|	TYPE_MODIFIER
-				)
-				(type=scalarTypes|type=arrayType{isNullable=true;})
-			)
-			expression
-		)
-		-> primitiveCast(isNullable = {isNullable}, type={$type.st}, expression={$expression.st})
-		
-	|	^(CAST
-			^(TYPE 
-				(	^(TYPE_MODIFIER Cast? '?'?)
-				|	TYPE_MODIFIER
-				)
-				TYPE_NAME
-			)
+			^(TYPE tMod=. (type=scalarTypes|type=arrayType|type=classInterfaceType))
 			expr=expression
 		)
 		{
-		    ITSPHPAst ast = $expr.start;
-		    if(ast!=null){
-		        String exprSt = ast.getText();
-		        String tempVariableName=null;
-   		        if(!exprSt.substring(0,1).equals("$")){
-		            tempVariableName = tempVariableHelper.getTempVariableNameForCast(ast);
-		            $st = %castWithTempVariable(type={$TYPE_NAME.text}, expression={$expr.st}, tempVariableName={tempVariableName});
-		        }else{
-		            $st = %cast(type={$TYPE_NAME.text}, variableId={$expr.st});
-		        }
-		    }
+		    $st = castHelper.getCast(templateLib, $type.start, $expr.start, $expr.st);
 		}
 	;
 	
