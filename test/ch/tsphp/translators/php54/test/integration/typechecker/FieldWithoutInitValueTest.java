@@ -17,10 +17,10 @@ import java.util.Arrays;
 import java.util.Collection;
 
 @RunWith(Parameterized.class)
-public class ClassMemberWithoutInitValueTest extends ATranslatorTypeCheckerTest
+public class FieldWithoutInitValueTest extends ATranslatorTypeCheckerTest
 {
 
-    public ClassMemberWithoutInitValueTest(String testString, String theExpectedResult) {
+    public FieldWithoutInitValueTest(String testString, String theExpectedResult) {
         super(testString, theExpectedResult);
     }
 
@@ -34,19 +34,19 @@ public class ClassMemberWithoutInitValueTest extends ATranslatorTypeCheckerTest
         String prefix = "<?php\nnamespace{\n    class a {\n        public $a = ";
         String appendix = ";\n    }\n}\n?>";
         return Arrays.asList(new Object[][]{
-            {"class a{bool $a;}", prefix + "false" + appendix},
-            {"class a{int $a;}", prefix + "0" + appendix},
-            {"class a{float $a;}", prefix + "0.0" + appendix},
-            {"class a{string $a;}", prefix + "''" + appendix},
-            {"class a{array $a;}", prefix + "null" + appendix},
-            {"class a{resource $a;}", prefix + "null" + appendix},
-            {"class a{mixed $a;}", prefix + "null" + appendix},
-            {"class a{bool? $a;}", prefix + "null" + appendix},
-            {"class a{int? $a;}", prefix + "null" + appendix},
-            {"class a{float? $a;}", prefix + "null" + appendix},
-            {"class a{string? $a;}", prefix + "null" + appendix},
-            {"class a{Exception $a;}", prefix + "null" + appendix},
-            {"class a{ErrorException $a;}", prefix + "null" + appendix}
+                {"class a{bool $a;}", prefix + "false" + appendix},
+                {"class a{int $a;}", prefix + "0" + appendix},
+                {"class a{float $a;}", prefix + "0.0" + appendix},
+                {"class a{string $a;}", prefix + "''" + appendix},
+                {"class a{array $a;}", prefix + "null" + appendix},
+                {"class a{resource $a;}", prefix + "null" + appendix},
+                {"class a{mixed $a;}", prefix + "null" + appendix},
+                {"class a{bool? $a;}", prefix + "null" + appendix},
+                {"class a{int? $a;}", prefix + "null" + appendix},
+                {"class a{float? $a;}", prefix + "null" + appendix},
+                {"class a{string? $a;}", prefix + "null" + appendix},
+                {"class a{Exception $a;}", prefix + "null" + appendix},
+                {"class a{ErrorException $a;}", prefix + "null" + appendix}
         });
     }
 }

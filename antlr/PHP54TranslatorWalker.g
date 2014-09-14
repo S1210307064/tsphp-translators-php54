@@ -137,7 +137,7 @@ classBody
 	
 classBodyDefinition
 	:	constDeclarationList 		-> {$constDeclarationList.st}
-	|	classMemberDeclaration		-> {$classMemberDeclaration.st}
+	|	fieldDeclaration		-> {$fieldDeclaration.st}
 	|	abstractConstructDeclaration 	-> {$abstractConstructDeclaration.st}
 	|	constructDeclaration 		-> {$constructDeclaration.st}
 	|	abstractMethodDeclaration 	-> {$abstractMethodDeclaration.st}
@@ -167,8 +167,8 @@ unaryPrimitiveAtom
 	;
 
 
-classMemberDeclaration
-	:	^(CLASS_MEMBER variableDeclarationList) -> {$variableDeclarationList.st}
+fieldDeclaration
+	:	^(FIELD variableDeclarationList) -> {$variableDeclarationList.st}
 	;
 	
 variableDeclarationList
@@ -605,7 +605,7 @@ primitiveAtomWithConstant
 	|	Null						-> {%{$Null.text}}
 	|	^(TypeArray keyValuePairs+=arrayKeyValue*)	-> array(content ={$keyValuePairs})
 	|	CONSTANT					-> {%{$CONSTANT.text.substring(0,$CONSTANT.text.length()-1)}}
-	|	^(CLASS_STATIC_ACCESS staticAccess CONSTANT)    -> classMemberAccessStatic(accessor={$staticAccess.st}, identifier={$CONSTANT.text.substring(0,$CONSTANT.text.length()-1)})
+	|	^(CLASS_STATIC_ACCESS staticAccess CONSTANT)    -> fieldAccessStatic(accessor={$staticAccess.st}, identifier={$CONSTANT.text.substring(0,$CONSTANT.text.length()-1)})
 	;
 
 arrayKeyValue
@@ -762,11 +762,11 @@ methodCallStatic
 
 classStaticAccess
 	:	^(CLASS_STATIC_ACCESS staticAccess identifier=CLASS_STATIC_ACCESS_VARIABLE_ID)
-		-> classMemberAccessStatic(accessor={$staticAccess.st}, identifier={$identifier.text})
+		-> fieldAccessStatic(accessor={$staticAccess.st}, identifier={$identifier.text})
 	;	
 
 postFixExpression
-	:	^(CLASS_MEMBER_ACCESS expression Identifier) 			-> classMemberAccess(expression={$expression.st}, identifier={$Identifier.text})
+	:	^(FIELD_ACCESS expression Identifier) 				-> fieldAccess(expression={$expression.st}, identifier={$Identifier.text})
 	|	^(ARRAY_ACCESS expr=expression index=expression)		-> arrayAccess(expression={$expr.st}, index={$index.st})
 	|	^(METHOD_CALL_POSTFIX expression Identifier actualParameters)	-> postFixCall(expression={$expression.st}, identifier={getMethodName($Identifier.text)}, parameters={$actualParameters.parameters})
 	;

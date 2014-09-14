@@ -212,11 +212,11 @@ methodCallStatic(callee, identifier, parameters) ::= <<
 <callee>::<identifier>(<parameters; separator=", ">)
 >>
 
-classMemberAccessStatic(accessor, identifier) ::= <<
+fieldAccessStatic(accessor, identifier) ::= <<
 <accessor>::<identifier>
 >>
 
-classMemberAccess(expression, identifier) ::= <<
+fieldAccess(expression, identifier) ::= <<
 <expression>-><identifier>
 >>
 
@@ -277,5 +277,3 @@ classInterfaceCast(type, expression)::=<<
 classInterfaceCastWithTempVariable(type, expression, tempVariableName)::=<<
 ((<tempVariableName> = <expression>) !== null ? (<tempVariableName> !== false ? (<tempVariableName> instanceof <type> ? <tempVariableName> : \trigger_error('Cast failed, the evaluation type of <expression> must be <type>.', \E_RECOVERABLE_ERROR)) : false) : null)
 >>
-
-

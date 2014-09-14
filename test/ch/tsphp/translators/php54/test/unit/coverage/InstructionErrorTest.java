@@ -15,12 +15,12 @@ import org.antlr.runtime.RecognitionException;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 
-import static ch.tsphp.typechecker.antlr.TSPHPTypeCheckWalker.Break;
-import static ch.tsphp.typechecker.antlr.TSPHPTypeCheckWalker.Continue;
-import static ch.tsphp.typechecker.antlr.TSPHPTypeCheckWalker.EOF;
-import static ch.tsphp.typechecker.antlr.TSPHPTypeCheckWalker.Echo;
-import static ch.tsphp.typechecker.antlr.TSPHPTypeCheckWalker.NAMESPACE_BODY;
-import static ch.tsphp.typechecker.antlr.TSPHPTypeCheckWalker.Try;
+import static ch.tsphp.translators.php54.antlr.PHP54TranslatorWalker.Break;
+import static ch.tsphp.translators.php54.antlr.PHP54TranslatorWalker.Continue;
+import static ch.tsphp.translators.php54.antlr.PHP54TranslatorWalker.EOF;
+import static ch.tsphp.translators.php54.antlr.PHP54TranslatorWalker.Echo;
+import static ch.tsphp.translators.php54.antlr.PHP54TranslatorWalker.NAMESPACE_BODY;
+import static ch.tsphp.translators.php54.antlr.PHP54TranslatorWalker.Try;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.spy;

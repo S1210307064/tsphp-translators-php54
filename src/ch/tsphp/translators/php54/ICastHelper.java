@@ -10,8 +10,14 @@ import ch.tsphp.common.ITSPHPAst;
 import org.antlr.stringtemplate.StringTemplate;
 import org.antlr.stringtemplate.StringTemplateGroup;
 
+/**
+ * Represents a helper which deals with casts, built-in casts respectively.
+ */
 public interface ICastHelper
 {
+    /**
+     * Returns the output code for a built-in cast in the form of a StringTemplate.
+     */
     StringTemplate getCast(StringTemplateGroup templateLib, ITSPHPAst typeAst,
             ITSPHPAst expression, StringTemplate expressionTemplate);
 }
