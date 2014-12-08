@@ -41,7 +41,7 @@ public class PHP54PrecedenceHelper implements IPrecedenceHelper
         precedenceRules.put(PHP54TranslatorWalker.Assign, 20);
         precedenceRules.put(PHP54TranslatorWalker.PlusAssign, 20);
         precedenceRules.put(PHP54TranslatorWalker.MinusAssign, 20);
-        precedenceRules.put(PHP54TranslatorWalker.Dot, 20);
+        precedenceRules.put(PHP54TranslatorWalker.DotAssign, 20);
         precedenceRules.put(PHP54TranslatorWalker.MultiplyAssign, 20);
         precedenceRules.put(PHP54TranslatorWalker.DivideAssign, 20);
         precedenceRules.put(PHP54TranslatorWalker.BitwiseAndAssign, 20);
