@@ -16,7 +16,7 @@
 
     <property file="${basedir}/ant/antlr.properties"/>
 
-    <property name="type-checker.jar" location="${basedir}/../TSPHP-type-checker/build/lib"/>
+    <property name="type-checker.jar" location="${basedir}/../tsphp-type-checker/build/lib"/>
 
     <!-- ================================================================== -->
     <!-- Specialised Target: dist -->
@@ -55,7 +55,7 @@
 
     <target name="cp.all" depends="cp.common, cp.parser, cp.parser-common, cp.type-checker"/>
 
-    <target name="cp.type-checker" depends="" description="copy the type checker jar to the lib folder">
+    <target name="cp.type-checker" depends="" description="copy the type checker jar to the lib dev folder">
         <delete>
             <fileset dir="${libdev}" includes="TSPHP-type-checker-*.jar"/>
         </delete>
