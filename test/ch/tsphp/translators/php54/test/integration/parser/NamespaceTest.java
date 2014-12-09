@@ -6,8 +6,8 @@
 
 package ch.tsphp.translators.php54.test.integration.parser;
 
-import ch.tsphp.translators.php54.test.integration.testutils.ATranslatorParserTest;
 import ch.tsphp.parser.antlr.TSPHPParser;
+import ch.tsphp.translators.php54.test.integration.testutils.ATranslatorParserTest;
 import org.antlr.runtime.ParserRuleReturnScope;
 import org.antlr.runtime.RecognitionException;
 import org.junit.Test;
@@ -30,8 +30,8 @@ public class NamespaceTest extends ATranslatorParserTest
     public void test() throws RecognitionException, IOException {
         translate();
     }
-    
-    
+
+
     @Override
     public ParserRuleReturnScope parserRun(TSPHPParser parser) throws RecognitionException {
         return parser.compilationUnit();
@@ -45,9 +45,17 @@ public class NamespaceTest extends ATranslatorParserTest
     @Parameterized.Parameters
     public static Collection<Object[]> testStrings() {
         return Arrays.asList(new Object[][]{
-                    {"namespace{}", "<?php\nnamespace{}\n?>"},
-                    {"namespace  {}", "<?php\nnamespace{}\n?>"},
-                    {"namespace a{}", "<?php\nnamespace a{}\n?>"}
-                });
+                {"namespace{}", "<?php\nnamespace{}\n?>"},
+                {"namespace  {}", "<?php\nnamespace{}\n?>"},
+                {"namespace a{}", "<?php\nnamespace a{}\n?>"},
+                {"namespace a\\b{}", "<?php\nnamespace a\\b{}\n?>"},
+                {"namespace a;", "<?php\nnamespace a{}\n?>"},
+                {"namespace a\\b\\c;", "<?php\nnamespace a\\b\\c{}\n?>"},
+                {"namespace a\\b{} namespace{}", "<?php\nnamespace a\\b{}\nnamespace{}\n?>"},
+                {
+                        " namespace{} namespace a\\b{}  namespace{}  namespace a{}",
+                        "<?php\nnamespace{}\nnamespace a\\b{}\nnamespace{}\nnamespace a{}\n?>"
+                },
+        });
     }
 }
