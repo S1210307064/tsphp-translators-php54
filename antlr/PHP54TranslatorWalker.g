@@ -81,8 +81,8 @@ statement
     ;
     
 useDeclarationList
-    :   ^('use' useDeclaration+)
-        -> useDeclarationList(useDeclarations={$useDeclaration.st})
+    :   ^('use' declarations+=useDeclaration+)
+        -> useDeclarationList(useDeclarations={$declarations})
     ;
 
 useDeclaration

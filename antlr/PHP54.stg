@@ -25,7 +25,7 @@ body(statements) ::= <<
 >>
 
 useDeclarationList(useDeclarations) ::= <<
-use <useDeclarations; separator=",">;
+use <useDeclarations; separator=", ">;
 >>
 
 useDeclaration(type, alias) ::= <<
