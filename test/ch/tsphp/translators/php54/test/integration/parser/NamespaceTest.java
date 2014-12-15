@@ -56,6 +56,10 @@ public class NamespaceTest extends ATranslatorParserTest
                         " namespace{} namespace a\\b{}  namespace{}  namespace a{}",
                         "<?php\nnamespace{}\nnamespace a\\b{}\nnamespace{}\nnamespace a{}\n?>"
                 },
+                //without namespace and empty statement
+                {";", "<?php\nnamespace{\n}\n?>"},
+                //without namespace and statement
+                {"", "<?php\nnamespace{}\n?>"},
         });
     }
 }
