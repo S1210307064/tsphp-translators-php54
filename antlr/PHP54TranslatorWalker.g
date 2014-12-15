@@ -158,14 +158,17 @@ constDeclaration
     ;
     
 unaryPrimitiveAtom
+@init{
+   String unary="";
+}
     :   primitiveAtomWithConstant
         -> {$primitiveAtomWithConstant.st}
 
-    |   ^(  (    unary=UNARY_MINUS
-            |    unary=UNARY_PLUS
+    |   ^(  (   UNARY_MINUS {unary="-";}
+            |   UNARY_PLUS  {unary="+";}
             ) primitiveAtomWithConstant
         ) 
-        -> unaryPostOperator(operator = {$unary.text}, expression = {$primitiveAtomWithConstant.st})
+        -> unaryPreOperator(operator = {unary}, expression = {$primitiveAtomWithConstant.st})
     ;
 
 

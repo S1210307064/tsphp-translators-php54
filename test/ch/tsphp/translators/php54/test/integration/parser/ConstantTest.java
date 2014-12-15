@@ -48,7 +48,7 @@ public class ConstantTest extends ATranslatorParserTest
                 {"const int a = null;", "const a = null;"},
                 //only valid since we only use the parser, b is not defined
                 {"const int a = b;", "const a = b;"},
-                //TSPHP does not support constant arrays
+                //TODO rstoll TSPHP-793 constant arrays
 //                {"const array a = [1,2,3];", "const a = [1, 2, 3];"},
 //                {"const array a = ['a'=> 1, 'b' =>2, 2 => 3];", "const a = ['a' => 1, 'b' => 2, 2 => 3];"},
                 // multiple constants
@@ -60,7 +60,7 @@ public class ConstantTest extends ATranslatorParserTest
                                 + "f = null, g = h, i = [1, 2], j = ['a' => 'b'];"
                 },
                 //unary primitive atom
-                {"const a = +1, b = -2;", "const a = +1, b = -2;"},
+                {"const int a = +1, b = -2;", "const a = +1, b = -2;"},
         });
     }
 }
