@@ -113,8 +113,8 @@ public class ParameterListHelper
                 prefixExpected + "array $a = null" + appendixExpected
         });
         collection.add(new Object[]{
-                prefix + "cast array $a" + appendix,
-                prefixExpected + "array $a" + appendixExpected
+                prefix + "cast array? $a" + appendix,
+                prefixExpected + "array $a = null" + appendixExpected
         });
 
         collection.add(new Object[]{

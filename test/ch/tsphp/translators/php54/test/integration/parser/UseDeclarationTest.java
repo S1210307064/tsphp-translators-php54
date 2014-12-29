@@ -17,10 +17,10 @@ import java.util.Arrays;
 import java.util.Collection;
 
 @RunWith(Parameterized.class)
-public class UseTest extends ATranslatorParserTest
+public class UseDeclarationTest extends ATranslatorParserTest
 {
 
-    public UseTest(String testString, String expectedResult) {
+    public UseDeclarationTest(String testString, String expectedResult) {
         super(testString, expectedResult);
     }
 

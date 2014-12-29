@@ -257,10 +257,13 @@ primitiveTypesWithoutArray
     ;
     
 scalarTypes
-    :   TypeBool    -> {%{$TypeBool.text}}
-    |   TypeInt     -> {%{$TypeInt.text}}
-    |   TypeFloat   -> {%{$TypeFloat.text}}
-    |   TypeString  -> {%{$TypeString.text}}
+@init{
+    $st = %{$start.getText()};
+}
+    :   TypeBool
+    |   TypeInt
+    |   TypeFloat
+    |   TypeString
     ;
     
 abstractConstructDeclaration
@@ -415,7 +418,7 @@ parameterNormalOrOptional returns[String variableId,String defaultValue]
     ;
 
 block returns[List<Object> instructions]
-    :   ^(BLOCK instr+=instruction*) {$instructions=$instr;}
+    :   ^(BLOCK instr+=instruction+) {$instructions=$instr;}
     |   BLOCK
     ;
     

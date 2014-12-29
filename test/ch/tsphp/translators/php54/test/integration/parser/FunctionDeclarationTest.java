@@ -20,11 +20,11 @@ import java.util.Collection;
 import java.util.List;
 
 @RunWith(Parameterized.class)
-public class FunctionTest extends ATranslatorParserTest
+public class FunctionDeclarationTest extends ATranslatorParserTest
 {
 
 
-    public FunctionTest(String testString, String expectedResult) {
+    public FunctionDeclarationTest(String testString, String expectedResult) {
         super(testString, expectedResult);
     }
 
@@ -36,8 +36,8 @@ public class FunctionTest extends ATranslatorParserTest
     @Parameterized.Parameters
     public static Collection<Object[]> testStrings() {
         List<Object[]> collection = new ArrayList<>();
-        
-         //return values
+
+        //return values
         collection.addAll(TypeHelper.getAllTypesWithModifier(
                 "function ", " get(){}",
                 "function get() {\n}", ""));
@@ -46,7 +46,7 @@ public class FunctionTest extends ATranslatorParserTest
         collection.addAll(ParameterListHelper.getTestStrings(
                 "function void set", "{}",
                 "function set", " {\n}"));
-       
+
         return collection;
 
     }

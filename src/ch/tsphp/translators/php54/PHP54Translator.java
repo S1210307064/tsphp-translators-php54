@@ -23,9 +23,9 @@ import java.util.Collection;
 public class PHP54Translator implements ITranslator, IErrorLogger
 {
 
-    private StringTemplateGroup templateGroup;
-    private IPrecedenceHelper precedenceHelper;
-    private ICastHelper castHelper;
+    private final StringTemplateGroup templateGroup;
+    private final IPrecedenceHelper precedenceHelper;
+    private final ICastHelper castHelper;
     private Collection<IErrorLogger> errorLoggers = new ArrayDeque<>();
     private boolean hasFoundError;
     private Exception loadingTemplateException;

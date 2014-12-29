@@ -25,10 +25,10 @@ import java.util.Arrays;
 import java.util.Collection;
 
 @RunWith(Parameterized.class)
-public class UseMultipleTest extends ATranslatorParserTest
+public class UseMultipleDeclarationTest extends ATranslatorParserTest
 {
 
-    public UseMultipleTest(String testString, String expectedResult) {
+    public UseMultipleDeclarationTest(String testString, String expectedResult) {
         super(testString, expectedResult);
     }
 

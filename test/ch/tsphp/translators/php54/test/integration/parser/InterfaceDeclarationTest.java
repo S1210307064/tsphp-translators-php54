@@ -17,10 +17,10 @@ import java.util.Arrays;
 import java.util.Collection;
 
 @RunWith(Parameterized.class)
-public class InterfaceTest extends ATranslatorParserTest
+public class InterfaceDeclarationTest extends ATranslatorParserTest
 {
 
-    public InterfaceTest(String testString, String expectedResult) {
+    public InterfaceDeclarationTest(String testString, String expectedResult) {
         super(testString, expectedResult);
     }
 
@@ -32,13 +32,13 @@ public class InterfaceTest extends ATranslatorParserTest
     @Parameterized.Parameters
     public static Collection<Object[]> testStrings() {
         return Arrays.asList(new Object[][]{
-                    {"interface a{};", "interface a {}"},
-                    {"interface a extends b{};", "interface a extends b {}"},
-                    {"interface a extends b\\c{};", "interface a extends b\\c {}"},
-                    {"interface a extends b\\c\\d{};", "interface a extends b\\c\\d {}"},
-                    {"interface a extends \\b{};", "interface a extends \\b {}"},
-                    {"interface a extends \\b\\c{};", "interface a extends \\b\\c {}"},
-                    {"interface a extends \\b\\c\\d{};", "interface a extends \\b\\c\\d {}"},
-                });
+                {"interface a{};", "interface a {}"},
+                {"interface a extends b{};", "interface a extends b {}"},
+                {"interface a extends b\\c{};", "interface a extends b\\c {}"},
+                {"interface a extends b\\c\\d{};", "interface a extends b\\c\\d {}"},
+                {"interface a extends \\b{};", "interface a extends \\b {}"},
+                {"interface a extends \\b\\c{};", "interface a extends \\b\\c {}"},
+                {"interface a extends \\b\\c\\d{};", "interface a extends \\b\\c\\d {}"},
+        });
     }
 }
