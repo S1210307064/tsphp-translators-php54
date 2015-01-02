@@ -57,15 +57,23 @@ public class PHP54Translator implements ITranslator, IErrorLogger
             try {
                 translation = translator.compilationUnit().getTemplate().toString();
             } catch (RecognitionException ex) {
-                informErrorLogger(ex);
+                informErrorLoggers(ex);
             }
         } else {
-            informErrorLogger(loadingTemplateException);
+            informErrorLoggers(loadingTemplateException);
         }
 
         return translation;
 
     }
+
+    private void informErrorLoggers(Exception ex) {
+        hasFoundError = true;
+        for (IErrorLogger logger : errorLoggers) {
+            logger.log(new TSPHPException(ex));
+        }
+    }
+
 
     @Override
     public boolean hasFoundError() {
@@ -75,13 +83,6 @@ public class PHP54Translator implements ITranslator, IErrorLogger
     @Override
     public void registerErrorLogger(IErrorLogger errorLogger) {
         errorLoggers.add(errorLogger);
-    }
-
-    private void informErrorLogger(Exception ex) {
-        hasFoundError = true;
-        for (IErrorLogger logger : errorLoggers) {
-            logger.log(new TSPHPException(ex));
-        }
     }
 
     @Override
