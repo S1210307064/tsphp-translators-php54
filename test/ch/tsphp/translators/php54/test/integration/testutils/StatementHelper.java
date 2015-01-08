@@ -85,6 +85,80 @@ public class StatementHelper
                         prefixExpected + "\n" + indent + instructionExpected + appendixExpected
                 },
                 {
+                        prefix + "if($a)" + instruction + appendix,
+                        prefixExpected + "\n" + indent
+                                + "if ($a) {\n" + indent + "    " + instructionExpected + "\n" + indent + "}"
+                                + appendixExpected
+                },
+                {
+                        prefix + "if($a){" + instruction + "}" + appendix,
+                        prefixExpected + "\n" + indent
+                                + "if ($a) {\n" + indent + "    " + instructionExpected + "\n" + indent + "}"
+                                + appendixExpected
+                },
+                {
+                        prefix + "if($a) $a=1; else " + instruction + appendix,
+                        prefixExpected + "\n" + indent
+                                + "if ($a) {\n"
+                                + indent + "    $a = 1;\n"
+                                + indent + "} else {\n"
+                                + indent + "    " + instructionExpected + "\n"
+                                + indent + "}"
+                                + appendixExpected
+                },
+
+                {
+                        prefix + "if($a){$a=1;}else{" + instruction + "}" + appendix,
+                        prefixExpected + "\n" + indent
+                                + "if ($a) {\n"
+                                + indent + "    $a = 1;\n"
+                                + indent + "} else {\n"
+                                + indent + "    " + instructionExpected + "\n"
+                                + indent + "}"
+                                + appendixExpected
+                },
+                {
+                        prefix + "switch($a){case 1: " + instruction + "}" + appendix,
+                        prefixExpected + "\n" + indent
+                                + "switch ($a) {\n"
+                                + indent + "    case 1:\n"
+                                + indent + "        " + instructionExpected + "\n"
+                                + indent + "}"
+                                + appendixExpected
+                },
+                {
+                        prefix + "switch($a){"
+                                + "    case 1: $a=1; " + instruction
+                                + "    default: $a=2; " + instruction
+                                + "}" + appendix,
+                        prefixExpected + "\n" + indent
+                                + "switch ($a) {\n"
+                                + indent + "    case 1:\n"
+                                + indent + "        $a = 1;\n"
+                                + indent + "        " + instructionExpected + "\n"
+                                + indent + "    default:\n"
+                                + indent + "        $a = 2;\n"
+                                + indent + "        " + instructionExpected + "\n"
+                                + indent + "}"
+                                + appendixExpected
+                },
+                {
+                        prefix + "switch($a){"
+                                + "    case 1:{ $a=1; " + instruction + "}"
+                                + "    default: $a=2; { " + instruction + "} "
+                                + "}" + appendix,
+                        prefixExpected + "\n" + indent
+                                + "switch ($a) {\n"
+                                + indent + "    case 1:\n"
+                                + indent + "        $a = 1;\n"
+                                + indent + "        " + instructionExpected + "\n"
+                                + indent + "    default:\n"
+                                + indent + "        $a = 2;\n"
+                                + indent + "        " + instructionExpected + "\n"
+                                + indent + "}"
+                                + appendixExpected
+                },
+                {
                         prefix + "for(;;) " + instruction + appendix,
                         prefixExpected + "\n" + indent
                                 + "for (; ; ) {\n" + indent + "    " + instructionExpected + "\n" + indent + "}"
@@ -130,80 +204,6 @@ public class StatementHelper
                         prefix + "do{ " + instruction + "}while(true);" + appendix,
                         prefixExpected + "\n" + indent
                                 + "do {\n" + indent + "    " + instructionExpected + "\n" + indent + "} while (true);"
-                                + appendixExpected
-                },
-                {
-                        prefix + "switch($a){case 1: " + instruction + "}" + appendix,
-                        prefixExpected + "\n" + indent
-                                + "switch ($a) {\n"
-                                + indent + "    case 1:\n"
-                                + indent + "        " + instructionExpected + "\n"
-                                + indent + "}"
-                                + appendixExpected
-                },
-                {
-                        prefix + "switch($a){"
-                                + "    case 1: $a=1; " + instruction
-                                + "    default: $a=2; " + instruction
-                                + "}" + appendix,
-                        prefixExpected + "\n" + indent
-                                + "switch ($a) {\n"
-                                + indent + "    case 1:\n"
-                                + indent + "        $a = 1;\n"
-                                + indent + "        " + instructionExpected + "\n"
-                                + indent + "    default:\n"
-                                + indent + "        $a = 2;\n"
-                                + indent + "        " + instructionExpected + "\n"
-                                + indent + "}"
-                                + appendixExpected
-                },
-                {
-                        prefix + "switch($a){"
-                                + "    case 1:{ $a=1; " + instruction + "}"
-                                + "    default: $a=2; { " + instruction + "} "
-                                + "}" + appendix,
-                        prefixExpected + "\n" + indent
-                                + "switch ($a) {\n"
-                                + indent + "    case 1:\n"
-                                + indent + "        $a = 1;\n"
-                                + indent + "        " + instructionExpected + "\n"
-                                + indent + "    default:\n"
-                                + indent + "        $a = 2;\n"
-                                + indent + "        " + instructionExpected + "\n"
-                                + indent + "}"
-                                + appendixExpected
-                },
-                {
-                        prefix + "if($a)" + instruction + appendix,
-                        prefixExpected + "\n" + indent
-                                + "if ($a) {\n" + indent + "    " + instructionExpected + "\n" + indent + "}"
-                                + appendixExpected
-                },
-                {
-                        prefix + "if($a){" + instruction + "}" + appendix,
-                        prefixExpected + "\n" + indent
-                                + "if ($a) {\n" + indent + "    " + instructionExpected + "\n" + indent + "}"
-                                + appendixExpected
-                },
-                {
-                        prefix + "if($a) $a=1; else " + instruction + appendix,
-                        prefixExpected + "\n" + indent
-                                + "if ($a) {\n"
-                                + indent + "    $a = 1;\n"
-                                + indent + "} else {\n"
-                                + indent + "    " + instructionExpected + "\n"
-                                + indent + "}"
-                                + appendixExpected
-                },
-
-                {
-                        prefix + "if($a){$a=1;}else{" + instruction + "}" + appendix,
-                        prefixExpected + "\n" + indent
-                                + "if ($a) {\n"
-                                + indent + "    $a = 1;\n"
-                                + indent + "} else {\n"
-                                + indent + "    " + instructionExpected + "\n"
-                                + indent + "}"
                                 + appendixExpected
                 },
                 {
