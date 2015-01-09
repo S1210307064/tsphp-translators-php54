@@ -92,7 +92,6 @@ public class NotCorrectStartNodeTypeTest extends AWalkerTest
                 {"definition", Else},
                 {"division", Else},
                 {"doWhileLoop", Else},
-                {"exit", Else},
                 {"expression", Else},
                 {"extendsDeclaration", Else},
                 {"fieldDeclaration", Else},

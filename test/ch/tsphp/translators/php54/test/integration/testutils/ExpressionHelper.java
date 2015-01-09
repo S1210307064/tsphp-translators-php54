@@ -221,7 +221,6 @@ public class ExpressionHelper
                 {"foo()", "foo()"},
                 {"\\foo(1,1+2,3)", "\\foo(1, 1 + 2, 3)"},
                 {"\\a\\foo()", "\\a\\foo()"},
-                {"foo()", "foo()"},
                 {"self::foo()", "self::foo()"},
                 {"parent::foo()", "parent::foo()"},
                 {"Foo::foo()", "Foo::foo()"},

@@ -71,7 +71,6 @@ namespace
     
 namespaceBody
     :   ^(NAMESPACE_BODY statements+=statement*) -> body(statements={$statements})
-    |   NAMESPACE_BODY -> body(statements={null})
     ;
 
 statement
@@ -132,7 +131,6 @@ implementsDeclaration
     
 classBody
     :   ^(CLASS_BODY def+=classBodyDefinition*) -> body(statements={$def})
-    |   CLASS_BODY                              -> body(statements={null})
     ;
     
 classBodyDefinition
@@ -200,9 +198,6 @@ typeModifier returns[boolean isCast,boolean isFalseable, boolean isNullable]
             $isFalseable=falseable!=null;
         } 
         -> {$variableModifier.st}
-
-    |   TYPE_MODIFIER
-        -> {null}
     ;
     
 variableModifier
@@ -231,11 +226,8 @@ variableDeclaration
     ;
     
 localVariableDeclaration[StringTemplate modifier]
-    :   ^(VariableId v=expression)
-        -> localVariableDeclaration(modifier={modifier}, variableId={$VariableId.text}, initValue={v})
-
-    |   VariableId
-        -> localVariableDeclaration(modifier={modifier}, variableId={$VariableId.text}, initValue={null})
+    :   ^(VariableId initValue=expression?)
+        -> localVariableDeclaration(modifier={modifier}, variableId={$VariableId.text}, initValue={initValue})
     ;
 
 allTypes
@@ -375,8 +367,7 @@ returnTypes
     ;
     
 formalParameters
-    :   ^(PARAMETER_LIST params+=paramDeclaration+) -> parameterList(declarations={$params})
-    |   PARAMETER_LIST -> {null}
+    :   ^(PARAMETER_LIST params+=paramDeclaration*) -> parameterList(declarations={$params})
     ;
 
 paramDeclaration
@@ -408,7 +399,7 @@ classInterfaceType
     ;
 
 scalarAndResource
-    :   scalarTypes -> {$scalarTypes.st}
+    :   scalarTypes  -> {$scalarTypes.st}
     |   TypeResource -> {%{$TypeResource.text}}
     ;
 
@@ -418,8 +409,7 @@ parameterNormalOrOptional returns[String variableId,String defaultValue]
     ;
 
 block returns[List<Object> instructions]
-    :   ^(BLOCK instr+=instruction+) {$instructions=$instr;}
-    |   BLOCK
+    :   ^(BLOCK instr+=instruction*) {$instructions=$instr;}
     ;
     
 interfaceDeclaration
@@ -438,7 +428,6 @@ interfaceDeclaration
     
 interfaceBody
     :   ^(INTERFACE_BODY def+=interfaceBodyDefinition*) -> body(statements={$def})
-    |   INTERFACE_BODY -> body(statements={null})
     ;
 
 interfaceBodyDefinition
@@ -551,9 +540,6 @@ forLoop
 expressionList[boolean semicolonAtTheEnd]
     :   ^(EXPRESSION_LIST expr+=expression*)
         -> expressionList(expressions={$expr}, semicolonAtTheEnd={semicolonAtTheEnd})
-
-    |   EXPRESSION_LIST
-        -> expressionList(expressions={null}, semicolonAtTheEnd={semicolonAtTheEnd})
     ;
 
 foreachLoop
@@ -598,15 +584,15 @@ catchBlock
     ;
 
 expression
-    :   atom                    -> {$atom.st}
-    |   operator                -> {$operator.st}
-    |   functionCall            -> {$functionCall.st}
-    |   methodCall              -> {$methodCall.st}
-    |   methodCallSelfOrParent  -> {$methodCallSelfOrParent.st}
-    |   methodCallStatic        -> {$methodCallStatic.st}
-    |   classStaticAccess       -> {$classStaticAccess.st}
-    |   postFixExpression       -> {$postFixExpression.st}
-    |   exit                    -> {$exit.st}
+    :   atom                        -> {$atom.st}
+    |   operator                    -> {$operator.st}
+    |   functionCall                -> {$functionCall.st}
+    |   methodCall                  -> {$methodCall.st}
+    |   methodCallSelfOrParent      -> {$methodCallSelfOrParent.st}
+    |   methodCallStatic            -> {$methodCallStatic.st}
+    |   classStaticAccess           -> {$classStaticAccess.st}
+    |   postFixExpression           -> {$postFixExpression.st}
+    |   ^('exit' ex=expression?)    -> exit(expression={$ex.st})
     ;
   
 atom
@@ -809,8 +795,7 @@ newOperator
     ;
 
 actualParameters returns[List<Object> parameters]
-    :   ^(ACTUAL_PARAMETERS params+=expression+) {$parameters=$params;}
-    |   ACTUAL_PARAMETERS
+    :   ^(ACTUAL_PARAMETERS params+=expression*) {$parameters=$params;}
     ;
 
 functionCall
@@ -863,10 +848,4 @@ postFixExpression
             identifier={getMethodName($Identifier.text)},
             parameters={$actualParameters.parameters}
         )
-    ;
-
-exit
-    :   ^('exit' expression?)   -> exit(expression={$expression.st})
-    |   'exit'                  -> exit(expression={null})
-    ;
-    
+    ;    
